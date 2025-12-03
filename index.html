@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Renaissance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .background-gif {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    .background-fallback {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1a3a1a 0%, #2d4a2d 20%, #8b6f47 50%, #d4774e 70%, #e8a05d 90%);
+        z-index: 0;
+    }
+
+    .glitch-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.03) 2px,
+            rgba(0, 0, 0, 0.03) 4px
+        );
+        pointer-events: none;
+        z-index: 1;
+        animation: glitch 3s infinite;
+    }
+
+    @keyframes glitch {
+        0%, 100% { transform: translate(0); opacity: 0.1; }
+        33% { transform: translate(2px, -2px); opacity: 0.2; }
+        66% { transform: translate(-2px, 2px); opacity: 0.15; }
+    }
+
+    .content {
+        position: relative;
+        z-index: 2;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 40px 20px;
+    }
+
+    .logo-container {
+        padding-top: 10px;
+    }
+
+    .logo-placeholder {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 9px;
+        backdrop-filter: blur(10px);
+    }
+
+    .center-area {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .play-pause-icon {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    .play-pause-icon:hover {
+        transform: scale(1.15);
+    }
+
+    .play-pause-icon:active {
+        transform: scale(0.95);
+    }
+
+    .bottom-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        padding-bottom: 20px;
+    }
+
+    .subscription-container {
+        max-width: 320px;
+        width: 100%;
+    }
+
+    .subscription-title {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 8px;
+        font-weight: 400;
+        text-align: center;
+        letter-spacing: 0.5px;
+    }
+
+    .email-form {
+        display: flex;
+        gap: 6px;
+    }
+
+    .email-input {
+        flex: 1;
+        padding: 8px 12px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 0;
+        color: #ffffff;
+        font-size: 13px;
+        transition: border-color 0.2s ease;
+    }
+
+    .email-input:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .email-input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .subscribe-btn {
+        padding: 8px 16px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 0;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 400;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .subscribe-btn:hover {
+        border-color: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    .social-link {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-size: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+        color: rgba(255, 255, 255, 1);
+    }
+
+    @media (max-width: 600px) {
+        .content {
+            padding: 30px 15px;
+        }
+
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+        }
+
+        .play-pause-icon {
+            width: 35px;
+            height: 35px;
+        }
+
+        .subscription-container {
+            padding: 18px 20px;
+            max-width: 320px;
+        }
+
+        .email-form {
+            flex-direction: column;
+        }
+
+        .subscribe-btn {
+            width: 100%;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="background-fallback"></div>
+    <img src="your-background.gif" alt="" class="background-gif" onerror="this.style.display='none'">
+    <div class="glitch-overlay"></div>
+
+```
+<div class="content">
+    <div class="logo-container">
+        <div class="logo-placeholder">
+            Logo
+        </div>
+    </div>
+
+    <div class="center-area">
+        <svg class="play-pause-icon" id="playPauseIcon" viewBox="0 0 24 24" fill="white">
+            <path id="iconPath" d="M8 5v14l11-7z"/>
+        </svg>
+    </div>
+
+    <div class="bottom-section">
+        <div class="subscription-container">
+            <div class="subscription-title">tap in</div>
+            <form class="email-form" id="emailForm">
+                <input 
+                    type="email" 
+                    class="email-input" 
+                    placeholder="your email" 
+                    required
+                    id="emailInput"
+                >
+                <button type="submit" class="subscribe-btn">Subscribe</button>
+            </form>
+        </div>
+
+        <div class="social-links">
+            <a href="https://instagram.com/yourusername" target="_blank" class="social-link">Instagram</a>
+            <a href="https://x.com/yourusername" target="_blank" class="social-link">X</a>
+        </div>
+    </div>
+</div>
+
+<audio id="audio" preload="metadata">
+    <source src="two-eyes-short.flac" type="audio/flac">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    const audio = document.getElementById('audio');
+    const playPauseIcon = document.getElementById('playPauseIcon');
+    const iconPath = document.getElementById('iconPath');
+    const emailForm = document.getElementById('emailForm');
+
+    let isPlaying = false;
+
+    const playPath = "M8 5v14l11-7z";
+    const pausePath = "M6 4h4v16H6V4zm8 0h4v16h-4V4z";
+
+    playPauseIcon.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            iconPath.setAttribute('d', playPath);
+        } else {
+            audio.play();
+            iconPath.setAttribute('d', pausePath);
+        }
+        isPlaying = !isPlaying;
+    });
+
+    audio.addEventListener('ended', () => {
+        iconPath.setAttribute('d', playPath);
+        isPlaying = false;
+    });
+
+    emailForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value;
+        
+        // REPLACE WITH YOUR EMAIL SERVICE
+        alert('Thank you for subscribing! Email: ' + email);
+        emailForm.reset();
+    });
+</script>
+```
+
+</body>
+</html>

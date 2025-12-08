@@ -390,33 +390,39 @@
         });
 
         emailForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Disable button during send
-            const submitBtn = emailForm.querySelector('.subscribe-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            // Send email using EmailJS
-            emailjs.sendForm('service_pr6bs0j', 'template_oe15cej', emailForm)
-                .then(() => {
-                    submitBtn.textContent = 'Subscribed!';
-                    emailForm.reset();
-                    setTimeout(() => {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }, 2000);
-                })
-                .catch((error) => {
-                    console.error('EmailJS error:', error);
-                    submitBtn.textContent = 'Error - Try again';
-                    setTimeout(() => {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }, 2000);
-                });
+    e.preventDefault();
+    
+    // Disable button during send
+    const submitBtn = emailForm.querySelector('.subscribe-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    
+    // Template parameters
+    const templateParams = {
+        to_email: document.getElementById('emailInput').value,
+        user_email: document.getElementById('emailInput').value
+    };
+    
+    // Send email using EmailJS
+    emailjs.send('service_pr6bs0j', 'template_oe15cej', templateParams)
+        .then(() => {
+            submitBtn.textContent = 'Subscribed!';
+            emailForm.reset();
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        })
+        .catch((error) => {
+            console.error('EmailJS error:', error);
+            submitBtn.textContent = 'Error - Try again';
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
         });
+});
     </script>
 </body>
 </html>

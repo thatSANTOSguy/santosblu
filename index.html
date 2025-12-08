@@ -1,4 +1,4 @@
-lar<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://use.typekit.net/mbc3fgm.css">
@@ -270,6 +270,7 @@ lar<!DOCTYPE html>
                         placeholder="your email" 
                         required
                         id="emailInput"
+                        name="user_email"
                     >
                     <button type="submit" class="subscribe-btn">Subscribe</button>
                 </form>
@@ -286,6 +287,15 @@ lar<!DOCTYPE html>
         <source src="two-eyes-short.flac" type="audio/flac">
         Your browser does not support the audio element.
     </audio>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialize EmailJS with your public key
+        (function(){
+            emailjs.init("ldkRltbcUdSrCvBVE"); // Replace with your actual public key from EmailJS
+        })();
+    </script>
 
     <script>
         const audio = document.getElementById('audio');
@@ -381,11 +391,31 @@ lar<!DOCTYPE html>
 
         emailForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const email = document.getElementById('emailInput').value;
             
-            // REPLACE WITH YOUR EMAIL SERVICE
-            alert('Thank you for subscribing! Email: ' + email);
-            emailForm.reset();
+            // Disable button during send
+            const submitBtn = emailForm.querySelector('.subscribe-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // Send email using EmailJS
+            emailjs.sendForm('service_pr6bs0j', 'template_oe15cej', emailForm)
+                .then(() => {
+                    submitBtn.textContent = 'Subscribed!';
+                    emailForm.reset();
+                    setTimeout(() => {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 2000);
+                })
+                .catch((error) => {
+                    console.error('EmailJS error:', error);
+                    submitBtn.textContent = 'Error - Try again';
+                    setTimeout(() => {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 2000);
+                });
         });
     </script>
 </body>

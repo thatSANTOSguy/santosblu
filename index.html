@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/mbc3fgm.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Renaissance</title>
+    <title>new renaissance santos bluː</title>
     <style>
         * {
             margin: 0;
@@ -438,10 +438,16 @@
         </div>
     </div>
 
+    <audio id="audio" loop preload="metadata">
+        <source src="two-eyes-short.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         emailjs.init("ldkRltbcUdSrCvBVE");
 
+        const audio = document.getElementById('audio');
         const playPauseIcon = document.getElementById('playPauseIcon');
         const iconPath = document.getElementById('iconPath');
         const emailForm = document.getElementById('emailForm');
@@ -523,8 +529,32 @@
         });
 
         playPauseIcon.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            iconPath.setAttribute('d', isPlaying ? pausePath : playPath);
+            if (isPlaying) {
+                audio.pause();
+                iconPath.setAttribute('d', playPath);
+                isPlaying = false;
+            } else {
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        iconPath.setAttribute('d', pausePath);
+                        isPlaying = true;
+                    }).catch(error => {
+                        console.log('Playback prevented:', error);
+                        iconPath.setAttribute('d', playPath);
+                        isPlaying = false;
+                    });
+                } else {
+                    iconPath.setAttribute('d', pausePath);
+                    isPlaying = true;
+                }
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            iconPath.setAttribute('d', playPath);
+            isPlaying = false;
         });
 
         emailForm.addEventListener('submit', (e) => {

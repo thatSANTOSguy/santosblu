@@ -30,6 +30,16 @@
             z-index: 0;
         }
 
+        .background-gif {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
         .glitch-overlay {
             position: fixed;
             top: 0;
@@ -358,6 +368,7 @@
 </head>
 <body>
     <div class="background-fallback"></div>
+    <img src="santosblu comp.gif" alt="" class="background-gif" onerror="this.style.display='none'">
     <div class="glitch-overlay"></div>
 
     <div class="content">
@@ -415,10 +426,11 @@
         <div class="streaming-content">
             <div class="streaming-title">Choose your streaming service</div>
             <div class="streaming-options">
-                <button class="streaming-option" data-service="spotify">Spotify</button>
+                <button class="streaming-option" data-service="tidal">Tidal</button>
                 <button class="streaming-option" data-service="apple">Apple Music</button>
+                <button class="streaming-option" data-service="spotify">Spotify</button>
                 <button class="streaming-option" data-service="youtube">YouTube Music</button>
-                <button class="streaming-option" data-service="soundcloud">SoundCloud</button>
+                <button class="streaming-option" data-service="deezer">Deezer</button>
             </div>
             <div class="modal-footer">
                 <button class="change-service-btn" id="changeServiceBtn" style="display: none;">Change streaming service</button>
@@ -446,22 +458,25 @@
 
         const songLinks = {
             song1: {
-                spotify: 'https://open.spotify.com/track/your-track-id',
-                apple: 'https://music.apple.com/us/album/your-track-id',
-                youtube: 'https://music.youtube.com/watch?v=your-video-id',
-                soundcloud: 'https://soundcloud.com/your-track'
+                tidal: 'https://listen.tidal.com/track/428773403',
+                apple: 'https://geo.music.apple.com/us/album/_/1807267133?i=1807267134&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
+                spotify: 'https://open.spotify.com/track/1uRRCmRfs21yx90nNFuYYm',
+                youtube: 'https://music.youtube.com/watch?v=mlnCCc7ZRZc',
+                deezer: 'https://www.deezer.com/track/3314866781'
             },
             song2: {
-                spotify: 'https://open.spotify.com/track/your-track-id-2',
-                apple: 'https://music.apple.com/us/album/your-track-id-2',
-                youtube: 'https://music.youtube.com/watch?v=your-video-id-2',
-                soundcloud: 'https://soundcloud.com/your-track-2'
+                tidal: 'https://listen.tidal.com/track/427802921',
+                apple: 'https://geo.music.apple.com/us/album/_/1806221333?i=1806221334&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
+                spotify: 'https://open.spotify.com/track/6TN47W3ADBKLqlXX2cRgii',
+                youtube: 'https://music.youtube.com/watch?v=VUtMRbhSBTo',
+                deezer: 'https://www.deezer.com/track/3307731961'
             },
             song3: {
-                spotify: 'https://open.spotify.com/track/your-track-id-3',
-                apple: 'https://music.apple.com/us/album/your-track-id-3',
-                youtube: 'https://music.youtube.com/watch?v=your-video-id-3',
-                soundcloud: 'https://soundcloud.com/your-track-3'
+                tidal: 'https://listen.tidal.com/track/410870685',
+                apple: 'https://geo.music.apple.com/us/album/_/1790060311?i=1790060312&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
+                spotify: 'https://open.spotify.com/track/0ebP3bn0LLpo1JlnmITPl9',
+                youtube: 'https://youtu.be/HJS3ebbI9ts?si=LIv-XJNPKxEeMlj5',
+                deezer: 'https://www.deezer.com/track/2929088962'
             }
         };
 

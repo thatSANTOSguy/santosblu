@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Renaissance</title>
-    <link rel="stylesheet" href="https://use.typekit.net/mbc3fgm.css">
     <style>
         * {
             margin: 0;
@@ -19,16 +18,6 @@
             width: 100vw;
             overflow: hidden;
             position: relative;
-        }
-
-        .background-gif {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
         }
 
         .background-fallback {
@@ -73,7 +62,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 20px;
+            padding: 20px;
         }
 
         .logo-container {
@@ -82,20 +71,18 @@
 
         .logo-placeholder {
             color: rgba(255, 255, 255, 0.72);
-            font-size: 18px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
             font-weight: 500;
-            font-style: bold;
             letter-spacing: 0px;
             text-transform: lowercase;
-            display: inline-block;
         }
 
         .center-area {
             flex: 1;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
+            padding-bottom: 60px;
         }
 
         .play-pause-icon {
@@ -118,8 +105,144 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             padding-bottom: 10px;
+        }
+
+        .music-links-section {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .more-music-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        .more-music-btn:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .music-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .music-links.expanded {
+            opacity: 1;
+            max-height: 200px;
+        }
+
+        .music-link {
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .music-link:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .streaming-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .streaming-modal.active {
+            display: flex;
+        }
+
+        .streaming-content {
+            background: rgba(26, 22, 37, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .streaming-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .streaming-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .streaming-option {
+            padding: 10px 16px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .streaming-option:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .change-service-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 11px;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            transition: color 0.2s ease;
+        }
+
+        .change-service-btn:hover {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .subscription-container {
@@ -152,7 +275,6 @@
             padding: 8px 12px;
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 0;
             color: #ffffff;
             font-size: 13px;
             transition: border-color 0.2s ease;
@@ -172,7 +294,6 @@
             padding: 8px 12px;
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 0;
             color: #ffffff;
             font-size: 13px;
             transition: border-color 0.2s ease;
@@ -191,13 +312,11 @@
             padding: 8px 16px;
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 0;
             color: #ffffff;
             font-size: 13px;
             font-weight: 400;
             cursor: pointer;
             transition: all 0.2s ease;
-            white-space: nowrap;
         }
 
         .subscribe-btn:hover {
@@ -222,24 +341,6 @@
         }
 
         @media (max-width: 600px) {
-            .content {
-                padding: 15px 15px;
-            }
-
-            .logo-placeholder {
-                font-size: 28px;
-            }
-
-            .play-pause-icon {
-                width: 35px;
-                height: 35px;
-            }
-
-            .subscription-container {
-                padding: 18px 20px;
-                max-width: 320px;
-            }
-
             .input-row {
                 flex-direction: column;
             }
@@ -257,14 +358,11 @@
 </head>
 <body>
     <div class="background-fallback"></div>
-    <img src="santosblu comp.gif" alt="" class="background-gif" onerror="this.style.display='none'">
     <div class="glitch-overlay"></div>
 
     <div class="content">
         <div class="logo-container">
-            <div class="logo-placeholder">
-                santos bluː
-            </div>
+            <div class="logo-placeholder">santos bluː</div>
         </div>
 
         <div class="center-area">
@@ -274,6 +372,15 @@
         </div>
 
         <div class="bottom-section">
+            <div class="music-links-section">
+                <button class="more-music-btn" id="moreMusicBtn">more music</button>
+                <div class="music-links" id="musicLinks">
+                    <a href="#" class="music-link" data-song="song1">Two Eyes</a>
+                    <a href="#" class="music-link" data-song="song2">Another Track</a>
+                    <a href="#" class="music-link" data-song="song3">Third Song</a>
+                </div>
+            </div>
+
             <div class="subscription-container">
                 <div class="subscription-title">tap in</div>
                 <form class="email-form" id="emailForm">
@@ -284,7 +391,6 @@
                             placeholder="your name" 
                             required
                             id="nameInput"
-                            name="customer_name"
                         >
                         <input 
                             type="email" 
@@ -292,7 +398,6 @@
                             placeholder="your email" 
                             required
                             id="emailInput"
-                            name="user_email"
                         >
                     </div>
                     <button type="submit" class="subscribe-btn">Subscribe</button>
@@ -306,102 +411,105 @@
         </div>
     </div>
 
-    <audio id="audio" loop preload="metadata">
-        <source src="two-eyes-short.mp3" type="audio/flac">
-        Your browser does not support the audio element.
-    </audio>
+    <div class="streaming-modal" id="streamingModal">
+        <div class="streaming-content">
+            <div class="streaming-title">Choose your streaming service</div>
+            <div class="streaming-options">
+                <button class="streaming-option" data-service="spotify">Spotify</button>
+                <button class="streaming-option" data-service="apple">Apple Music</button>
+                <button class="streaming-option" data-service="youtube">YouTube Music</button>
+                <button class="streaming-option" data-service="soundcloud">SoundCloud</button>
+            </div>
+            <div class="modal-footer">
+                <button class="change-service-btn" id="changeServiceBtn" style="display: none;">Change streaming service</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function(){
-            emailjs.init("ldkRltbcUdSrCvBVE");
-        })();
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-        const audio = document.getElementById('audio');
+        emailjs.init("ldkRltbcUdSrCvBVE");
+
         const playPauseIcon = document.getElementById('playPauseIcon');
         const iconPath = document.getElementById('iconPath');
         const emailForm = document.getElementById('emailForm');
+        const moreMusicBtn = document.getElementById('moreMusicBtn');
+        const musicLinks = document.getElementById('musicLinks');
+        const streamingModal = document.getElementById('streamingModal');
+        const changeServiceBtn = document.getElementById('changeServiceBtn');
 
         let isPlaying = false;
-        let vinylAnimationFrame = null;
+        let preferredService = null;
 
         const playPath = "M8 5v14l11-7z";
         const pausePath = "M6 4h4v16H6V4zm8 0h4v16h-4V4z";
 
-        function vinylWindUp() {
-            const startRate = 0.3;
-            const endRate = 1.0;
-            const duration = 800;
-            const startTime = Date.now();
-
-            audio.playbackRate = startRate;
-
-            function animate() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                const easeProgress = 1 - Math.pow(1 - progress, 3);
-                audio.playbackRate = startRate + (endRate - startRate) * easeProgress;
-
-                if (progress < 1) {
-                    vinylAnimationFrame = requestAnimationFrame(animate);
-                } else {
-                    audio.playbackRate = endRate;
-                }
+        const songLinks = {
+            song1: {
+                spotify: 'https://open.spotify.com/track/your-track-id',
+                apple: 'https://music.apple.com/us/album/your-track-id',
+                youtube: 'https://music.youtube.com/watch?v=your-video-id',
+                soundcloud: 'https://soundcloud.com/your-track'
+            },
+            song2: {
+                spotify: 'https://open.spotify.com/track/your-track-id-2',
+                apple: 'https://music.apple.com/us/album/your-track-id-2',
+                youtube: 'https://music.youtube.com/watch?v=your-video-id-2',
+                soundcloud: 'https://soundcloud.com/your-track-2'
+            },
+            song3: {
+                spotify: 'https://open.spotify.com/track/your-track-id-3',
+                apple: 'https://music.apple.com/us/album/your-track-id-3',
+                youtube: 'https://music.youtube.com/watch?v=your-video-id-3',
+                soundcloud: 'https://soundcloud.com/your-track-3'
             }
+        };
 
-            animate();
+        moreMusicBtn.addEventListener('click', () => {
+            musicLinks.classList.toggle('expanded');
+        });
+
+        document.querySelectorAll('.music-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const songId = e.target.dataset.song;
+                
+                if (preferredService) {
+                    window.open(songLinks[songId][preferredService], '_blank');
+                } else {
+                    showStreamingModal(songId);
+                }
+            });
+        });
+
+        function showStreamingModal(songId) {
+            streamingModal.classList.add('active');
+            
+            document.querySelectorAll('.streaming-option').forEach(option => {
+                option.onclick = () => {
+                    const service = option.dataset.service;
+                    preferredService = service;
+                    streamingModal.classList.remove('active');
+                    window.open(songLinks[songId][service], '_blank');
+                    changeServiceBtn.style.display = 'block';
+                };
+            });
         }
 
-        function vinylWindDown(callback) {
-            const startRate = audio.playbackRate;
-            const endRate = 0.3;
-            const duration = 600;
-            const startTime = Date.now();
+        changeServiceBtn.addEventListener('click', () => {
+            preferredService = null;
+            changeServiceBtn.style.display = 'none';
+        });
 
-            function animate() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                const easeProgress = Math.pow(progress, 2);
-                audio.playbackRate = startRate - (startRate - endRate) * easeProgress;
-
-                if (progress < 1) {
-                    vinylAnimationFrame = requestAnimationFrame(animate);
-                } else {
-                    audio.playbackRate = 1.0;
-                    if (callback) callback();
-                }
-            }
-
-            animate();
-        }
-
-        playPauseIcon.addEventListener('click', () => {
-            if (vinylAnimationFrame) {
-                cancelAnimationFrame(vinylAnimationFrame);
-            }
-
-            if (isPlaying) {
-                vinylWindDown(() => {
-                    audio.pause();
-                });
-                iconPath.setAttribute('d', playPath);
-                isPlaying = false;
-            } else {
-                audio.play();
-                vinylWindUp();
-                iconPath.setAttribute('d', pausePath);
-                isPlaying = true;
+        streamingModal.addEventListener('click', (e) => {
+            if (e.target === streamingModal) {
+                streamingModal.classList.remove('active');
             }
         });
 
-        audio.addEventListener('ended', () => {
-            iconPath.setAttribute('d', playPath);
-            isPlaying = false;
+        playPauseIcon.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            iconPath.setAttribute('d', isPlaying ? pausePath : playPath);
         });
 
         emailForm.addEventListener('submit', (e) => {

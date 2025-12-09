@@ -40,6 +40,7 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
+            filter: brightness(0.7) contrast(0.9);
         }
 
         .glitch-overlay {
@@ -52,18 +53,19 @@
                 0deg,
                 transparent,
                 transparent 2px,
-                rgba(0, 0, 0, 0.03) 2px,
-                rgba(0, 0, 0, 0.03) 4px
+                rgba(0, 0, 0, 0.1) 2px,
+                rgba(0, 0, 0, 0.1) 4px
             );
             pointer-events: none;
             z-index: 1;
             animation: glitch 3s infinite;
+            opacity: 1;
         }
 
         @keyframes glitch {
-            0%, 100% { transform: translate(0); opacity: 0.1; }
-            33% { transform: translate(2px, -2px); opacity: 0.2; }
-            66% { transform: translate(-2px, 2px); opacity: 0.15; }
+            0%, 100% { transform: translate(0); }
+            33% { transform: translate(2px, -2px); }
+            66% { transform: translate(-2px, 2px); }
         }
 
         .content {

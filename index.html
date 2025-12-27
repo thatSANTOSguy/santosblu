@@ -376,6 +376,7 @@
 </head>
 <body>
     <div class="background-fallback"></div>
+    <img src="santosblu comp.gif" alt="" class="background-gif" onerror="this.style.display='none'">
     <div class="glitch-overlay"></div>
 
     <div class="content">
@@ -445,10 +446,16 @@
         </div>
     </div>
 
+    <audio id="audio" loop preload="metadata">
+        <source src="two-eyes-short.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         emailjs.init("ldkRltbcUdSrCvBVE");
 
+        const audio = document.getElementById('audio');
         const playPauseIcon = document.getElementById('playPauseIcon');
         const iconPath = document.getElementById('iconPath');
         const emailForm = document.getElementById('emailForm');
@@ -531,12 +538,31 @@
 
         playPauseIcon.addEventListener('click', () => {
             if (isPlaying) {
+                audio.pause();
                 iconPath.setAttribute('d', playPath);
                 isPlaying = false;
             } else {
-                iconPath.setAttribute('d', pausePath);
-                isPlaying = true;
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        iconPath.setAttribute('d', pausePath);
+                        isPlaying = true;
+                    }).catch(error => {
+                        console.log('Playback prevented:', error);
+                        iconPath.setAttribute('d', playPath);
+                        isPlaying = false;
+                    });
+                } else {
+                    iconPath.setAttribute('d', pausePath);
+                    isPlaying = true;
+                }
             }
+        });
+
+        audio.addEventListener('ended', () => {
+            iconPath.setAttribute('d', playPath);
+            isPlaying = false;
         });
 
         emailForm.addEventListener('submit', (e) => {

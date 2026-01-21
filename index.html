@@ -95,28 +95,124 @@
             text-transform: lowercase;
         }
 
-        .center-area {
+        .center-section {
             flex: 1;
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            padding-bottom: 60px;
+            gap: 25px;
+            width: 100%;
+            max-width: 600px;
         }
 
-        .play-pause-icon {
-            width: 40px;
-            height: 40px;
+        .album-cover-container {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .album-cover {
+            width: 280px;
+            height: 280px;
+            transform-style: preserve-3d;
+            animation: rotate3d 20s linear infinite;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
+        }
+
+        .album-cover:hover {
+            animation-play-state: paused;
+            transform: scale(1.05) rotateY(var(--rotation, 0deg));
+        }
+
+        @keyframes rotate3d {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ep-info {
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .ep-title {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .ep-collab {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 15px;
+        }
+
+        .ep-description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+            min-height: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .ep-description.visible {
+            opacity: 1;
+        }
+
+        .ep-description.typing::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .stream-btn {
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s ease;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
         }
 
-        .play-pause-icon:hover {
-            transform: scale(1.15);
+        .stream-btn:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 1);
         }
 
-        .play-pause-icon:active {
-            transform: scale(0.95);
+        .archive-link {
+            margin-top: 15px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .archive-link:hover {
+            color: rgba(255, 255, 255, 0.6);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         .bottom-section {
@@ -124,7 +220,8 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            padding-bottom: 10px;
+            padding-bottom: 20px;
+            width: 100%;
         }
 
         .music-links-section {
@@ -204,7 +301,7 @@
         }
 
         .streaming-content {
-            background: rgba(30, 35, 45, 0.6);
+            background: rgba(30, 35, 45, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 30px;
             max-width: 400px;
@@ -243,24 +340,213 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .modal-footer {
-            margin-top: 20px;
-            text-align: center;
+        .archive-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            z-index: 2000;
+            overflow: hidden;
         }
 
-        .change-service-btn {
+        .archive-modal.active {
+            display: block;
+        }
+
+        .archive-close {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 2002;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+        }
+
+        .archive-close:hover {
+            opacity: 1;
+        }
+
+        .archive-close::before,
+        .archive-close::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: white;
+            top: 50%;
+            left: 0;
+        }
+
+        .archive-close::before {
+            transform: rotate(45deg);
+        }
+
+        .archive-close::after {
+            transform: rotate(-45deg);
+        }
+
+        .archive-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .archive-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .archive-scroll {
+            display: flex;
+            gap: 40px;
+            padding: 40px;
+            min-width: min-content;
+        }
+
+        .archive-piece {
+            position: relative;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            perspective: 1000px;
+        }
+
+        .archive-card {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .archive-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .archive-card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(20, 20, 30, 0.6);
+            overflow: hidden;
+        }
+
+        .archive-card-back {
+            transform: rotateY(180deg);
+        }
+
+        .archive-piece.flippable .archive-card-face::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(225deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .archive-piece.flippable:hover .archive-card-face::after {
+            opacity: 1;
+        }
+
+        .archive-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.05) brightness(0.95);
+        }
+
+        .archive-glitch {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 3px,
+                rgba(255, 0, 100, 0.03) 3px,
+                rgba(255, 0, 100, 0.03) 6px
+            );
+            pointer-events: none;
+            mix-blend-mode: screen;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        .archive-notes {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(20, 20, 30, 0.8);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+        }
+
+        .notes-textarea {
+            flex: 1;
             background: transparent;
             border: none;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 11px;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 0;
-            transition: color 0.2s ease;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
         }
 
-        .change-service-btn:hover {
-            color: rgba(255, 255, 255, 0.7);
+        .notes-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            font-style: italic;
+        }
+
+        .notes-saved {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 11px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .notes-saved.show {
+            opacity: 1;
         }
 
         .subscription-container {
@@ -359,6 +645,26 @@
         }
 
         @media (max-width: 600px) {
+            .album-cover {
+                width: 240px;
+                height: 240px;
+            }
+
+            .archive-container {
+                padding: 0 40px;
+            }
+
+            .archive-card {
+                width: 300px;
+                height: 400px;
+            }
+
+            .archive-notes {
+                width: 300px;
+                height: 400px;
+                padding: 20px;
+            }
+
             .input-row {
                 flex-direction: column;
             }
@@ -370,6 +676,17 @@
 
             .subscribe-btn {
                 width: 100%;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .album-cover {
+                width: 200px;
+                height: 200px;
+            }
+
+            .ep-title {
+                font-size: 20px;
             }
         }
     </style>
@@ -384,10 +701,21 @@
             <div class="logo-placeholder">santos bluː</div>
         </div>
 
-        <div class="center-area">
-            <svg class="play-pause-icon" id="playPauseIcon" viewBox="0 0 24 24" fill="white">
-                <path id="iconPath" d="M8 5v14l11-7z"/>
-            </svg>
+        <div class="center-section">
+            <div class="album-cover-container" id="albumCover">
+                <div class="album-cover">
+                    <img src="cover-art-a&w.jpg" alt="Alive & Well Cover">
+                </div>
+            </div>
+
+            <div class="ep-info">
+                <div class="ep-title">Alive & Well</div>
+                <div class="ep-collab">with CLOUD5</div>
+                <div class="ep-description" id="epDescription" data-text="[Your description here]">
+                </div>
+                <button class="stream-btn" id="streamBtn">Listen Now</button>
+                <div class="archive-link" id="archiveLink">/// archive</div>
+            </div>
         </div>
 
         <div class="bottom-section">
@@ -434,41 +762,74 @@
         <div class="streaming-content">
             <div class="streaming-title">Choose your streaming service</div>
             <div class="streaming-options">
-                <button class="streaming-option" data-service="tidal">Tidal</button>
-                <button class="streaming-option" data-service="apple">Apple Music</button>
-                <button class="streaming-option" data-service="spotify">Spotify</button>
-                <button class="streaming-option" data-service="youtube">YouTube Music</button>
-                <button class="streaming-option" data-service="deezer">Deezer</button>
-            </div>
-            <div class="modal-footer">
-                <button class="change-service-btn" id="changeServiceBtn" style="display: none;">Change streaming service</button>
+                <button class="streaming-option" data-service="tidal" data-type="ep">Tidal</button>
+                <button class="streaming-option" data-service="apple" data-type="ep">Apple Music</button>
+                <button class="streaming-option" data-service="spotify" data-type="ep">Spotify</button>
+                <button class="streaming-option" data-service="youtube" data-type="ep">YouTube Music</button>
+                <button class="streaming-option" data-service="deezer" data-type="ep">Deezer</button>
             </div>
         </div>
     </div>
 
-    <audio id="audio" loop preload="metadata">
-        <source src="two-eyes-short.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <div class="archive-modal" id="archiveModal">
+        <div class="archive-close" id="archiveClose"></div>
+        <div class="archive-container" id="archiveContainer">
+            <div class="archive-scroll" id="archiveScroll">
+                <!-- Archive pieces will be generated by JS -->
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         emailjs.init("ldkRltbcUdSrCvBVE");
 
-        const audio = document.getElementById('audio');
-        const playPauseIcon = document.getElementById('playPauseIcon');
-        const iconPath = document.getElementById('iconPath');
-        const emailForm = document.getElementById('emailForm');
+        const streamBtn = document.getElementById('streamBtn');
+        const albumCover = document.getElementById('albumCover');
         const moreMusicBtn = document.getElementById('moreMusicBtn');
         const musicLinks = document.getElementById('musicLinks');
         const streamingModal = document.getElementById('streamingModal');
-        const changeServiceBtn = document.getElementById('changeServiceBtn');
+        const archiveLink = document.getElementById('archiveLink');
+        const archiveModal = document.getElementById('archiveModal');
+        const archiveClose = document.getElementById('archiveClose');
+        const emailForm = document.getElementById('emailForm');
+        const epDescription = document.getElementById('epDescription');
 
-        let isPlaying = false;
         let preferredService = null;
+        let currentContext = 'ep';
 
-        const playPath = "M8 5v14l11-7z";
-        const pausePath = "M6 4h4v16H6V4zm8 0h4v16h-4V4z";
+        // Typewriter effect for description
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.classList.add('typing');
+            element.classList.add('visible');
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    element.classList.remove('typing');
+                }
+            }
+            type();
+        }
+
+        // Start typing effect after 6 seconds
+        setTimeout(() => {
+            const descriptionText = epDescription.getAttribute('data-text');
+            typeWriter(epDescription, descriptionText, 70);
+        }, 6000);
+
+        // UPDATE THESE LINKS WITH YOUR ACTUAL EP STREAMING URLS
+        const epLinks = {
+            tidal: 'https://listen.tidal.com/album/YOUR_EP_ID',
+            apple: 'https://music.apple.com/us/album/alive-well-ep/1870312531?uo=4&app=music&at=1001lry3&ct=dashboard',
+            spotify: 'https://open.spotify.com/artist/2WafMYEadi2cAl1e65j1Yh', // Update with EP link
+            youtube: 'https://music.youtube.com/playlist?list=YOUR_EP_ID',
+            deezer: 'https://www.deezer.com/album/YOUR_EP_ID'
+        };
 
         const songLinks = {
             song1: {
@@ -494,24 +855,131 @@
             }
         };
 
-        moreMusicBtn.addEventListener('click', () => {
-            musicLinks.classList.toggle('expanded');
-        });
+        // Archive content - replace with your actual image filenames
+        const archivePieces = [
+            { front: 'archive-1.jpg', back: null, flippable: false },
+            { front: 'archive-2.jpg', back: 'archive-2-back.jpg', flippable: true },
+            { front: 'archive-3.jpg', back: null, flippable: false },
+            { front: 'archive-4.jpg', back: 'archive-4-back.jpg', flippable: true },
+            { front: 'archive-5.jpg', back: null, flippable: false },
+            { front: 'archive-6.jpg', back: null, flippable: false },
+            { front: 'archive-7.jpg', back: 'archive-7-back.jpg', flippable: true },
+            { front: 'archive-8.jpg', back: null, flippable: false },
+            { type: 'notes' } // Notes section as last piece
+        ];
 
-        document.querySelectorAll('.music-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const songId = e.target.dataset.song;
-                
-                if (preferredService) {
-                    window.open(songLinks[songId][preferredService], '_blank');
+        function initArchive() {
+            const archiveScroll = document.getElementById('archiveScroll');
+            archiveScroll.innerHTML = '';
+
+            archivePieces.forEach((piece, index) => {
+                if (piece.type === 'notes') {
+                    // Create notes section
+                    const notesEl = document.createElement('div');
+                    notesEl.className = 'archive-notes';
+                    notesEl.innerHTML = `
+                        <div class="notes-title">/// notes</div>
+                        <textarea 
+                            class="notes-textarea" 
+                            id="archiveNotes"
+                            placeholder="type here..."
+                        ></textarea>
+                        <div class="notes-saved" id="notesSaved">saved</div>
+                    `;
+                    archiveScroll.appendChild(notesEl);
+
+                    // Load saved notes from localStorage
+                    setTimeout(() => {
+                        const textarea = document.getElementById('archiveNotes');
+                        const savedIndicator = document.getElementById('notesSaved');
+                        const savedNotes = localStorage.getItem('archive_notes');
+                        
+                        if (savedNotes) {
+                            textarea.value = savedNotes;
+                        }
+
+                        // Auto-save on typing
+                        let saveTimeout;
+                        textarea.addEventListener('input', () => {
+                            clearTimeout(saveTimeout);
+                            saveTimeout = setTimeout(() => {
+                                localStorage.setItem('archive_notes', textarea.value);
+                                savedIndicator.classList.add('show');
+                                setTimeout(() => {
+                                    savedIndicator.classList.remove('show');
+                                }, 1500);
+                            }, 500);
+                        });
+                    }, 100);
                 } else {
-                    showStreamingModal(songId);
+                    // Create regular image piece
+                    const pieceEl = document.createElement('div');
+                    pieceEl.className = `archive-piece ${piece.flippable ? 'flippable' : ''}`;
+                    
+                    pieceEl.innerHTML = `
+                        <div class="archive-card">
+                            <div class="archive-card-face">
+                                <img src="${piece.front}" class="archive-image" alt="Archive ${index + 1}">
+                                <div class="archive-glitch"></div>
+                            </div>
+                            ${piece.back ? `
+                            <div class="archive-card-face archive-card-back">
+                                <img src="${piece.back}" class="archive-image" alt="Archive ${index + 1} Back">
+                                <div class="archive-glitch"></div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+
+                    if (piece.flippable) {
+                        const card = pieceEl.querySelector('.archive-card');
+                        pieceEl.addEventListener('click', () => {
+                            card.classList.toggle('flipped');
+                        });
+                    }
+
+                    archiveScroll.appendChild(pieceEl);
                 }
             });
+        }
+
+        initArchive();
+
+        archiveLink.addEventListener('click', () => {
+            archiveModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
 
-        function showStreamingModal(songId) {
+        archiveClose.addEventListener('click', () => {
+            archiveModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        archiveModal.addEventListener('click', (e) => {
+            if (e.target === archiveModal) {
+                archiveModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && archiveModal.classList.contains('active')) {
+                archiveModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        streamBtn.addEventListener('click', () => {
+            currentContext = 'ep';
+            showStreamingModal();
+        });
+
+        albumCover.addEventListener('click', () => {
+            currentContext = 'ep';
+            showStreamingModal();
+        });
+
+        function showStreamingModal() {
             streamingModal.classList.add('active');
             
             document.querySelectorAll('.streaming-option').forEach(option => {
@@ -519,16 +987,12 @@
                     const service = option.dataset.service;
                     preferredService = service;
                     streamingModal.classList.remove('active');
-                    window.open(songLinks[songId][service], '_blank');
-                    changeServiceBtn.style.display = 'block';
+                    
+                    const url = currentContext === 'ep' ? epLinks[service] : songLinks[currentContext][service];
+                    window.open(url, '_blank');
                 };
             });
         }
-
-        changeServiceBtn.addEventListener('click', () => {
-            preferredService = null;
-            changeServiceBtn.style.display = 'none';
-        });
 
         streamingModal.addEventListener('click', (e) => {
             if (e.target === streamingModal) {
@@ -536,33 +1000,16 @@
             }
         });
 
-        playPauseIcon.addEventListener('click', () => {
-            if (isPlaying) {
-                audio.pause();
-                iconPath.setAttribute('d', playPath);
-                isPlaying = false;
-            } else {
-                const playPromise = audio.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        iconPath.setAttribute('d', pausePath);
-                        isPlaying = true;
-                    }).catch(error => {
-                        console.log('Playback prevented:', error);
-                        iconPath.setAttribute('d', playPath);
-                        isPlaying = false;
-                    });
-                } else {
-                    iconPath.setAttribute('d', pausePath);
-                    isPlaying = true;
-                }
-            }
+        moreMusicBtn.addEventListener('click', () => {
+            musicLinks.classList.toggle('expanded');
         });
 
-        audio.addEventListener('ended', () => {
-            iconPath.setAttribute('d', playPath);
-            isPlaying = false;
+        document.querySelectorAll('.music-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentContext = e.target.dataset.song;
+                showStreamingModal();
+            });
         });
 
         emailForm.addEventListener('submit', (e) => {

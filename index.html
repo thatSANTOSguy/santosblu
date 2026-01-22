@@ -728,8 +728,8 @@
         }
 
         .sigil-container {
-            width: 150px;
-            height: 150px;
+            width: 110px;
+            height: 110px;
             margin-top: 25px;
             opacity: 0;
             transition: opacity 0.5s;
@@ -946,8 +946,7 @@
                 <button class="streaming-option" data-service="tidal" data-type="ep">Tidal</button>
                 <button class="streaming-option" data-service="apple" data-type="ep">Apple Music</button>
                 <button class="streaming-option" data-service="spotify" data-type="ep">Spotify</button>
-                <button class="streaming-option" data-service="youtube" data-type="ep">YouTube Music</button>
-                <button class="streaming-option" data-service="deezer" data-type="ep">Deezer</button>
+                <button class="streaming-option" data-service="pandora" data-type="ep">Pandora</button>
             </div>
         </div>
     </div>
@@ -998,10 +997,9 @@
 
         const epLinks = {
             tidal: 'https://listen.tidal.com/album/490814320',
-            apple: 'https://music.apple.com/us/album/alive-well-ep/1870312531?uo=4&app=music&at=1001lry3&ct=dashboard',
+            apple: 'https://geo.music.apple.com/us/album/_/1870312531?mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
             spotify: 'https://open.spotify.com/album/442M5bQwAlpfiAG0vCFwYz',
-            youtube: 'https://music.youtube.com/playlist?list=YOUR_EP_ID',
-            deezer: 'https://www.deezer.com/album/YOUR_EP_ID'
+            pandora: 'https://www.pandora.com/AL:59941654'
         };
 
         const songLinks = {
@@ -1099,7 +1097,7 @@
             function type() {
                 if (i < txt.length) {
                     if (txt[i] === '\n') {
-                        el.innerHTML += '<br><br>';
+                        el.innerHTML += '<br>';
                         i++;
                     } else if (txt.substring(i, i + 3) === '<b>') {
                         el.innerHTML += '<b>';

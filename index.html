@@ -1,724 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://use.typekit.net/mbc3fgm.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>new renaissance santos bluː</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>santos bluː</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            min-height: 100vh;
-            width: 100vw;
-            overflow-x: hidden;
-            overflow-y: auto;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .background-fallback {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1625 0%, #252a35 50%, #2a2e35 100%);
-            z-index: 0;
-        }
-
-        .background-gif {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            will-change: opacity;
-        }
-
-        .glitch-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 0, 0, 0.04) 2px,
-                rgba(0, 0, 0, 0.04) 4px
-            );
-            pointer-events: none;
-            z-index: 1;
-            animation: glitch 3s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); opacity: 0.1; }
-            33% { transform: translate(2px, -2px); opacity: 0.2; }
-            66% { transform: translate(-2px, 2px); opacity: 0.15; }
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 70px 20px 20px 20px;
-        }
-
-        .logo-container {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            padding-top: 10px;
-        }
-
-        .logo-placeholder {
-            color: rgba(255, 255, 255, 0.72);
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 0px;
-            text-transform: lowercase;
-        }
-
-        .center-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .album-cover-container {
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .album-cover {
-            width: 280px;
-            height: 280px;
-            transform-style: preserve-3d;
-            animation: rotate3d 20s linear infinite;
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
-        }
-
-        .album-cover:hover {
-            animation-play-state: paused;
-            transform: scale(1.05) rotateY(var(--rotation, 0deg));
-        }
-
-        @keyframes rotate3d {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-
-        .album-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .ep-info {
-            text-align: center;
-            max-width: 400px;
-        }
-
-        .ep-title {
-            font-size: 24px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .ep-collab {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 15px;
-        }
-
-        .ep-description {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-style: italic;
-            min-height: 40px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .ep-description.visible {
-            opacity: 1;
-        }
-
-        .ep-description.typing::after {
-            content: '|';
-            animation: blink 0.7s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        .stream-btn {
-            padding: 10px 24px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-        }
-
-        .stream-btn:hover {
-            border-color: rgba(255, 255, 255, 0.8);
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 1);
-        }
-
-        .archive-link {
-            margin-top: 20px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.25);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .archive-link:hover {
-            color: rgba(255, 255, 255, 0.6);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        .bottom-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding-bottom: 20px;
-            width: 100%;
-            margin-top: 40px;
-        }
-
-        .music-links-section {
-            width: 100%;
-            max-width: 320px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .more-music-btn {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 0;
-            font-family: inherit;
-        }
-
-        .more-music-btn:hover {
-            color: rgba(255, 255, 255, 1);
-        }
-
-        .music-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 100%;
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .music-links.expanded {
-            opacity: 1;
-            max-height: 200px;
-        }
-
-        .music-link {
-            padding: 8px 12px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: block;
-        }
-
-        .music-link:hover {
-            border-color: rgba(255, 255, 255, 0.6);
-            color: rgba(255, 255, 255, 1);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .streaming-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .streaming-modal.active {
-            display: flex;
-        }
-
-        .streaming-content {
-            background: rgba(30, 35, 45, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .streaming-title {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 14px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-
-        .streaming-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .streaming-option {
-            padding: 10px 16px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .streaming-option:hover {
-            border-color: rgba(255, 255, 255, 0.6);
-            color: rgba(255, 255, 255, 1);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .archive-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            z-index: 2000;
-            overflow: hidden;
-        }
-
-        .archive-modal.active {
-            display: block;
-        }
-
-        .archive-close {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            z-index: 2002;
-            opacity: 0.4;
-            transition: opacity 0.3s ease;
-        }
-
-        .archive-close:hover {
-            opacity: 1;
-        }
-
-        .archive-close::before,
-        .archive-close::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: white;
-            top: 50%;
-            left: 0;
-        }
-
-        .archive-close::before {
-            transform: rotate(45deg);
-        }
-
-        .archive-close::after {
-            transform: rotate(-45deg);
-        }
-
-        .archive-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            padding: 0 80px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .archive-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .archive-scroll {
-            display: flex;
-            gap: 40px;
-            padding: 40px;
-            min-width: min-content;
-        }
-
-        .archive-piece {
-            position: relative;
-            flex-shrink: 0;
-            scroll-snap-align: center;
-            perspective: 1000px;
-        }
-
-        .archive-card {
-            position: relative;
-            width: 400px;
-            height: 500px;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-            cursor: pointer;
-        }
-
-        .archive-card.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .archive-card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(20, 20, 30, 0.6);
-            overflow: hidden;
-        }
-
-        .archive-card-back {
-            transform: rotateY(180deg);
-        }
-
-        .archive-piece.flippable .archive-card-face::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(225deg, rgba(255,255,255,0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .archive-piece.flippable:hover .archive-card-face::after {
-            opacity: 1;
-        }
-
-        .archive-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: contrast(1.05) brightness(0.95);
-        }
-
-        .archive-glitch {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 3px,
-                rgba(255, 0, 100, 0.03) 3px,
-                rgba(255, 0, 100, 0.03) 6px
-            );
-            pointer-events: none;
-            mix-blend-mode: screen;
-            animation: scanline 8s linear infinite;
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100%); }
-        }
-
-        .archive-notes {
-            position: relative;
-            width: 400px;
-            height: 500px;
-            flex-shrink: 0;
-            scroll-snap-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(20, 20, 30, 0.8);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .notes-title {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            margin-bottom: 15px;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-            text-transform: lowercase;
-        }
-
-        .notes-textarea {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 13px;
-            font-family: 'Courier New', monospace;
-            line-height: 1.6;
-            resize: none;
-            outline: none;
-        }
-
-        .notes-textarea::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-            font-style: italic;
-        }
-
-        .notes-saved {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 11px;
-            margin-top: 10px;
-            font-family: 'Courier New', monospace;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .notes-saved.show {
-            opacity: 1;
-        }
-
-        .subscription-container {
-            max-width: 320px;
-            width: 100%;
-        }
-
-        .subscription-title {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 8px;
-            font-weight: 400;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
-
-        .email-form {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .input-row {
-            display: flex;
-            gap: 6px;
-        }
-
-        .name-input {
-            width: 33.33%;
-            padding: 8px 12px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            font-size: 13px;
-            transition: border-color 0.2s ease;
-        }
-
-        .name-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.6);
-        }
-
-        .name-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .email-input {
-            width: 66.67%;
-            padding: 8px 12px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            font-size: 13px;
-            transition: border-color 0.2s ease;
-        }
-
-        .email-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.6);
-        }
-
-        .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .subscribe-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .subscribe-btn:hover {
-            border-color: rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .social-link {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            color: rgba(255, 255, 255, 1);
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; min-height: 100vh; overflow-x: hidden; position: relative; }
+        .background-fallback { position: fixed; inset: 0; background: linear-gradient(135deg, #1a1625 0%, #252a35 50%, #2a2e35 100%); z-index: 0; }
+        .content { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 70px 20px 20px; }
+        .logo-container { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 10; color: rgba(255,255,255,0.72); font-size: 16px; }
+        .center-section { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 25px; width: 100%; max-width: 600px; }
+        .album-cover { width: 280px; height: 280px; cursor: pointer; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5)); animation: rotate3d 20s linear infinite; }
+        @keyframes rotate3d { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+        .album-cover:hover { animation-play-state: paused; }
+        .album-cover img { width: 100%; height: 100%; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); }
+        .ep-info { text-align: center; max-width: 400px; display: flex; flex-direction: column; align-items: center; }
+        .ep-title { font-size: 24px; color: rgba(255,255,255,0.9); font-weight: 500; margin-bottom: 8px; }
+        .ep-collab { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 15px; }
+        .about-btn { background: none; border: none; color: rgba(255,255,255,0.35); font-size: 12px; cursor: pointer; font-family: 'Courier New', monospace; margin-bottom: 20px; transition: color 0.3s; }
+        .about-btn:hover { color: rgba(255,255,255,0.6); }
+        .stream-btn { padding: 10px 24px; background: transparent; border: 1px solid rgba(255,255,255,0.4); color: rgba(255,255,255,0.8); font-size: 13px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
+        .stream-btn:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); }
+        .archive-link { margin-top: 20px; font-size: 11px; color: rgba(255,255,255,0.25); cursor: pointer; font-family: 'Courier New', monospace; transition: color 0.3s; }
+        .archive-link:hover { color: rgba(255,255,255,0.6); }
+        .bottom-section { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; margin-top: 40px; padding-bottom: 20px; }
+        .music-links-section { width: 100%; max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .more-music-btn { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 12px; cursor: pointer; }
+        .music-links { display: flex; flex-direction: column; gap: 8px; width: 100%; max-height: 0; opacity: 0; overflow: hidden; transition: all 0.3s; }
+        .music-links.expanded { opacity: 1; max-height: 200px; }
+        .music-link { padding: 8px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); font-size: 12px; text-align: center; cursor: pointer; text-decoration: none; display: block; transition: all 0.2s; }
+        .music-link:hover { border-color: rgba(255,255,255,0.6); color: white; }
+        .subscription-container { max-width: 320px; width: 100%; }
+        .subscription-title { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 8px; text-align: center; }
+        .email-form { display: flex; flex-direction: column; gap: 6px; }
+        .input-row { display: flex; gap: 6px; }
+        .name-input, .email-input { padding: 8px 12px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 13px; }
+        .name-input { width: 33.33%; }
+        .email-input { width: 66.67%; }
+        .subscribe-btn { padding: 8px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 13px; cursor: pointer; }
+        .social-links { display: flex; gap: 25px; }
+        .social-link { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 12px; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal.active { display: flex; }
+        .modal-content { background: rgba(30,35,45,0.95); border: 1px solid rgba(255,255,255,0.2); padding: 30px; max-width: 400px; width: 90%; }
+        .modal-title { color: white; font-size: 14px; margin-bottom: 20px; text-align: center; }
+        .streaming-option { padding: 10px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.7); font-size: 13px; cursor: pointer; text-align: center; margin-bottom: 10px; display: block; width: 100%; }
+        .close-btn { position: fixed; top: 30px; right: 30px; width: 30px; height: 30px; cursor: pointer; z-index: 3002; opacity: 0.4; }
+        .close-btn:hover { opacity: 1; }
+        .close-btn::before, .close-btn::after { content: ''; position: absolute; width: 100%; height: 2px; background: white; top: 50%; }
+        .close-btn::before { transform: rotate(45deg); }
+        .close-btn::after { transform: rotate(-45deg); }
+        
+        .archive-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 2000; overflow: hidden; }
+        .archive-modal.active { display: block; }
+        .archive-container { position: relative; width: 100%; height: 100%; display: flex; align-items: center; padding: 0 80px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+        .archive-container::-webkit-scrollbar { display: none; }
+        .archive-scroll { display: flex; gap: 40px; padding: 40px; min-width: min-content; }
+        .archive-piece { position: relative; flex-shrink: 0; perspective: 1000px; }
+        .archive-card { position: relative; width: 400px; height: 500px; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; }
+        .archive-card.flipped { transform: rotateY(180deg); }
+        .archive-card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border: 1px solid rgba(255,255,255,0.15); background: rgba(20,20,30,0.6); overflow: hidden; }
+        .archive-card-back { transform: rotateY(180deg); }
+        .archive-piece.flippable .archive-card-face::after { content: ''; position: absolute; top: 0; right: 0; width: 40px; height: 40px; background: linear-gradient(225deg, rgba(255,255,255,0.1) 0%, transparent 100%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+        .archive-piece.flippable:hover .archive-card-face::after { opacity: 1; }
+        .archive-image { width: 100%; height: 100%; object-fit: cover; }
+        .archive-notes { position: relative; width: 400px; height: 500px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.15); background: rgba(20,20,30,0.8); padding: 30px; display: flex; flex-direction: column; }
+        .notes-title { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 15px; font-family: 'Courier New', monospace; letter-spacing: 1px; text-transform: lowercase; }
+        .notes-textarea { flex: 1; background: transparent; border: none; color: rgba(255,255,255,0.8); font-size: 13px; font-family: 'Courier New', monospace; line-height: 1.6; resize: none; outline: none; }
+        .notes-textarea::placeholder { color: rgba(255,255,255,0.3); font-style: italic; }
+        .notes-saved { color: rgba(255,255,255,0.4); font-size: 11px; margin-top: 10px; font-family: 'Courier New', monospace; opacity: 0; transition: opacity 0.3s; }
+        .notes-saved.show { opacity: 1; }
+        
+        .about-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; z-index: 2000; }
+        .about-modal.active { display: flex; align-items: center; justify-content: flex-start; padding-left: 80px; }
+        .glitch-text { position: absolute; font-family: 'Courier New', monospace; font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 1px; user-select: none; pointer-events: none; opacity: 0.8; transition: opacity 0.5s; }
+        .glitch-text.fade-out { opacity: 0; }
+        .glitch-text.clickable { cursor: pointer; pointer-events: all; }
+        .glitch-text.clickable:hover { color: rgba(255,255,255,0.75); }
+        .glitch-text.clicked { animation: glitchPulse 0.3s; }
+        @keyframes glitchPulse { 0%, 100% { transform: translate(0,0); } 25% { transform: translate(-2px,1px); } 50% { transform: translate(1px,-2px); } 75% { transform: translate(-1px,-1px); } }
+        .description-container { width: 600px; max-width: 90vw; padding: 40px; background: transparent; opacity: 0; transition: opacity 0.5s; display: flex; flex-direction: column; align-items: center; }
+        .description-container.visible { opacity: 1; }
+        .description-text { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.8; font-family: 'Courier New', monospace; text-align: left; width: 100%; }
+        .description-text.typing::after { content: '|'; animation: blink 0.7s infinite; }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+        
+        .sigil-container { width: 150px; height: 150px; margin-top: 25px; opacity: 0; transition: opacity 0.5s; display: flex; align-items: center; justify-content: center; }
+        .sigil-container.visible { opacity: 1; }
+        .sigil-container img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .play-pause-btn { background: none; border: none; cursor: pointer; margin-top: 25px; padding: 15px; opacity: 0; transition: opacity 0.5s; display: flex; align-items: center; justify-content: center; }
+        .play-pause-btn.visible { opacity: 1; }
+        .play-icon, .pause-icon { width: 0; height: 0; transition: all 0.3s; }
+        .play-icon { border-style: solid; border-width: 12px 0 12px 20px; border-color: transparent transparent transparent rgba(255,255,255,0.7); }
+        .play-pause-btn:hover .play-icon { border-color: transparent transparent transparent rgba(255,255,255,1); }
+        .pause-icon { width: 20px; height: 24px; border-left: 6px solid rgba(255,255,255,0.7); border-right: 6px solid rgba(255,255,255,0.7); box-sizing: border-box; display: none; }
+        .play-pause-btn:hover .pause-icon { border-color: rgba(255,255,255,1); }
+        .play-pause-btn.playing .play-icon { display: none; }
+        .play-pause-btn.playing .pause-icon { display: block; }
+        
         @media (max-width: 600px) {
-            .album-cover {
-                width: 240px;
-                height: 240px;
-            }
-
-            .archive-container {
-                padding: 0 40px;
-            }
-
-            .archive-card {
-                width: 300px;
-                height: 400px;
-            }
-
-            .archive-notes {
-                width: 300px;
-                height: 400px;
-                padding: 20px;
-            }
-
-            .input-row {
-                flex-direction: column;
-            }
-
-            .name-input,
-            .email-input {
-                width: 100%;
-            }
-
-            .subscribe-btn {
-                width: 100%;
-            }
-        }
-
-        @media (max-height: 700px) {
-            .album-cover {
-                width: 200px;
-                height: 200px;
-            }
-
-            .ep-title {
-                font-size: 20px;
-            }
+            .about-modal.active { padding-left: 20px; padding-right: 20px; }
+            .description-container { width: 100%; padding: 20px; }
         }
     </style>
 </head>
 <body>
     <div class="background-fallback"></div>
-    <img src="santosblu comp.gif" alt="" class="background-gif" onerror="this.style.display='none'">
-    <div class="glitch-overlay"></div>
-
     <div class="content">
-        <div class="logo-container">
-            <div class="logo-placeholder">santos bluː</div>
-        </div>
-
+        <div class="logo-container">santos bluː</div>
         <div class="center-section">
-            <div class="album-cover-container" id="albumCover">
-                <div class="album-cover">
-                    <img src="cover-art-a&w.jpg" alt="Alive & Well Cover">
-                </div>
+            <div class="album-cover" id="albumCover">
+                <img src="cover-art-a&w.jpg" alt="Alive & Well">
             </div>
-
             <div class="ep-info">
                 <div class="ep-title">Alive & Well</div>
                 <div class="ep-collab">with CLOUD5</div>
-                <div class="ep-description" id="epDescription" data-text="I made this album with my friends while driving around Miami. We didn't know when the next linkup would be, but we knew we had 3 weeks to cook up some unforgettable magic. We wanted to be OUTSIDE, make the most of our experience, but we NEEDED to create. All day, every day. So naturally, we brought the studio with us, and we poured our joy, sweat, and tears into this music, everywhere we went.">
-                </div>
+                <button class="about-btn" id="aboutBtn">[ about ]</button>
                 <button class="stream-btn" id="streamBtn">Listen Now</button>
                 <div class="archive-link" id="archiveLink">/// archive</div>
             </div>
         </div>
-
         <div class="bottom-section">
             <div class="music-links-section">
                 <button class="more-music-btn" id="moreMusicBtn">more music</button>
@@ -728,323 +131,73 @@
                     <a href="#" class="music-link" data-song="song3">Special Place</a>
                 </div>
             </div>
-
             <div class="subscription-container">
                 <div class="subscription-title">tap in</div>
                 <form class="email-form" id="emailForm">
                     <div class="input-row">
-                        <input 
-                            type="text" 
-                            class="name-input" 
-                            placeholder="your name" 
-                            required
-                            id="nameInput"
-                        >
-                        <input 
-                            type="email" 
-                            class="email-input" 
-                            placeholder="your email" 
-                            required
-                            id="emailInput"
-                        >
+                        <input type="text" class="name-input" placeholder="your name" required id="nameInput">
+                        <input type="email" class="email-input" placeholder="your email" required id="emailInput">
                     </div>
                     <button type="submit" class="subscribe-btn">Subscribe</button>
                 </form>
             </div>
-
             <div class="social-links">
                 <a href="https://instagram.com/santosblu._" target="_blank" class="social-link">Instagram</a>
                 <a href="https://x.com/santosblu_" target="_blank" class="social-link">X</a>
             </div>
         </div>
     </div>
-
-    <div class="streaming-modal" id="streamingModal">
-        <div class="streaming-content">
-            <div class="streaming-title">Choose your streaming service</div>
-            <div class="streaming-options">
-                <button class="streaming-option" data-service="tidal" data-type="ep">Tidal</button>
-                <button class="streaming-option" data-service="apple" data-type="ep">Apple Music</button>
-                <button class="streaming-option" data-service="spotify" data-type="ep">Spotify</button>
-                <button class="streaming-option" data-service="youtube" data-type="ep">YouTube Music</button>
-                <button class="streaming-option" data-service="deezer" data-type="ep">Deezer</button>
-            </div>
+    <div class="modal" id="streamingModal">
+        <div class="close-btn" onclick="closeModal('streamingModal')"></div>
+        <div class="modal-content">
+            <div class="modal-title">Choose your streaming service</div>
+            <div id="streamingOptions"></div>
         </div>
     </div>
-
     <div class="archive-modal" id="archiveModal">
-        <div class="archive-close" id="archiveClose"></div>
-        <div class="archive-container" id="archiveContainer">
-            <div class="archive-scroll" id="archiveScroll">
-                <!-- Archive pieces will be generated by JS -->
-            </div>
-        </div>
+        <div class="close-btn" id="archiveClose"></div>
+        <div class="archive-container"><div class="archive-scroll" id="archiveScroll"></div></div>
     </div>
-
+    <div class="about-modal" id="aboutModal">
+        <div class="close-btn" onclick="closeAbout()"></div>
+        <div id="aboutContent"></div>
+    </div>
+    <audio id="audioPlayer" src="your-audio-file.mp3"></audio>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-        emailjs.init("ldkRltbcUdSrCvBVE");
+emailjs.init("ldkRltbcUdSrCvBVE");
+const epLinks={tidal:'https://listen.tidal.com/album/490814320',apple:'https://geo.music.apple.com/us/album/_/1870312531?mt=1&app=music&ls=1&at=1000lHKX',spotify:'https://open.spotify.com/album/442M5bQwAlpfiAG0vCFwYz',pandora:'https://www.pandora.com/AL:59941654'};
+const songLinks={song1:{tidal:'https://listen.tidal.com/track/428773403',apple:'https://geo.music.apple.com/us/album/_/1807267133?i=1807267134',spotify:'https://open.spotify.com/track/1uRRCmRfs21yx90nNFuYYm'},song2:{tidal:'https://listen.tidal.com/track/427802921',apple:'https://geo.music.apple.com/us/album/_/1806221333?i=1806221334',spotify:'https://open.spotify.com/track/6TN47W3ADBKLqlXX2cRgii'},song3:{tidal:'https://listen.tidal.com/track/410870685',apple:'https://geo.music.apple.com/us/album/_/1790060311?i=1790060312',spotify:'https://open.spotify.com/track/0ebP3bn0LLpo1JlnmITPl9'}};
+const archivePieces=[{front:'archive-1.jpg',back:null,flippable:false},{front:'archive-2.jpg',back:'archive-2-back.jpg',flippable:true},{front:'archive-3.jpg',back:null,flippable:false},{front:'archive-4.jpg',back:'archive-4-back.jpg',flippable:true},{front:'archive-5.jpg',back:null,flippable:false},{front:'archive-6.jpg',back:null,flippable:false},{front:'archive-7.jpg',back:'archive-7-back.jpg',flippable:true},{front:'archive-8.jpg',back:null,flippable:false},{type:'notes'}];
+let currentContext='ep',clickCount=0;
+const glitchSets=[['/','\\','_','|','//','\\\\','~','-'],[':',';','*','+','=','<','>','.']];
+const glitchTexts=['//corrupted_signal\\\\_404_//\\','_n0!se//transmission\\'];
+const descText="I made this album with my friends while driving around Miami. We didn't know when the next linkup would be, but we knew we had <b>3 weeks</b> to cook up some <i>unforgettable magic</i>.\n\nWe wanted to be OUTSIDE, make the most of our experience, but we NEEDED to create. All day, every day. So naturally, we brought the studio with us, and we poured our joy, sweat, and tears into this music, everywhere we went.";
+const audio=document.getElementById('audioPlayer');
+let playBtn=null,noiseElements=[];
 
-        const streamBtn = document.getElementById('streamBtn');
-        const albumCover = document.getElementById('albumCover');
-        const moreMusicBtn = document.getElementById('moreMusicBtn');
-        const musicLinks = document.getElementById('musicLinks');
-        const streamingModal = document.getElementById('streamingModal');
-        const archiveLink = document.getElementById('archiveLink');
-        const archiveModal = document.getElementById('archiveModal');
-        const archiveClose = document.getElementById('archiveClose');
-        const emailForm = document.getElementById('emailForm');
-        const epDescription = document.getElementById('epDescription');
+function initArchive(){const scroll=document.getElementById('archiveScroll');scroll.innerHTML='';archivePieces.forEach((piece,idx)=>{if(piece.type==='notes'){const notes=document.createElement('div');notes.className='archive-notes';notes.innerHTML='<div class="notes-title">/// notes</div><textarea class="notes-textarea" id="archiveNotes" placeholder="type here..."></textarea><div class="notes-saved" id="notesSaved">saved</div>';scroll.appendChild(notes);setTimeout(()=>{const ta=document.getElementById('archiveNotes'),saved=document.getElementById('notesSaved'),stored=localStorage.getItem('archive_notes');if(stored)ta.value=stored;let timeout;ta.addEventListener('input',()=>{clearTimeout(timeout);timeout=setTimeout(()=>{localStorage.setItem('archive_notes',ta.value);saved.classList.add('show');setTimeout(()=>saved.classList.remove('show'),1500)},500)})},100)}else{const el=document.createElement('div');el.className='archive-piece'+(piece.flippable?' flippable':'');el.innerHTML='<div class="archive-card"><div class="archive-card-face"><img src="'+piece.front+'" class="archive-image" alt="Archive '+(idx+1)+'"></div>'+(piece.back?'<div class="archive-card-face archive-card-back"><img src="'+piece.back+'" class="archive-image" alt="Archive '+(idx+1)+' Back"></div>':'')+'</div>';if(piece.flippable){el.addEventListener('click',()=>el.querySelector('.archive-card').classList.toggle('flipped'))}scroll.appendChild(el)}})}
+initArchive();
 
-        let preferredService = null;
-        let currentContext = 'ep';
-
-        // Typewriter effect for description
-        function typeWriter(element, text, speed = 50) {
-            let i = 0;
-            element.classList.add('typing');
-            element.classList.add('visible');
-            
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else {
-                    element.classList.remove('typing');
-                }
-            }
-            type();
-        }
-
-        // Start typing effect after 6 seconds
-        setTimeout(() => {
-            const descriptionText = epDescription.getAttribute('data-text');
-            typeWriter(epDescription, descriptionText, 70);
-        }, 6000);
-
-        // UPDATE THESE LINKS WITH YOUR ACTUAL EP STREAMING URLS
-        const epLinks = {
-            tidal: 'https://listen.tidal.com/album/YOUR_EP_ID',
-            apple: 'https://music.apple.com/us/album/alive-well-ep/1870312531?uo=4&app=music&at=1001lry3&ct=dashboard',
-            spotify: 'https://open.spotify.com/artist/2WafMYEadi2cAl1e65j1Yh', // Update with EP link
-            youtube: 'https://music.youtube.com/playlist?list=YOUR_EP_ID',
-            deezer: 'https://www.deezer.com/album/YOUR_EP_ID'
-        };
-
-        const songLinks = {
-            song1: {
-                tidal: 'https://listen.tidal.com/track/428773403',
-                apple: 'https://geo.music.apple.com/us/album/_/1807267133?i=1807267134&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
-                spotify: 'https://open.spotify.com/track/1uRRCmRfs21yx90nNFuYYm',
-                youtube: 'https://music.youtube.com/watch?v=mlnCCc7ZRZc',
-                deezer: 'https://www.deezer.com/track/3314866781'
-            },
-            song2: {
-                tidal: 'https://listen.tidal.com/track/427802921',
-                apple: 'https://geo.music.apple.com/us/album/_/1806221333?i=1806221334&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
-                spotify: 'https://open.spotify.com/track/6TN47W3ADBKLqlXX2cRgii',
-                youtube: 'https://music.youtube.com/watch?v=VUtMRbhSBTo',
-                deezer: 'https://www.deezer.com/track/3307731961'
-            },
-            song3: {
-                tidal: 'https://listen.tidal.com/track/410870685',
-                apple: 'https://geo.music.apple.com/us/album/_/1790060311?i=1790060312&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
-                spotify: 'https://open.spotify.com/track/0ebP3bn0LLpo1JlnmITPl9',
-                youtube: 'https://youtu.be/HJS3ebbI9ts?si=LIv-XJNPKxEeMlj5',
-                deezer: 'https://www.deezer.com/track/2929088962'
-            }
-        };
-
-        // Archive content - replace with your actual image filenames
-        const archivePieces = [
-            { front: 'archive-1.jpg', back: null, flippable: false },
-            { front: 'archive-2.jpg', back: 'archive-2-back.jpg', flippable: true },
-            { front: 'archive-3.jpg', back: null, flippable: false },
-            { front: 'archive-4.jpg', back: 'archive-4-back.jpg', flippable: true },
-            { front: 'archive-5.jpg', back: null, flippable: false },
-            { front: 'archive-6.jpg', back: null, flippable: false },
-            { front: 'archive-7.jpg', back: 'archive-7-back.jpg', flippable: true },
-            { front: 'archive-8.jpg', back: null, flippable: false },
-            { type: 'notes' } // Notes section as last piece
-        ];
-
-        function initArchive() {
-            const archiveScroll = document.getElementById('archiveScroll');
-            archiveScroll.innerHTML = '';
-
-            archivePieces.forEach((piece, index) => {
-                if (piece.type === 'notes') {
-                    // Create notes section
-                    const notesEl = document.createElement('div');
-                    notesEl.className = 'archive-notes';
-                    notesEl.innerHTML = `
-                        <div class="notes-title">/// notes</div>
-                        <textarea 
-                            class="notes-textarea" 
-                            id="archiveNotes"
-                            placeholder="type here..."
-                        ></textarea>
-                        <div class="notes-saved" id="notesSaved">saved</div>
-                    `;
-                    archiveScroll.appendChild(notesEl);
-
-                    // Load saved notes from localStorage
-                    setTimeout(() => {
-                        const textarea = document.getElementById('archiveNotes');
-                        const savedIndicator = document.getElementById('notesSaved');
-                        const savedNotes = localStorage.getItem('archive_notes');
-                        
-                        if (savedNotes) {
-                            textarea.value = savedNotes;
-                        }
-
-                        // Auto-save on typing
-                        let saveTimeout;
-                        textarea.addEventListener('input', () => {
-                            clearTimeout(saveTimeout);
-                            saveTimeout = setTimeout(() => {
-                                localStorage.setItem('archive_notes', textarea.value);
-                                savedIndicator.classList.add('show');
-                                setTimeout(() => {
-                                    savedIndicator.classList.remove('show');
-                                }, 1500);
-                            }, 500);
-                        });
-                    }, 100);
-                } else {
-                    // Create regular image piece
-                    const pieceEl = document.createElement('div');
-                    pieceEl.className = `archive-piece ${piece.flippable ? 'flippable' : ''}`;
-                    
-                    pieceEl.innerHTML = `
-                        <div class="archive-card">
-                            <div class="archive-card-face">
-                                <img src="${piece.front}" class="archive-image" alt="Archive ${index + 1}">
-                                <div class="archive-glitch"></div>
-                            </div>
-                            ${piece.back ? `
-                            <div class="archive-card-face archive-card-back">
-                                <img src="${piece.back}" class="archive-image" alt="Archive ${index + 1} Back">
-                                <div class="archive-glitch"></div>
-                            </div>
-                            ` : ''}
-                        </div>
-                    `;
-
-                    if (piece.flippable) {
-                        const card = pieceEl.querySelector('.archive-card');
-                        pieceEl.addEventListener('click', () => {
-                            card.classList.toggle('flipped');
-                        });
-                    }
-
-                    archiveScroll.appendChild(pieceEl);
-                }
-            });
-        }
-
-        initArchive();
-
-        archiveLink.addEventListener('click', () => {
-            archiveModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-
-        archiveClose.addEventListener('click', () => {
-            archiveModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        archiveModal.addEventListener('click', (e) => {
-            if (e.target === archiveModal) {
-                archiveModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && archiveModal.classList.contains('active')) {
-                archiveModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        streamBtn.addEventListener('click', () => {
-            currentContext = 'ep';
-            showStreamingModal();
-        });
-
-        albumCover.addEventListener('click', () => {
-            currentContext = 'ep';
-            showStreamingModal();
-        });
-
-        function showStreamingModal() {
-            streamingModal.classList.add('active');
-            
-            document.querySelectorAll('.streaming-option').forEach(option => {
-                option.onclick = () => {
-                    const service = option.dataset.service;
-                    preferredService = service;
-                    streamingModal.classList.remove('active');
-                    
-                    const url = currentContext === 'ep' ? epLinks[service] : songLinks[currentContext][service];
-                    window.open(url, '_blank');
-                };
-            });
-        }
-
-        streamingModal.addEventListener('click', (e) => {
-            if (e.target === streamingModal) {
-                streamingModal.classList.remove('active');
-            }
-        });
-
-        moreMusicBtn.addEventListener('click', () => {
-            musicLinks.classList.toggle('expanded');
-        });
-
-        document.querySelectorAll('.music-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                currentContext = e.target.dataset.song;
-                showStreamingModal();
-            });
-        });
-
-        emailForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const submitBtn = emailForm.querySelector('.subscribe-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            
-            const templateParams = {
-                to_email: document.getElementById('emailInput').value,
-                user_email: document.getElementById('emailInput').value,
-                customer_name: document.getElementById('nameInput').value
-            };
-            
-            emailjs.send('service_pr6bs0j', 'template_oe15cej', templateParams)
-                .then(() => {
-                    submitBtn.textContent = 'Subscribed!';
-                    emailForm.reset();
-                    setTimeout(() => {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }, 2000);
-                })
-                .catch((error) => {
-                    console.error('EmailJS error:', error);
-                    submitBtn.textContent = 'Error - Try again';
-                    setTimeout(() => {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }, 2000);
-                });
-        });
+function showStreaming(){const links=currentContext==='ep'?epLinks:songLinks[currentContext],opts=document.getElementById('streamingOptions');opts.innerHTML='';Object.keys(links).forEach(k=>{const btn=document.createElement('button');btn.className='streaming-option';btn.textContent=k.charAt(0).toUpperCase()+k.slice(1);btn.onclick=()=>{window.open(links[k],'_blank');closeModal('streamingModal')};opts.appendChild(btn)});document.getElementById('streamingModal').classList.add('active')}
+function closeModal(id){document.getElementById(id).classList.remove('active')}
+function getRandPos(){const w=window.innerWidth,h=window.innerHeight,p=100;return{left:p+Math.random()*(w-2*p),top:p+Math.random()*(h-2*p)}}
+function createGlitch(txt,clickable=false){const el=document.createElement('div');el.className='glitch-text'+(clickable?' clickable':'');el.textContent=txt;const pos=getRandPos();el.style.left=pos.left+'px';el.style.top=pos.top+'px';if(clickable){el.onclick=()=>{el.classList.add('clicked');noiseElements.forEach(n=>n.classList.add('fade-out'));setTimeout(()=>{noiseElements.forEach(n=>n.remove());noiseElements=createNoiseField(glitchSets[clickCount]);noiseElements.forEach(n=>document.getElementById('aboutContent').appendChild(n))},500);setTimeout(()=>{if(clickCount<1){clickCount++;el.remove();const newGlitch=createGlitch(glitchTexts[1],true);document.getElementById('aboutContent').appendChild(newGlitch)}else{el.style.opacity='0';noiseElements.forEach(n=>n.classList.add('fade-out'));setTimeout(()=>{el.remove();noiseElements.forEach(n=>n.remove());noiseElements=[];showDesc()},500)}},300)}}return el}
+function typeWriter(el,txt,spd=50){let i=0;el.classList.add('typing');function type(){if(i<txt.length){if(txt[i]==='\n'){el.innerHTML+='<br><br>';i++}else if(txt.substring(i,i+3)==='<b>'){el.innerHTML+='<b>';i+=3}else if(txt.substring(i,i+4)==='</b>'){el.innerHTML+='</b>';i+=4}else if(txt.substring(i,i+3)==='<i>'){el.innerHTML+='<i>';i+=3}else if(txt.substring(i,i+4)==='</i>'){el.innerHTML+='</i>';i+=4}else{el.innerHTML+=txt.charAt(i);i++}setTimeout(type,spd)}else{el.classList.remove('typing');showSigil()}}type()}
+function showDesc(){const remaining=createGlitch('~',false);document.getElementById('aboutContent').appendChild(remaining);noiseElements=[remaining];const c=document.createElement('div');c.className='description-container';const t=document.createElement('div');t.className='description-text';c.appendChild(t);document.getElementById('aboutContent').appendChild(c);setTimeout(()=>{c.classList.add('visible');typeWriter(t,descText,40)},300)}
+function showSigil(){const sigil=document.createElement('div');sigil.className='sigil-container';sigil.innerHTML='<img src="your-sigil.png" alt="Sigil">';const container=document.querySelector('.description-container');container.appendChild(sigil);setTimeout(()=>{sigil.classList.add('visible');setTimeout(()=>showPlayBtn(),300)},300)}
+function showPlayBtn(){playBtn=document.createElement('button');playBtn.className='play-pause-btn';playBtn.innerHTML='<div class="play-icon"></div><div class="pause-icon"></div>';playBtn.onclick=togglePlay;const container=document.querySelector('.description-container');container.appendChild(playBtn);setTimeout(()=>playBtn.classList.add('visible'),300)}
+function togglePlay(){if(audio.paused){audio.play();playBtn.classList.add('playing')}else{audio.pause();playBtn.classList.remove('playing')}}
+function closeAbout(){document.getElementById('aboutModal').classList.remove('active');document.getElementById('aboutContent').innerHTML='';noiseElements=[];if(audio)audio.pause()}
+function createNoiseField(chars=glitchSets[0]){const field=[];const count=Math.floor(Math.random()*8)+6;for(let i=0;i<count;i++){const noise=chars[Math.floor(Math.random()*chars.length)];field.push(createGlitch(noise,false))}return field}
+document.getElementById('streamBtn').onclick=()=>{currentContext='ep';showStreaming()};
+document.getElementById('albumCover').onclick=()=>{currentContext='ep';showStreaming()};
+document.getElementById('moreMusicBtn').onclick=()=>document.getElementById('musicLinks').classList.toggle('expanded');
+document.querySelectorAll('.music-link').forEach(l=>l.onclick=e=>{e.preventDefault();currentContext=e.target.dataset.song;showStreaming()});
+document.getElementById('aboutBtn').onclick=()=>{document.getElementById('aboutModal').classList.add('active');clickCount=0;const content=document.getElementById('aboutContent');content.innerHTML='';noiseElements=createNoiseField();noiseElements.forEach(n=>content.appendChild(n));const mainGlitch=createGlitch(glitchTexts[0],true);content.appendChild(mainGlitch)};
+document.getElementById('archiveLink').onclick=()=>{document.getElementById('archiveModal').classList.add('active')};
+document.getElementById('archiveClose').onclick=()=>{document.getElementById('archiveModal').classList.remove('active')};
+document.getElementById('emailForm').onsubmit=e=>{e.preventDefault();const btn=e.target.querySelector('.subscribe-btn'),orig=btn.textContent;btn.disabled=true;btn.textContent='Sending...';emailjs.send('service_pr6bs0j','template_oe15cej',{to_email:document.getElementById('emailInput').value,user_email:document.getElementById('emailInput').value,customer_name:document.getElementById('nameInput').value}).then(()=>{btn.textContent='Subscribed!';e.target.reset();setTimeout(()=>{btn.textContent=orig;btn.disabled=false},2000)}).catch(()=>{btn.textContent='Error';setTimeout(()=>{btn.textContent=orig;btn.disabled=false},2000)})};
     </script>
 </body>
 </html>

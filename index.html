@@ -215,12 +215,23 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            padding-bottom: 20px;
+            padding-bottom: 0;
             width: 100%;
-            margin-top: 40px;
+            margin-top: 0;
+        }
+
+        .footer-section {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 20px 60px 20px;
         }
 
         .music-links-section {
+            position: relative;
             width: 100%;
             max-width: 320px;
             display: flex;
@@ -245,8 +256,13 @@
         }
 
         .music-links {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 12px;
             display: flex;
-            flex-direction: column;
+            flex-direction: column-reverse;
             gap: 8px;
             width: 100%;
             opacity: 0;
@@ -908,34 +924,39 @@
                     <a href="#" class="music-link" data-song="song3">Special Place</a>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="subscription-container">
-                <div class="subscription-title">tap in</div>
-                <form class="email-form" id="emailForm">
-                    <div class="input-row">
-                        <input 
-                            type="text" 
-                            class="name-input" 
-                            placeholder="your name" 
-                            required
-                            id="nameInput"
-                        >
-                        <input 
-                            type="email" 
-                            class="email-input" 
-                            placeholder="your email" 
-                            required
-                            id="emailInput"
-                        >
-                    </div>
-                    <button type="submit" class="subscribe-btn">Subscribe</button>
-                </form>
-            </div>
+    <!-- FOOTER - BELOW THE FOLD -->
+    <div class="footer-section">
+        <div class="subscription-container">
+            <div class="subscription-title">tap in</div>
+            <form class="email-form" id="emailForm">
+                <div class="input-row">
+                    <input 
+                        type="text" 
+                        class="name-input" 
+                        placeholder="your name" 
+                        required
+                        id="nameInput"
+                    >
+                    <input 
+                        type="email" 
+                        class="email-input" 
+                        placeholder="your email" 
+                        required
+                        id="emailInput"
+                    >
+                </div>
+                <button type="submit" class="subscribe-btn">Subscribe</button>
+            </form>
+        </div>
 
-            <div class="social-links">
-                <a href="https://instagram.com/santosblu._" target="_blank" class="social-link">Instagram</a>
-                <a href="https://x.com/santosblu_" target="_blank" class="social-link">X</a>
-            </div>
+        <div class="social-links">
+            <a href="https://instagram.com/santosblu._" target="_blank" class="social-link">Instagram</a>
+            <a href="https://x.com/santosblu_" target="_blank" class="social-link">X</a>
+        </div>
+    </div>
         </div>
     </div>
 

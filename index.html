@@ -3,7 +3,8 @@
 <head>
     <link rel="stylesheet" href="https://use.typekit.net/mbc3fgm.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1a1625">
     <title>new renaissance santos bluː</title>
     <style>
         * {
@@ -12,14 +13,21 @@
             box-sizing: border-box;
         }
 
+        html {
+            height: 100%;
+            background: linear-gradient(135deg, #1a1625 0%, #252a35 50%, #2a2e35 100%);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             width: 100vw;
             overflow-x: hidden;
             overflow-y: auto;
             position: relative;
             -webkit-overflow-scrolling: touch;
+            background: transparent;
         }
 
         .background-fallback {

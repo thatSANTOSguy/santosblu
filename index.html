@@ -38,20 +38,42 @@
             left: 0;
             width: 100%;
             height: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
             background: linear-gradient(135deg, #1a1625 0%, #252a35 50%, #2a2e35 100%);
             z-index: 0;
         }
 
-        /* Optimized for video background - if using GIF, change back to img */
-        .background-video {
+        /* Background GIF */
+        .background-gif {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
             object-fit: cover;
             z-index: 0;
-            transform: translateZ(0);
+        }
+
+        /* Mobile browser fix - extend beyond viewport for URL bar behavior */
+        @media (max-width: 768px) {
+            .background-gif,
+            .background-fallback {
+                min-height: 120vh;
+            }
+        }
+
+        /* Additional Safari-specific fix */
+        @supports (-webkit-touch-callout: none) {
+            .background-gif,
+            .background-fallback {
+                min-height: 120vh;
+            }
         }
 
         /* If keeping GIF, use this instead */
@@ -148,7 +170,6 @@
         }
 
         .album-cover:hover {
-            animation-play-state: paused;
             transform: scale(1.05) rotateY(var(--rotation, 0deg));
         }
 
@@ -909,16 +930,7 @@
 <body>
     <div class="background-fallback"></div>
     
-    <!-- OPTION 1: If you convert to video (RECOMMENDED) -->
-    <!-- Uncomment this and comment out the img tag below -->
-    <!--
-    <video autoplay loop muted playsinline class="background-video" id="bgVideo">
-        <source src="santosblu-comp.mp4" type="video/mp4">
-        <source src="santosblu-comp.webm" type="video/webm">
-    </video>
-    -->
-    
-    <!-- OPTION 2: Keep using GIF (current) -->
+    <!-- Background GIF -->
     <img src="santosblu comp.gif" 
          alt="" 
          class="background-gif" 
@@ -1032,14 +1044,6 @@
                 emailjs.init("ldkRltbcUdSrCvBVE");
             }
 
-            // Handle background GIF/Video error
-            const bgGif = document.getElementById('bgGif');
-            if (bgGif) {
-                bgGif.addEventListener('error', function() {
-                    this.style.display = 'none';
-                });
-            }
-
             // Cache DOM elements
             const streamBtn = document.getElementById('streamBtn');
             const albumCover = document.getElementById('albumCover');
@@ -1064,8 +1068,8 @@
             let aboutCompleted = false;
 
             const glitchSets = [['/','\\','_','|','//','\\\\','~','-'],[':',';','*','+','=','<','>','.']];
-            const glitchTexts = ['//corrupted_signal\\\\_404_//\\','_n0!se//transmission\\'];
-            const descText = "I made this album with my friends while driving around Miami. We didn't know when the next linkup would be, but we knew we had <b>3 weeks</b> to cook up some <i>unforgettable magic</i>.\n\nWe wanted to be OUTSIDE, make the most of our experience, but we NEEDED to create. All day, every day. So naturally, we brought the studio with us, and we poured our joy, sweat, and tears into this music, everywhere we went.";
+            const glitchTexts = ['◊ unlock_memory ◊','>> grant_access <<'];
+            const descText = "I made this album with my friends while driving around Miami. We didn't know when the next linkup would be, but we knew we had <b>3 weeks</b> to cook up some <i>unforgettable magic</i>.\n\nWe wanted to be outside, make the most of our experience, but we NEEDED to keep creating. All day, every day. So naturally, we brought the studio with us. Laptop, mic, keyboard, aux. And with that, we poured our joy, sweat, and tears into this music, everywhere we went.";
 
             const epLinks = {
                 tidal: 'https://listen.tidal.com/album/490814320',
@@ -1111,6 +1115,76 @@
             ];
 
             // ABOUT PAGE FUNCTIONS
+            function typeWriter(el, txt, spd = 50) {
+                let i = 0;
+                el.classList.add('typing');
+                
+                function type() {
+                    if (i < txt.length) {
+                        if (txt[i] === '\n') {
+                            el.innerHTML += '<br>';
+                            i++;
+                        } else if (txt.substring(i, i + 3) === '<b>') {
+                            el.innerHTML += '<b>';
+                            i += 3;
+                        } else if (txt.substring(i, i + 4) === '</b>') {
+                            el.innerHTML += '</b>';
+                            i += 4;
+                        } else if (txt.substring(i, i + 3) === '<i>') {
+                            el.innerHTML += '<i>';
+                            i += 3;
+                        } else if (txt.substring(i, i + 4) === '</i>') {
+                            el.innerHTML += '</i>';
+                            i += 4;
+                        } else {
+                            el.innerHTML += txt.charAt(i);
+                            i++;
+                        }
+                        setTimeout(type, spd);
+                    } else {
+                        el.classList.remove('typing');
+                        showSigilForAbout();
+                    }
+                }
+                type();
+            }
+
+            function showSigilForAbout() {
+                const sigil = document.createElement('div');
+                sigil.className = 'sigil-container';
+                sigil.innerHTML = '<img src="your-sigil.png" alt="Sigil" loading="lazy" decoding="async">';
+                const container = document.querySelector('.description-container');
+                container.appendChild(sigil);
+                
+                setTimeout(() => {
+                    sigil.classList.add('visible');
+                    setTimeout(() => showPlayBtnForAbout(), 300);
+                }, 300);
+            }
+
+            function showPlayBtnForAbout() {
+                playBtn = document.createElement('button');
+                playBtn.className = 'play-pause-btn';
+                playBtn.innerHTML = '<div class="play-icon"></div><div class="pause-icon"></div>';
+                
+                playBtn.addEventListener('click', function() {
+                    if (audio.paused) {
+                        audio.play().then(() => {
+                            playBtn.classList.add('playing');
+                        }).catch(err => {
+                            console.log('Play error:', err);
+                        });
+                    } else {
+                        audio.pause();
+                        playBtn.classList.remove('playing');
+                    }
+                });
+                
+                const container = document.querySelector('.description-container');
+                container.appendChild(playBtn);
+                setTimeout(() => playBtn.classList.add('visible'), 300);
+            }
+
             function getRandPos() {
                 const w = window.innerWidth;
                 const h = window.innerHeight;
@@ -1119,6 +1193,50 @@
                     left: p + Math.random() * (w - 2 * p),
                     top: p + Math.random() * (h - 2 * p)
                 };
+            }
+
+            function typeWriter(el, txt, spd = 50) {
+                let i = 0;
+                el.classList.add('typing');
+                
+                function type() {
+                    if (i < txt.length) {
+                        if (txt[i] === '\n') {
+                            el.innerHTML += '<br>';
+                            i++;
+                        } else if (txt.substring(i, i + 3) === '<b>') {
+                            el.innerHTML += '<b>';
+                            i += 3;
+                        } else if (txt.substring(i, i + 4) === '</b>') {
+                            el.innerHTML += '</b>';
+                            i += 4;
+                        } else if (txt.substring(i, i + 3) === '<i>') {
+                            el.innerHTML += '<i>';
+                            i += 3;
+                        } else if (txt.substring(i, i + 4) === '</i>') {
+                            el.innerHTML += '</i>';
+                            i += 4;
+                        } else {
+                            el.innerHTML += txt.charAt(i);
+                            i++;
+                        }
+                        setTimeout(type, spd);
+                    } else {
+                        el.classList.remove('typing');
+                        // Show sigil and button after typing completes
+                        const container = el.parentElement;
+                        const sigil = container.querySelector('.sigil-container');
+                        const playButton = container.querySelector('.play-pause-btn');
+                        
+                        setTimeout(() => {
+                            if (sigil) sigil.classList.add('visible');
+                            setTimeout(() => {
+                                if (playButton) playButton.classList.add('visible');
+                            }, 300);
+                        }, 300);
+                    }
+                }
+                type();
             }
 
             function createGlitch(txt, clickable = false) {
@@ -1137,7 +1255,10 @@
                         setTimeout(() => {
                             noiseElements.forEach(n => n.remove());
                             noiseElements = createNoiseField(glitchSets[clickCount]);
-                            noiseElements.forEach(n => aboutContent.appendChild(n));
+                            const unlockContent = document.getElementById('archiveUnlockContent');
+                            if (unlockContent) {
+                                noiseElements.forEach(n => unlockContent.appendChild(n));
+                            }
                         }, 500);
                         
                         setTimeout(() => {
@@ -1145,7 +1266,10 @@
                                 clickCount++;
                                 el.remove();
                                 const newGlitch = createGlitch(glitchTexts[1], true);
-                                aboutContent.appendChild(newGlitch);
+                                const unlockContent = document.getElementById('archiveUnlockContent');
+                                if (unlockContent) {
+                                    unlockContent.appendChild(newGlitch);
+                                }
                             } else {
                                 el.style.opacity = '0';
                                 noiseElements.forEach(n => n.classList.add('fade-out'));
@@ -1190,69 +1314,25 @@
                         setTimeout(type, spd);
                     } else {
                         el.classList.remove('typing');
-                        showSigil();
+                        showSigilForAbout();
                     }
                 }
                 type();
             }
 
             function showDesc() {
-                const remaining = createGlitch('~', false);
-                aboutContent.appendChild(remaining);
-                noiseElements = [remaining];
-                
-                const c = document.createElement('div');
-                c.className = 'description-container';
-                const t = document.createElement('div');
-                t.className = 'description-text';
-                c.appendChild(t);
-                aboutContent.appendChild(c);
-                
-                setTimeout(() => {
-                    c.classList.add('visible');
-                    typeWriter(t, descText, 40);
-                    aboutCompleted = true;
-                }, 300);
-            }
-
-            function showSigil() {
-                const sigil = document.createElement('div');
-                sigil.className = 'sigil-container';
-                sigil.innerHTML = '<img src="your-sigil.png" alt="Sigil" loading="lazy" decoding="async">';
-                const container = document.querySelector('.description-container');
-                container.appendChild(sigil);
-                
-                setTimeout(() => {
-                    sigil.classList.add('visible');
-                    setTimeout(() => showPlayBtn(), 300);
-                }, 300);
-            }
-
-            function showPlayBtn() {
-                playBtn = document.createElement('button');
-                playBtn.className = 'play-pause-btn';
-                playBtn.innerHTML = '<div class="play-icon"></div><div class="pause-icon"></div>';
-                
-                playBtn.addEventListener('click', function() {
-                    if (audio.paused) {
-                        audio.play().then(() => {
-                            playBtn.classList.add('playing');
-                        }).catch(err => {
-                            console.log('Play error:', err);
-                        });
-                    } else {
-                        audio.pause();
-                        playBtn.classList.remove('playing');
-                    }
-                });
-                
-                const container = document.querySelector('.description-container');
-                container.appendChild(playBtn);
-                setTimeout(() => playBtn.classList.add('visible'), 300);
-            }
-
-            function closeAbout() {
-                aboutModal.classList.remove('active');
+                const unlockContent = document.getElementById('archiveUnlockContent');
+                if (unlockContent) {
+                    unlockContent.style.opacity = '0';
+                    setTimeout(() => {
+                        unlockContent.remove();
+                        // Restore the archive scroll container
+                        const archiveContainer = document.getElementById('archiveContainer');
+                        archiveContainer.innerHTML = '<div class="archive-scroll" id="archiveScroll"></div>';
+                        initArchive();
+                        aboutCompleted = true;
+                    }, 500);
+                }
             }
 
             function createNoiseField(chars = glitchSets[0]) {
@@ -1265,19 +1345,26 @@
                 return field;
             }
 
+            function closeAbout() {
+                aboutModal.classList.remove('active');
+            }
+
             aboutBtn.addEventListener('click', () => {
                 aboutModal.classList.add('active');
                 
-                if (aboutCompleted) {
-                    return;
-                }
-                
-                clickCount = 0;
                 aboutContent.innerHTML = '';
-                noiseElements = createNoiseField();
-                noiseElements.forEach(n => aboutContent.appendChild(n));
-                const mainGlitch = createGlitch(glitchTexts[0], true);
-                aboutContent.appendChild(mainGlitch);
+                
+                const c = document.createElement('div');
+                c.className = 'description-container';
+                const t = document.createElement('div');
+                t.className = 'description-text';
+                c.appendChild(t);
+                aboutContent.appendChild(c);
+                
+                setTimeout(() => {
+                    c.classList.add('visible');
+                    typeWriter(t, descText, 40);
+                }, 300);
             });
 
             aboutClose.addEventListener('click', closeAbout);
@@ -1378,6 +1465,22 @@
             archiveLink.addEventListener('click', () => {
                 archiveModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                
+                // If archive already unlocked, show it directly
+                if (aboutCompleted) {
+                    return;
+                }
+                
+                // First time - show glitch interaction
+                clickCount = 0;
+                const archiveContainer = document.getElementById('archiveContainer');
+                archiveContainer.innerHTML = '<div id="archiveUnlockContent" style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;"></div>';
+                const unlockContent = document.getElementById('archiveUnlockContent');
+                
+                noiseElements = createNoiseField();
+                noiseElements.forEach(n => unlockContent.appendChild(n));
+                const mainGlitch = createGlitch(glitchTexts[0], true);
+                unlockContent.appendChild(mainGlitch);
             });
 
             archiveClose.addEventListener('click', () => {

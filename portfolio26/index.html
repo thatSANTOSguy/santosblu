@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>santos bluː - mixing portfolio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1625 0%, #252a35 50%, #2a2e35 100%);
+            min-height: 100vh;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 40px 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 60px; }
+        .logo {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.72);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: lowercase;
+            margin-bottom: 10px;
+        }
+        .loudness-note {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Courier New', monospace;
+            margin-top: 15px;
+            letter-spacing: 0.5px;
+        }
+        .track-card {
+            background: rgba(30, 35, 45, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        .track-card:hover {
+            background: rgba(30, 35, 45, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .track-info { margin-bottom: 20px; }
+        .track-title {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .track-artist { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
+        .track-notes {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+            margin-top: 8px;
+        }
+        .ab-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .ab-btn {
+            flex: 1;
+            max-width: 150px;
+            padding: 12px 20px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .ab-btn:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .ab-btn.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 1);
+        }
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .progress-bar {
+            height: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .controls { display: flex; align-items: center; gap: 15px; }
+        .play-btn {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .play-btn:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .time-display {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: 'Courier New', monospace;
+            min-width: 100px;
+        }
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+        .volume-icon { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            cursor: pointer;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
+        }
+        .keyboard-hint {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 600px) {
+            .track-card { padding: 20px; }
+            .ab-toggle { flex-direction: column; }
+            .ab-btn { max-width: none; }
+            .volume-control { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">santos bluː</div>
+        </div>
+        <div style="margin-bottom: 60px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); font-family: 'Courier New', monospace; letter-spacing: 1px;">/// unreleased (unmixed)</div>
+            </div>
+            <div class="track-card">
+                <div class="track-info">
+                    <div class="track-title">two eyes</div>
+                    <div class="track-artist">santos bluː</div>
+                </div>
+                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 15px;">1. (the windows)</div>
+                    <div class="progress-container" data-track="unreleased-0"><div class="progress-bar"></div></div>
+                    <div class="controls">
+                        <button class="play-btn" data-track="unreleased-0">▶</button>
+                        <div class="time-display" data-track="unreleased-0">0:00 / 0:00</div>
+                        <div class="volume-control">
+                            <span class="volume-icon">🔊</span>
+                            <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="unreleased-0">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 15px;">2. two eyes</div>
+                    <div class="progress-container" data-track="unreleased-1"><div class="progress-bar"></div></div>
+                    <div class="controls">
+                        <button class="play-btn" data-track="unreleased-1">▶</button>
+                        <div class="time-display" data-track="unreleased-1">0:00 / 0:00</div>
+                        <div class="volume-control">
+                            <span class="volume-icon">🔊</span>
+                            <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="unreleased-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); font-family: 'Courier New', monospace; letter-spacing: 1px;">/// mixing portfolio</div>
+            <div class="loudness-note" style="margin-top: 10px;">all files normalized to -14 LUFS integrated</div>
+        </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">Love or War</div>
+                <div class="track-artist">CLOUD5 & santos bluː • 2026</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="0" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="0" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="0"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="0">▶</button>
+                <div class="time-display" data-track="0">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="0">
+                </div>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">Daze</div>
+                <div class="track-artist">CLOUD5 • 2022</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="1" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="1" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="1"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="1">▶</button>
+                <div class="time-display" data-track="1">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="1">
+                </div>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">13 Bricks</div>
+                <div class="track-artist">CLOUD5 & santos bluː • 2026</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="2" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="2" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="2"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="2">▶</button>
+                <div class="time-display" data-track="2">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="2">
+                </div>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">Reminiscing</div>
+                <div class="track-artist">Fenda • 2024</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="3" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="3" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="3"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="3">▶</button>
+                <div class="time-display" data-track="3">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="3">
+                </div>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">Fluid, Go Stupid</div>
+                <div class="track-artist">CLOUD5 & santos bluː • 2026</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="4" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="4" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="4"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="4">▶</button>
+                <div class="time-display" data-track="4">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="4">
+                </div>
+            </div>
+        </div>
+        <div class="keyboard-hint">tip: press A or B to switch versions while playing • space to play/pause</div>
+    </div>
+    <script>
+const unreleasedTracks=[{title:'(the windows)',artist:'santos bluː',file:'audio/unreleased-track1.mp3'},{title:'two eyes',artist:'santos bluː',file:'audio/unreleased-track2.mp3'}];
+const mixingTracks=[{title:'Love or War',artist:'CLOUD5 & santos bluː • 2026',before:'audio/track1-reference.mp3',after:'audio/track1-mixed.mp3'},{title:'Daze',artist:'CLOUD5 • 2022',before:'audio/track2-reference.mp3',after:'audio/track2-mixed.mp3'},{title:'13 Bricks',artist:'CLOUD5 & santos bluː • 2026',before:'audio/track3-reference.mp3',after:'audio/track3-mixed.mp3'},{title:'Reminiscing',artist:'Fenda • 2024',before:'audio/track4-reference.mp3',after:'audio/track4-mixed.mp3'},{title:'Fluid, Go Stupid',artist:'CLOUD5 & santos bluː • 2026',before:'audio/track5-reference.mp3',after:'audio/track5-mixed.mp3'}];
+const unreleasedPlayers=unreleasedTracks.map(t=>({audio:new Audio(t.file),isPlaying:false}));
+const mixingPlayers=mixingTracks.map(t=>({before:new Audio(t.before),after:new Audio(t.after),currentVersion:'before',isPlaying:false}));
+unreleasedPlayers.forEach(p=>p.audio.volume=0.8);
+mixingPlayers.forEach(p=>{p.before.volume=0.8;p.after.volume=0.8});
+document.querySelectorAll('.play-btn[data-track^="unreleased-"]').forEach(btn=>{btn.addEventListener('click',()=>{const tid=btn.dataset.track,ti=parseInt(tid.split('-')[1]),p=unreleasedPlayers[ti];if(p.isPlaying){p.audio.pause();btn.textContent='▶';p.isPlaying=false}else{unreleasedPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});mixingPlayers.forEach((x,i)=>{if(x.isPlaying){x[x.currentVersion].pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});p.audio.play();btn.textContent='⏸';p.isPlaying=true}})});
+unreleasedPlayers.forEach((p,i)=>{const up=()=>{const pb=document.querySelector(`.progress-container[data-track="unreleased-${i}"] .progress-bar`),td=document.querySelector(`.time-display[data-track="unreleased-${i}"]`);if(p.audio.duration){pb.style.width=(p.audio.currentTime/p.audio.duration)*100+'%';const cm=Math.floor(p.audio.currentTime/60),cs=Math.floor(p.audio.currentTime%60).toString().padStart(2,'0'),dm=Math.floor(p.audio.duration/60),ds=Math.floor(p.audio.duration%60).toString().padStart(2,'0');td.textContent=`${cm}:${cs} / ${dm}:${ds}`}};p.audio.addEventListener('timeupdate',up);p.audio.addEventListener('ended',()=>{document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';p.isPlaying=false;if(i===0)setTimeout(()=>document.querySelector('.play-btn[data-track="unreleased-1"]').click(),500)})});
+document.querySelectorAll('.progress-container[data-track^="unreleased-"]').forEach(c=>{c.addEventListener('click',e=>{const ti=parseInt(c.dataset.track.split('-')[1]),p=unreleasedPlayers[ti],r=c.getBoundingClientRect(),x=e.clientX-r.left,pct=x/r.width;p.audio.currentTime=pct*p.audio.duration})});
+document.querySelectorAll('.volume-slider[data-track^="unreleased-"]').forEach(s=>{s.addEventListener('input',e=>{const ti=parseInt(s.dataset.track.split('-')[1]);unreleasedPlayers[ti].audio.volume=e.target.value/100})});
+document.querySelectorAll('.play-btn[data-track]:not([data-track^="unreleased-"])').forEach(btn=>{btn.addEventListener('click',()=>{const ti=parseInt(btn.dataset.track),p=mixingPlayers[ti],ca=p[p.currentVersion];if(p.isPlaying){ca.pause();btn.textContent='▶';p.isPlaying=false}else{unreleasedPlayers.forEach((x,i)=>{if(x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});mixingPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x[x.currentVersion].pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});ca.play();btn.textContent='⏸';p.isPlaying=true}})});
+document.querySelectorAll('.ab-btn').forEach(btn=>{btn.addEventListener('click',()=>{const ti=parseInt(btn.dataset.track),v=btn.dataset.version,p=mixingPlayers[ti];document.querySelectorAll(`.ab-btn[data-track="${ti}"]`).forEach(b=>b.classList.remove('active'));btn.classList.add('active');const oa=p[p.currentVersion],na=p[v],wp=p.isPlaying,ct=oa.currentTime;if(wp)oa.pause();na.currentTime=ct;p.currentVersion=v;if(wp)na.play()})});
+mixingPlayers.forEach((p,i)=>{const up=()=>{const ca=p[p.currentVersion],pb=document.querySelector(`.progress-container[data-track="${i}"]:not([data-track^="unreleased-"]) .progress-bar`),td=document.querySelector(`.time-display[data-track="${i}"]:not([data-track^="unreleased-"])`);if(ca.duration){pb.style.width=(ca.currentTime/ca.duration)*100+'%';const cm=Math.floor(ca.currentTime/60),cs=Math.floor(ca.currentTime%60).toString().padStart(2,'0'),dm=Math.floor(ca.duration/60),ds=Math.floor(ca.duration%60).toString().padStart(2,'0');td.textContent=`${cm}:${cs} / ${dm}:${ds}`}};p.before.addEventListener('timeupdate',up);p.after.addEventListener('timeupdate',up);p.before.addEventListener('ended',()=>{const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';p.isPlaying=false});p.after.addEventListener('ended',()=>{const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';p.isPlaying=false})});
+document.querySelectorAll('.progress-container[data-track]:not([data-track^="unreleased-"])').forEach(c=>{c.addEventListener('click',e=>{const ti=parseInt(c.dataset.track),p=mixingPlayers[ti],ca=p[p.currentVersion],r=c.getBoundingClientRect(),x=e.clientX-r.left,pct=x/r.width;ca.currentTime=pct*ca.duration})});
+document.querySelectorAll('.volume-slider[data-track]:not([data-track^="unreleased-"])').forEach(s=>{s.addEventListener('input',e=>{const ti=parseInt(s.dataset.track),v=e.target.value/100;mixingPlayers[ti].before.volume=v;mixingPlayers[ti].after.volume=v})});
+document.addEventListener('keydown',e=>{const pi=mixingPlayers.findIndex(p=>p.isPlaying);if(pi===-1)return;if(e.key==='a'||e.key==='A'){e.preventDefault();document.querySelector(`.ab-btn[data-track="${pi}"][data-version="before"]`).click()}else if(e.key==='b'||e.key==='B'){e.preventDefault();document.querySelector(`.ab-btn[data-track="${pi}"][data-version="after"]`).click()}else if(e.key===' '){e.preventDefault();const b=document.querySelector(`.play-btn[data-track="${pi}"]:not([data-track^="unreleased-"])`);if(b)b.click()}});
+unreleasedPlayers.forEach(p=>p.audio.preload='auto');
+mixingPlayers.forEach(p=>{p.before.preload='auto';p.after.preload='auto'});
+    </script>
+</body>
+</html>

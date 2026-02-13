@@ -1,1593 +1,869 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Preconnect to external resources -->
-    <link rel="preconnect" href="https://use.typekit.net">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://use.typekit.net">
-    
-    <link rel="stylesheet" href="https://use.typekit.net/mbc3fgm.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>new renaissance santos bluː</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>santos bluː - mixing portfolio</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            height: 100%;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            min-height: 100vh;
-            min-height: 100dvh;
-            width: 100vw;
-            overflow-x: hidden;
-            overflow-y: auto;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .background-fallback {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-            min-height: 100dvh;
             background: linear-gradient(135deg, #1a1625 0%, #252a35 50%, #2a2e35 100%);
-            z-index: 0;
-        }
-
-        /* Background GIF */
-        .background-gif {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
             min-height: 100vh;
-            min-height: 100dvh;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        /* Mobile browser fix - extend beyond viewport for URL bar behavior */
-        @media (max-width: 768px) {
-            .background-gif,
-            .background-fallback {
-                min-height: 120vh;
-            }
-        }
-
-        /* Additional Safari-specific fix */
-        @supports (-webkit-touch-callout: none) {
-            .background-gif,
-            .background-fallback {
-                min-height: 120vh;
-            }
-        }
-
-        /* If keeping GIF, use this instead */
-        .background-gif {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            transform: translateZ(0);
-        }
-
-        .glitch-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 0, 0, 0.04) 2px,
-                rgba(0, 0, 0, 0.04) 4px
-            );
-            pointer-events: none;
-            z-index: 1;
-            animation: glitch 3s infinite;
-            transform: translateZ(0);
-        }
-
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); opacity: 0.1; }
-            33% { transform: translate(2px, -2px); opacity: 0.2; }
-            66% { transform: translate(-2px, 2px); opacity: 0.15; }
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 70px 20px 20px 20px;
-        }
-
-        .logo-container {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            padding-top: 10px;
-        }
-
-        .logo-placeholder {
-            color: rgba(255, 255, 255, 0.72);
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 0px;
-            text-transform: lowercase;
-        }
-
-        .center-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .album-cover-container {
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .album-cover {
-            width: 280px;
-            height: 280px;
-            transform-style: preserve-3d;
-            animation: rotate3d 20s linear infinite;
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.5));
-            transform: translateZ(0);
-            will-change: transform;
-        }
-
-        .album-cover:hover {
-            transform: scale(1.05) rotateY(var(--rotation, 0deg));
-        }
-
-        @keyframes rotate3d {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-
-        .album-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .ep-info {
-            text-align: center;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .ep-title {
-            font-size: 24px;
             color: rgba(255, 255, 255, 0.9);
+            padding: 40px 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 60px; }
+        .logo {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.72);
             font-weight: 500;
-            margin-bottom: 8px;
             letter-spacing: 0.5px;
+            text-transform: lowercase;
+            margin-bottom: 10px;
         }
-
-        .ep-collab {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 15px;
-        }
-
-        .about-btn {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.35);
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 0;
+        .loudness-note {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
             font-family: 'Courier New', monospace;
+            margin-top: 15px;
             letter-spacing: 0.5px;
-            margin-bottom: 20px;
         }
-
-        .about-btn:hover {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Shared interactive styles */
-        .interactive-button {
+        .track-card {
+            background: rgba(30, 35, 45, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .track-card:hover {
+            background: rgba(30, 35, 45, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .track-info { margin-bottom: 20px; }
+        .track-title {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .track-artist { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
+        .ab-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .ab-btn {
+            flex: 1;
+            max-width: 150px;
+            padding: 12px 20px;
             background: transparent;
-            color: rgba(255, 255, 255, 0.8);
-            cursor: pointer;
-        }
-
-        .interactive-button:hover {
-            border-color: rgba(255, 255, 255, 0.8);
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 1);
-        }
-
-        .stream-btn {
-            padding: 10px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 500;
         }
-
-        .archive-link {
-            margin-top: 20px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.25);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .archive-link:hover {
-            color: rgba(255, 255, 255, 0.6);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        .bottom-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding-bottom: 0;
-            width: 100%;
-            margin-top: 0;
-        }
-
-        .footer-section {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            padding: 40px 20px 60px 20px;
-        }
-
-        .music-links-section {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .more-music-btn {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 0;
-            font-family: inherit;
-        }
-
-        .more-music-btn:hover {
-            color: rgba(255, 255, 255, 1);
-        }
-
-        .music-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 100%;
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .music-links.expanded {
-            opacity: 1;
-            max-height: 200px;
-        }
-
-        .music-link {
-            padding: 8px 12px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            display: block;
-        }
-
-        .music-link:hover {
-            border-color: rgba(255, 255, 255, 0.6);
-            color: rgba(255, 255, 255, 1);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .streaming-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .streaming-modal.active {
-            display: flex;
-        }
-
-        .streaming-content {
-            background: rgba(30, 35, 45, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .streaming-title {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 14px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-        }
-
-        .streaming-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .streaming-option {
-            padding: 10px 16px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-
-        .streaming-option:hover {
-            border-color: rgba(255, 255, 255, 0.6);
-            color: rgba(255, 255, 255, 1);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .archive-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            z-index: 2000;
-            overflow: hidden;
-        }
-
-        .archive-modal.active {
-            display: block;
-        }
-
-        .archive-close {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            z-index: 2002;
-            opacity: 0.4;
-            transition: opacity 0.3s ease;
-        }
-
-        .archive-close:hover {
-            opacity: 1;
-        }
-
-        .archive-close::before,
-        .archive-close::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: white;
-            top: 50%;
-            left: 0;
-        }
-
-        .archive-close::before {
-            transform: rotate(45deg);
-        }
-
-        .archive-close::after {
-            transform: rotate(-45deg);
-        }
-
-        .archive-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            padding: 0 80px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .archive-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .archive-scroll {
-            display: flex;
-            gap: 40px;
-            padding: 40px;
-            min-width: min-content;
-        }
-
-        .archive-piece {
-            position: relative;
-            flex-shrink: 0;
-            scroll-snap-align: center;
-            perspective: 1000px;
-        }
-
-        .archive-card {
-            position: relative;
-            width: 400px;
-            height: 500px;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-            cursor: pointer;
-        }
-
-        .archive-card.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .archive-card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(20, 20, 30, 0.6);
-            overflow: hidden;
-        }
-
-        .archive-card-back {
-            transform: rotateY(180deg);
-        }
-
-        .archive-piece.flippable .archive-card-face::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(225deg, rgba(255,255,255,0.1) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .archive-piece.flippable:hover .archive-card-face::after {
-            opacity: 1;
-        }
-
-        .archive-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: contrast(1.05) brightness(0.95);
-        }
-
-        .archive-glitch {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 3px,
-                rgba(255, 0, 100, 0.03) 3px,
-                rgba(255, 0, 100, 0.03) 6px
-            );
-            pointer-events: none;
-            mix-blend-mode: screen;
-            animation: scanline 8s linear infinite;
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100%); }
-        }
-
-        .archive-notes {
-            position: relative;
-            width: 400px;
-            height: 500px;
-            flex-shrink: 0;
-            scroll-snap-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(20, 20, 30, 0.8);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .notes-title {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            margin-bottom: 15px;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 1px;
-            text-transform: lowercase;
-        }
-
-        .notes-textarea {
-            flex: 1;
-            background: transparent;
-            border: none;
+        .ab-btn:hover {
+            border-color: rgba(255, 255, 255, 0.5);
             color: rgba(255, 255, 255, 0.8);
-            font-size: 13px;
-            font-family: 'Courier New', monospace;
-            line-height: 1.6;
-            resize: none;
-            outline: none;
         }
-
-        .notes-textarea::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-            font-style: italic;
-        }
-
-        .notes-saved {
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 11px;
-            margin-top: 10px;
-            font-family: 'Courier New', monospace;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .notes-saved.show {
-            opacity: 1;
-        }
-
-        .subscription-container {
-            max-width: 320px;
-            width: 100%;
-        }
-
-        .subscription-title {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 8px;
-            font-weight: 400;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
-
-        .email-form {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .input-row {
-            display: flex;
-            gap: 6px;
-        }
-
-        .name-input,
-        .email-input {
-            padding: 8px 12px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            font-size: 13px;
-            transition: border-color 0.2s ease;
-        }
-
-        .name-input {
-            width: 33.33%;
-        }
-
-        .email-input {
-            width: 66.67%;
-        }
-
-        .name-input:focus,
-        .email-input:focus {
-            outline: none;
+        .ab-btn.active {
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.6);
-        }
-
-        .name-input::placeholder,
-        .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .subscribe-btn {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .subscribe-btn:hover {
-            border-color: rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .social-link {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
             color: rgba(255, 255, 255, 1);
         }
-
-        /* ABOUT MODAL STYLES */
-        .about-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.98);
-            display: none;
-            z-index: 3000;
-        }
-
-        .about-modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-left: 0;
-        }
-
-        .glitch-text {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            color: rgba(255,255,255,0.5);
-            letter-spacing: 1px;
-            user-select: none;
-            pointer-events: none;
-            opacity: 0.8;
-            transition: opacity 0.5s;
-        }
-
-        .glitch-text.fade-out {
-            opacity: 0;
-        }
-
-        .glitch-text.clickable {
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
             cursor: pointer;
-            pointer-events: all;
         }
-
-        .glitch-text.clickable:hover {
-            color: rgba(255,255,255,0.75);
-        }
-
-        .glitch-text.clicked {
-            animation: glitchPulse 0.3s;
-        }
-
-        @keyframes glitchPulse {
-            0%, 100% { transform: translate(0,0); }
-            25% { transform: translate(-2px,1px); }
-            50% { transform: translate(1px,-2px); }
-            75% { transform: translate(-1px,-1px); }
-        }
-
-        .description-container {
-            width: 600px;
-            max-width: 90vw;
-            padding: 40px;
-            background: transparent;
-            opacity: 0;
-            transition: opacity 0.5s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .description-container.visible {
-            opacity: 1;
-        }
-
-        .description-text {
-            font-size: 15px;
-            color: rgba(255,255,255,0.7);
-            line-height: 1.8;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            width: 100%;
-        }
-
-        .description-text.typing::after {
-            content: '|';
-            animation: blink 0.7s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        .sigil-container {
-            width: 110px;
-            height: 110px;
-            margin-top: 25px;
-            opacity: 0;
-            transition: opacity 0.5s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .sigil-container.visible {
-            opacity: 1;
-        }
-
-        .sigil-container img {
-            width: 100%;
+        .progress-bar {
             height: 100%;
-            object-fit: contain;
+            background: rgba(255, 255, 255, 0.6);
+            width: 0%;
+            transition: width 0.1s linear;
         }
-
-        .play-pause-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            margin-top: 25px;
-            padding: 0;
-            opacity: 0;
-            transition: opacity 0.5s;
+        .controls { display: flex; align-items: center; gap: 15px; }
+        .play-btn {
             width: 40px;
             height: 40px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            font-size: 14px;
         }
-
-        .play-pause-btn.visible {
-            opacity: 1;
+        .play-btn:hover {
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.05);
         }
-
-        .play-icon {
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 10px 0 10px 16px;
-            border-color: transparent transparent transparent rgba(255,255,255,0.7);
-            margin-left: 3px;
+        .time-display {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: 'Courier New', monospace;
+            min-width: 100px;
         }
-
-        .play-pause-btn:hover .play-icon {
-            border-color: transparent transparent transparent rgba(255,255,255,1);
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
         }
-
-        .pause-icon {
-            width: 16px;
-            height: 20px;
-            position: relative;
+        .volume-icon { font-size: 14px; color: rgba(255, 255, 255, 0.5); }
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            cursor: pointer;
         }
-
-        .pause-icon::before,
-        .pause-icon::after {
-            content: '';
-            position: absolute;
-            width: 5px;
-            height: 100%;
-            background: rgba(255,255,255,0.7);
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            border-radius: 50%;
         }
-
-        .pause-icon::before {
-            left: 0;
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            border-radius: 50%;
+            border: none;
         }
-
-        .pause-icon::after {
-            right: 0;
+        .keyboard-hint {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Courier New', monospace;
         }
-
-        .play-pause-btn:hover .pause-icon::before,
-        .play-pause-btn:hover .pause-icon::after {
-            background: rgba(255,255,255,1);
-        }
-
-        .play-pause-btn .pause-icon {
-            display: none;
-        }
-
-        .play-pause-btn.playing .play-icon {
-            display: none !important;
-        }
-
-        .play-pause-btn.playing .pause-icon {
-            display: block !important;
-        }
-
-        /* MEDIA QUERIES - Consolidated */
         @media (max-width: 600px) {
-            .album-cover {
-                width: 240px;
-                height: 240px;
-            }
-
-            .archive-container {
-                padding: 0 40px;
-            }
-
-            .archive-card,
-            .archive-notes {
-                width: 300px;
-                height: 400px;
-            }
-
-            .archive-notes {
-                padding: 20px;
-            }
-
-            .input-row {
-                flex-direction: column;
-            }
-
-            .name-input,
-            .email-input {
-                width: 100%;
-            }
-
-            .subscribe-btn {
-                width: 100%;
-            }
-
-            .description-container {
-                width: 100%;
-                padding: 20px;
-            }
-        }
-
-        @media (max-height: 700px) {
-            .album-cover {
-                width: 200px;
-                height: 200px;
-            }
-
-            .ep-title {
-                font-size: 20px;
-            }
+            .track-card { padding: 20px; }
+            .ab-toggle { flex-direction: column; }
+            .ab-btn { max-width: none; }
+            .volume-control { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="background-fallback"></div>
-    
-    <!-- Background GIF -->
-    <img src="santosblu comp.gif" 
-         alt="" 
-         class="background-gif" 
-         id="bgGif"
-         loading="eager"
-         decoding="async">
-    
-    <div class="glitch-overlay"></div>
-
-    <div class="content">
-        <div class="logo-container">
-            <div class="logo-placeholder">santos bluː</div>
+    <div class="container">
+        <div class="header">
+            <div class="logo">santos bluː</div>
         </div>
-
-        <div class="center-section">
-            <div class="album-cover-container" id="albumCover">
-                <div class="album-cover">
-                    <img src="cover-art-a&w.jpg" 
-                         alt="Alive & Well Cover"
-                         loading="eager"
-                         decoding="async">
+        <div style="margin-bottom: 60px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); font-family: 'Courier New', monospace; letter-spacing: 1px;">/// unreleased (unmixed)</div>
+            </div>
+            <div class="track-card">
+                <div class="track-info">
+                    <div class="track-title">two eyes</div>
+                    <div class="track-artist">santos bluː</div>
                 </div>
-            </div>
-
-            <div class="ep-info">
-                <div class="ep-title">Alive & Well</div>
-                <div class="ep-collab">with CLOUD5</div>
-                <button class="about-btn" id="aboutBtn">[ about ]</button>
-                <button class="stream-btn interactive-button" id="streamBtn">Listen Now</button>
-                <div class="archive-link" id="archiveLink">/// archive</div>
-            </div>
-        </div>
-
-        <div class="bottom-section">
-            <div class="music-links-section">
-                <button class="more-music-btn" id="moreMusicBtn">more music</button>
-                <div class="music-links" id="musicLinks">
-                    <a href="#" class="music-link" data-song="song1">Camera'ShyBaby</a>
-                    <a href="#" class="music-link" data-song="song2">LAVA VS ICE</a>
-                    <a href="#" class="music-link" data-song="song3">Special Place</a>
+                <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 15px;">1. (the windows)</div>
+                    <div class="progress-container" data-track="unreleased-0"><div class="progress-bar"></div></div>
+                    <div class="controls">
+                        <button class="play-btn" data-track="unreleased-0">▶</button>
+                        <div class="time-display" data-track="unreleased-0">0:00 / 0:00</div>
+                        <div class="volume-control">
+                            <span class="volume-icon">🔊</span>
+                            <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="unreleased-0">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 15px;">2. two eyes</div>
+                    <div class="progress-container" data-track="unreleased-1"><div class="progress-bar"></div></div>
+                    <div class="controls">
+                        <button class="play-btn" data-track="unreleased-1">▶</button>
+                        <div class="time-display" data-track="unreleased-1">0:00 / 0:00</div>
+                        <div class="volume-control">
+                            <span class="volume-icon">🔊</span>
+                            <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="unreleased-1">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- FOOTER - BELOW THE FOLD -->
-    <div class="footer-section">
-        <div class="subscription-container">
-            <div class="subscription-title">tap in</div>
-            <form class="email-form" id="emailForm">
-                <div class="input-row">
-                    <input 
-                        type="text" 
-                        class="name-input" 
-                        placeholder="your name" 
-                        required
-                        id="nameInput"
-                    >
-                    <input 
-                        type="email" 
-                        class="email-input" 
-                        placeholder="your email" 
-                        required
-                        id="emailInput"
-                    >
+        <div style="text-align: center; margin-bottom: 30px;">
+            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); font-family: 'Courier New', monospace; letter-spacing: 1px;">/// mixing portfolio</div>
+            <div class="loudness-note" style="margin-top: 10px;">all files normalized to -14 LUFS integrated</div>
+        </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">Love or War</div>
+                <div class="track-artist">CLOUD5 & santos bluː • 2026</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="0" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="0" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="0"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="0">▶</button>
+                <div class="time-display" data-track="0">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="0">
                 </div>
-                <button type="submit" class="subscribe-btn">Subscribe</button>
-            </form>
-        </div>
-
-        <div class="social-links">
-            <a href="https://instagram.com/santosblu._" target="_blank" class="social-link">Instagram</a>
-            <a href="https://x.com/santosblu_" target="_blank" class="social-link">X</a>
-        </div>
-    </div>
-
-    <!-- MODALS -->
-    <div class="streaming-modal" id="streamingModal">
-        <div class="streaming-content">
-            <div class="streaming-title">Choose your streaming service</div>
-            <div class="streaming-options">
-                <button class="streaming-option" data-service="tidal" data-type="ep">Tidal</button>
-                <button class="streaming-option" data-service="apple" data-type="ep">Apple Music</button>
-                <button class="streaming-option" data-service="spotify" data-type="ep">Spotify</button>
-                <button class="streaming-option" data-service="pandora" data-type="ep">Pandora</button>
             </div>
         </div>
-    </div>
-
-    <div class="archive-modal" id="archiveModal">
-        <div class="archive-close" id="archiveClose"></div>
-        <div class="archive-container" id="archiveContainer">
-            <div class="archive-scroll" id="archiveScroll"></div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">Daze</div>
+                <div class="track-artist">CLOUD5 • 2022</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="1" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="1" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="1"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="1">▶</button>
+                <div class="time-display" data-track="1">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="1">
+                </div>
+            </div>
         </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">13 Bricks</div>
+                <div class="track-artist">CLOUD5 & santos bluː • 2026</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="2" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="2" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="2"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="2">▶</button>
+                <div class="time-display" data-track="2">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="2">
+                </div>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">Reminiscing</div>
+                <div class="track-artist">Fenda • 2024</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="3" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="3" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="3"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="3">▶</button>
+                <div class="time-display" data-track="3">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="3">
+                </div>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-info">
+                <div class="track-title">Fluid, Go Stupid</div>
+                <div class="track-artist">CLOUD5 & santos bluː • 2026</div>
+            </div>
+            <div class="ab-toggle">
+                <button class="ab-btn active" data-track="4" data-version="before">A - REFERENCE</button>
+                <button class="ab-btn" data-track="4" data-version="after">B - MIXED</button>
+            </div>
+            <div class="progress-container" data-track="4"><div class="progress-bar"></div></div>
+            <div class="controls">
+                <button class="play-btn" data-track="4">▶</button>
+                <div class="time-display" data-track="4">0:00 / 0:00</div>
+                <div class="volume-control">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" class="volume-slider" min="0" max="100" value="80" data-track="4">
+                </div>
+            </div>
+        </div>
+        <div class="keyboard-hint">tip: press A or B to switch versions while playing • space to play/pause</div>
     </div>
-
-    <div class="about-modal" id="aboutModal">
-        <div class="archive-close" id="aboutClose"></div>
-        <div id="aboutContent"></div>
-    </div>
-
-    <audio id="audioPlayer" src="anw-snippet.mp3"></audio>
-
-    <!-- Deferred Scripts for Better Performance -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-        // Wait for DOM to be ready
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize EmailJS when script loads
-            if (typeof emailjs !== 'undefined') {
-                emailjs.init("ldkRltbcUdSrCvBVE");
-            }
+const unreleasedTracks=[{title:'(the windows)',artist:'santos bluː',file:'unreleased-track1.mp3'},{title:'two eyes',artist:'santos bluː',file:'unreleased-track2.mp3'}];
+const mixingTracks=[{title:'Love or War',artist:'CLOUD5 & santos bluː • 2026',before:'track1-reference.mp3',after:'track1-mixed.mp3'},{title:'Daze',artist:'CLOUD5 • 2022',before:'track2-reference.mp3',after:'track2-mixed.mp3'},{title:'13 Bricks',artist:'CLOUD5 & santos bluː • 2026',before:'track3-reference.mp3',after:'track3-mixed.mp3'},{title:'Reminiscing',artist:'Fenda • 2024',before:'track4-reference.mp3',after:'track4-mixed.mp3'},{title:'Fluid, Go Stupid',artist:'CLOUD5 & santos bluː • 2026',before:'track5-reference.mp3',after:'track5-mixed.mp3'}];
 
-            // Cache DOM elements
-            const streamBtn = document.getElementById('streamBtn');
-            const albumCover = document.getElementById('albumCover');
-            const moreMusicBtn = document.getElementById('moreMusicBtn');
-            const musicLinks = document.getElementById('musicLinks');
-            const streamingModal = document.getElementById('streamingModal');
-            const archiveLink = document.getElementById('archiveLink');
-            const archiveModal = document.getElementById('archiveModal');
-            const archiveClose = document.getElementById('archiveClose');
-            const emailForm = document.getElementById('emailForm');
-            const aboutBtn = document.getElementById('aboutBtn');
-            const aboutModal = document.getElementById('aboutModal');
-            const aboutClose = document.getElementById('aboutClose');
-            const aboutContent = document.getElementById('aboutContent');
-            const audio = document.getElementById('audioPlayer');
+const unreleasedPlayers=unreleasedTracks.map(t=>({audio:new Audio(t.file),isPlaying:false}));
+const mixingPlayers=mixingTracks.map(t=>({
+    before:new Audio(t.before),
+    after:new Audio(t.after),
+    currentVersion:'before',
+    isPlaying:false,
+    masterVolume:0.8
+}));
 
-            let preferredService = null;
-            let currentContext = 'ep';
-            let clickCount = 0;
-            let noiseElements = [];
-            let playBtn = null;
-            let aboutCompleted = false;
+unreleasedPlayers.forEach(p=>p.audio.volume=0.8);
+mixingPlayers.forEach(p=>{
+    p.before.volume=0.8;
+    p.after.volume=0;
+    p.before.preload='auto';
+    p.after.preload='auto';
+});
 
-            const glitchSets = [['/','\\','_','|','//','\\\\','~','-'],[':',';','*','+','=','<','>','.']];
-            const glitchTexts = ['◊ unlock_memory ◊','>> grant_access <<'];
-            const descText = "I made this album with my friends while driving around Miami. We didn't know when the next linkup would be, but we knew we had <b>3 weeks</b> to cook up some <i>unforgettable magic</i>.\n\nWe wanted to be outside, make the most of our experience, but we NEEDED to keep creating. All day, every day. So naturally, we brought the studio with us. Laptop, mic, keyboard, aux. And with that, we poured our joy, sweat, and tears into this music, everywhere we went.";
+// UNRELEASED - Play/Pause
+document.querySelectorAll('.play-btn[data-track^="unreleased-"]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const tid=btn.dataset.track,ti=parseInt(tid.split('-')[1]),p=unreleasedPlayers[ti];
+        if(p.isPlaying){
+            p.audio.pause();btn.textContent='▶';p.isPlaying=false;
+        }else{
+            unreleasedPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});
+            mixingPlayers.forEach((x,i)=>{if(x.isPlaying){x.before.pause();x.after.pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});
+            p.audio.play();btn.textContent='⏸';p.isPlaying=true;
+        }
+    });
+});
 
-            const epLinks = {
-                tidal: 'https://listen.tidal.com/album/490814320',
-                apple: 'https://geo.music.apple.com/us/album/_/1870312531?mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
-                spotify: 'https://open.spotify.com/album/442M5bQwAlpfiAG0vCFwYz',
-                pandora: 'https://www.pandora.com/AL:59941654'
-            };
+unreleasedPlayers.forEach((p,i)=>{
+    const up=()=>{
+        const pb=document.querySelector(`.progress-container[data-track="unreleased-${i}"] .progress-bar`),
+              td=document.querySelector(`.time-display[data-track="unreleased-${i}"]`);
+        if(p.audio.duration){
+            pb.style.width=(p.audio.currentTime/p.audio.duration)*100+'%';
+            const cm=Math.floor(p.audio.currentTime/60),cs=Math.floor(p.audio.currentTime%60).toString().padStart(2,'0'),
+                  dm=Math.floor(p.audio.duration/60),ds=Math.floor(p.audio.duration%60).toString().padStart(2,'0');
+            td.textContent=`${cm}:${cs} / ${dm}:${ds}`;
+        }
+    };
+    p.audio.addEventListener('timeupdate',up);
+    p.audio.addEventListener('ended',()=>{
+        document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';
+        p.isPlaying=false;
+        if(i===0)setTimeout(()=>document.querySelector('.play-btn[data-track="unreleased-1"]').click(),500);
+    });
+});
 
-            const songLinks = {
-                song1: {
-                    tidal: 'https://listen.tidal.com/track/428773403',
-                    apple: 'https://geo.music.apple.com/us/album/_/1807267133?i=1807267134&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
-                    spotify: 'https://open.spotify.com/track/1uRRCmRfs21yx90nNFuYYm',
-                    youtube: 'https://music.youtube.com/watch?v=mlnCCc7ZRZc',
-                    deezer: 'https://www.deezer.com/track/3314866781'
-                },
-                song2: {
-                    tidal: 'https://listen.tidal.com/track/427802921',
-                    apple: 'https://geo.music.apple.com/us/album/_/1806221333?i=1806221334&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
-                    spotify: 'https://open.spotify.com/track/6TN47W3ADBKLqlXX2cRgii',
-                    youtube: 'https://music.youtube.com/watch?v=VUtMRbhSBTo',
-                    deezer: 'https://www.deezer.com/track/3307731961'
-                },
-                song3: {
-                    tidal: 'https://listen.tidal.com/track/410870685',
-                    apple: 'https://geo.music.apple.com/us/album/_/1790060311?i=1790060312&mt=1&app=music&ls=1&at=1000lHKX&ct=odesli_http&itscg=30200&itsct=odsl_m',
-                    spotify: 'https://open.spotify.com/track/0ebP3bn0LLpo1JlnmITPl9',
-                    youtube: 'https://youtu.be/HJS3ebbI9ts?si=LIv-XJNPKxEeMlj5',
-                    deezer: 'https://www.deezer.com/track/2929088962'
-                }
-            };
+document.querySelectorAll('.progress-container[data-track^="unreleased-"]').forEach(c=>{
+    c.addEventListener('click',e=>{
+        const ti=parseInt(c.dataset.track.split('-')[1]),p=unreleasedPlayers[ti],
+              r=c.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width;
+        p.audio.currentTime=pct*p.audio.duration;
+    });
+});
 
-            const archivePieces = [
-                { front: 'archive-1.jpg', back: null, flippable: false },
-                { front: 'archive-2.jpg', back: 'archive-2-back.jpg', flippable: true },
-                { front: 'archive-3.jpg', back: null, flippable: false },
-                { front: 'archive-4.jpg', back: 'archive-4-back.jpg', flippable: true },
-                { front: 'archive-5.jpg', back: null, flippable: false },
-                { front: 'archive-6.jpg', back: null, flippable: false },
-                { front: 'archive-7.jpg', back: 'archive-7-back.jpg', flippable: true },
-                { front: 'archive-8.jpg', back: null, flippable: false },
-                { type: 'notes' }
-            ];
+document.querySelectorAll('.volume-slider[data-track^="unreleased-"]').forEach(s=>{
+    s.addEventListener('input',e=>{
+        const ti=parseInt(s.dataset.track.split('-')[1]);
+        unreleasedPlayers[ti].audio.volume=e.target.value/100;
+    });
+});
 
-            // ABOUT PAGE FUNCTIONS
-            function typeWriter(el, txt, spd = 50) {
-                let i = 0;
-                el.classList.add('typing');
-                
-                function type() {
-                    if (i < txt.length) {
-                        if (txt[i] === '\n') {
-                            el.innerHTML += '<br>';
-                            i++;
-                        } else if (txt.substring(i, i + 3) === '<b>') {
-                            el.innerHTML += '<b>';
-                            i += 3;
-                        } else if (txt.substring(i, i + 4) === '</b>') {
-                            el.innerHTML += '</b>';
-                            i += 4;
-                        } else if (txt.substring(i, i + 3) === '<i>') {
-                            el.innerHTML += '<i>';
-                            i += 3;
-                        } else if (txt.substring(i, i + 4) === '</i>') {
-                            el.innerHTML += '</i>';
-                            i += 4;
-                        } else {
-                            el.innerHTML += txt.charAt(i);
-                            i++;
-                        }
-                        setTimeout(type, spd);
-                    } else {
-                        el.classList.remove('typing');
-                        showSigilForAbout();
-                    }
-                }
-                type();
-            }
+// MIXING PORTFOLIO - Play/Pause (starts BOTH tracks)
+document.querySelectorAll('.play-btn[data-track]:not([data-track^="unreleased-"])').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const ti=parseInt(btn.dataset.track),p=mixingPlayers[ti];
+        if(p.isPlaying){
+            p.before.pause();p.after.pause();
+            btn.textContent='▶';p.isPlaying=false;
+        }else{
+            unreleasedPlayers.forEach((x,i)=>{if(x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});
+            mixingPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x.before.pause();x.after.pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});
+            
+            // Start BOTH tracks simultaneously
+            p.before.currentTime=p.after.currentTime;
+            p.before.play();
+            p.after.play();
+            btn.textContent='⏸';p.isPlaying=true;
+        }
+    });
+});
 
-            function showSigilForAbout() {
-                const sigil = document.createElement('div');
-                sigil.className = 'sigil-container';
-                sigil.innerHTML = '<img src="your-sigil.png" alt="Sigil" loading="lazy" decoding="async">';
-                const container = document.querySelector('.description-container');
-                container.appendChild(sigil);
-                
-                setTimeout(() => {
-                    sigil.classList.add('visible');
-                    setTimeout(() => showPlayBtnForAbout(), 300);
-                }, 300);
-            }
+// A/B Toggle - just crossfades volume instantly
+document.querySelectorAll('.ab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const ti=parseInt(btn.dataset.track),v=btn.dataset.version,p=mixingPlayers[ti];
+        if(p.currentVersion===v)return;
+        
+        document.querySelectorAll(`.ab-btn[data-track="${ti}"]`).forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        p.currentVersion=v;
+        
+        // Instant volume crossfade
+        if(v==='before'){
+            p.before.volume=p.masterVolume;
+            p.after.volume=0;
+        }else{
+            p.before.volume=0;
+            p.after.volume=p.masterVolume;
+        }
+    });
+});
 
-            function showPlayBtnForAbout() {
-                playBtn = document.createElement('button');
-                playBtn.className = 'play-pause-btn';
-                playBtn.innerHTML = '<div class="play-icon"></div><div class="pause-icon"></div>';
-                
-                playBtn.addEventListener('click', function() {
-                    if (audio.paused) {
-                        audio.play().then(() => {
-                            playBtn.classList.add('playing');
-                        }).catch(err => {
-                            console.log('Play error:', err);
-                        });
-                    } else {
-                        audio.pause();
-                        playBtn.classList.remove('playing');
-                    }
+mixingPlayers.forEach((p,i)=>{
+    const up=()=>{
+        const ca=p[p.currentVersion],
+              pb=document.querySelector(`.progress-container[data-track="${i}"]:not([data-track^="unreleased-"]) .progress-bar`),
+              td=document.querySelector(`.time-display[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(ca.duration){
+            pb.style.width=(ca.currentTime/ca.duration)*100+'%';
+            const cm=Math.floor(ca.currentTime/60),cs=Math.floor(ca.currentTime%60).toString().padStart(2,'0'),
+                  dm=Math.floor(ca.duration/60),ds=Math.floor(ca.duration%60).toString().padStart(2,'0');
+            td.textContent=`${cm}:${cs} / ${dm}:${ds}`;
+        }
+    };
+    p.before.addEventListener('timeupdate',up);
+    p.after.addEventListener('timeupdate',up);
+    p.before.addEventListener('ended',()=>{
+        const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(b)b.textContent='▶';p.isPlaying=false;
+    });
+    p.after.addEventListener('ended',()=>{
+        const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(b)b.textContent='▶';p.isPlaying=false;
+    });
+});
+
+document.querySelectorAll('.progress-container[data-track]:not([data-track^="unreleased-"])').forEach(c=>{
+    c.addEventListener('click',e=>{
+        const ti=parseInt(c.dataset.track),p=mixingPlayers[ti],
+              r=c.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width,
+              newTime=pct*p.before.duration;
+        p.before.currentTime=newTime;
+        p.after.currentTime=newTime;
+    });
+});
+
+document.querySelectorAll('.volume-slider[data-track]:not([data-track^="unreleased-"])').forEach(s=>{
+    s.addEventListener('input',e=>{
+        const ti=parseInt(s.dataset.track),vol=e.target.value/100,p=mixingPlayers[ti];
+        p.masterVolume=vol;
+        if(p.currentVersion==='before'){
+            p.before.volume=vol;
+        }else{
+            p.after.volume=vol;
+        }
+    });
+});
+
+document.addEventListener('keydown',e=>{
+    const pi=mixingPlayers.findIndex(p=>p.isPlaying);
+    if(pi===-1)return;
+    if(e.key==='a'||e.key==='A'){
+        e.preventDefault();
+        document.querySelector(`.ab-btn[data-track="${pi}"][data-version="before"]`).click();
+    }else if(e.key==='b'||e.key==='B'){
+        e.preventDefault();
+    <script>
+const unreleasedTracks=[{title:'(the windows)',artist:'santos bluː',file:'unreleased-track1.mp3'},{title:'two eyes',artist:'santos bluː',file:'unreleased-track2.mp3'}];
+const mixingTracks=[{title:'Love or War',artist:'CLOUD5 & santos bluː • 2026',before:'track1-reference.mp3',after:'track1-mixed.mp3'},{title:'Daze',artist:'CLOUD5 • 2022',before:'track2-reference.mp3',after:'track2-mixed.mp3'},{title:'13 Bricks',artist:'CLOUD5 & santos bluː • 2026',before:'track3-reference.mp3',after:'track3-mixed.mp3'},{title:'Reminiscing',artist:'Fenda • 2024',before:'track4-reference.mp3',after:'track4-mixed.mp3'},{title:'Fluid, Go Stupid',artist:'CLOUD5 & santos bluː • 2026',before:'track5-reference.mp3',after:'track5-mixed.mp3'}];
+
+const unreleasedPlayers=unreleasedTracks.map(t=>({audio:new Audio(t.file),isPlaying:false}));
+const mixingPlayers=mixingTracks.map(t=>({
+    before:new Audio(t.before),
+    after:new Audio(t.after),
+    currentVersion:'before',
+    isPlaying:false,
+    masterVolume:0.8,
+    dualPlaybackMode:false
+}));
+
+unreleasedPlayers.forEach(p=>p.audio.volume=0.8);
+mixingPlayers.forEach(p=>{
+    p.before.volume=0.8;
+    p.after.volume=0;
+    p.before.preload='auto';
+    p.after.preload='auto';
+});
+
+// Detect if dual playback works (desktop) or not (mobile)
+function detectDualPlayback(callback){
+    const test1=new Audio();
+    const test2=new Audio();
+    test1.src='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
+    test2.src='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
+    test1.volume=0.01;
+    test2.volume=0.01;
+    Promise.all([test1.play(),test2.play()])
+        .then(()=>{callback(true);test1.pause();test2.pause();})
+        .catch(()=>{callback(false);});
+}
+
+// UNRELEASED - Play/Pause
+document.querySelectorAll('.play-btn[data-track^="unreleased-"]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const tid=btn.dataset.track,ti=parseInt(tid.split('-')[1]),p=unreleasedPlayers[ti];
+        if(p.isPlaying){
+            p.audio.pause();btn.textContent='▶';p.isPlaying=false;
+        }else{
+            unreleasedPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});
+            mixingPlayers.forEach((x,i)=>{if(x.isPlaying){x.before.pause();x.after.pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});
+            p.audio.play();btn.textContent='⏸';p.isPlaying=true;
+        }
+    });
+});
+
+unreleasedPlayers.forEach((p,i)=>{
+    const up=()=>{
+        const pb=document.querySelector(`.progress-container[data-track="unreleased-${i}"] .progress-bar`),
+              td=document.querySelector(`.time-display[data-track="unreleased-${i}"]`);
+        if(p.audio.duration){
+            pb.style.width=(p.audio.currentTime/p.audio.duration)*100+'%';
+            const cm=Math.floor(p.audio.currentTime/60),cs=Math.floor(p.audio.currentTime%60).toString().padStart(2,'0'),
+                  dm=Math.floor(p.audio.duration/60),ds=Math.floor(p.audio.duration%60).toString().padStart(2,'0');
+            td.textContent=`${cm}:${cs} / ${dm}:${ds}`;
+        }
+    };
+    p.audio.addEventListener('timeupdate',up);
+    p.audio.addEventListener('ended',()=>{
+        document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';
+        p.isPlaying=false;
+        if(i===0)setTimeout(()=>document.querySelector('.play-btn[data-track="unreleased-1"]').click(),500);
+    });
+});
+
+document.querySelectorAll('.progress-container[data-track^="unreleased-"]').forEach(c=>{
+    c.addEventListener('click',e=>{
+        const ti=parseInt(c.dataset.track.split('-')[1]),p=unreleasedPlayers[ti],
+              r=c.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width;
+        p.audio.currentTime=pct*p.audio.duration;
+    });
+});
+
+document.querySelectorAll('.volume-slider[data-track^="unreleased-"]').forEach(s=>{
+    s.addEventListener('input',e=>{
+        const ti=parseInt(s.dataset.track.split('-')[1]);
+        unreleasedPlayers[ti].audio.volume=e.target.value/100;
+    });
+});
+
+// MIXING PORTFOLIO - Play/Pause
+document.querySelectorAll('.play-btn[data-track]:not([data-track^="unreleased-"])').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const ti=parseInt(btn.dataset.track),p=mixingPlayers[ti];
+        if(p.isPlaying){
+            p.before.pause();p.after.pause();
+            btn.textContent='▶';p.isPlaying=false;
+        }else{
+            unreleasedPlayers.forEach((x,i)=>{if(x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});
+            mixingPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x.before.pause();x.after.pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});
+            
+            // Detect mode if not yet determined
+            if(!('dualPlaybackMode' in p)){
+                detectDualPlayback(canDual=>{
+                    p.dualPlaybackMode=canDual;
+                    startPlayback(p,btn);
                 });
-                
-                const container = document.querySelector('.description-container');
-                container.appendChild(playBtn);
-                setTimeout(() => playBtn.classList.add('visible'), 300);
+            }else{
+                startPlayback(p,btn);
             }
+        }
+    });
+});
 
-            function getRandPos() {
-                const w = window.innerWidth;
-                const h = window.innerHeight;
-                const p = 100;
-                return {
-                    left: p + Math.random() * (w - 2 * p),
-                    top: p + Math.random() * (h - 2 * p)
-                };
+function startPlayback(p,btn){
+    if(p.dualPlaybackMode){
+        // Desktop: play both, use volume switching
+        p.before.currentTime=p.after.currentTime;
+        p.before.volume=p.currentVersion==='before'?p.masterVolume:0;
+        p.after.volume=p.currentVersion==='after'?p.masterVolume:0;
+        p.before.play();
+        p.after.play();
+    }else{
+        // Mobile: play only current track
+        p[p.currentVersion].play();
+    }
+    btn.textContent='⏸';
+    p.isPlaying=true;
+}
+
+// A/B Toggle
+document.querySelectorAll('.ab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const ti=parseInt(btn.dataset.track),v=btn.dataset.version,p=mixingPlayers[ti];
+        if(p.currentVersion===v)return;
+        
+        document.querySelectorAll(`.ab-btn[data-track="${ti}"]`).forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const oldV=p.currentVersion;
+        p.currentVersion=v;
+        
+        if(p.isPlaying){
+            if(p.dualPlaybackMode){
+                // Desktop: instant volume crossfade
+                p.before.volume=v==='before'?p.masterVolume:0;
+                p.after.volume=v==='after'?p.masterVolume:0;
+            }else{
+                // Mobile: switch tracks with minimal gap
+                const ct=p[oldV].currentTime;
+                p[oldV].pause();
+                p[v].currentTime=ct;
+                p[v].play().catch(()=>{});
             }
+        }
+    });
+});
 
-            function typeWriter(el, txt, spd = 50) {
-                let i = 0;
-                el.classList.add('typing');
-                
-                function type() {
-                    if (i < txt.length) {
-                        if (txt[i] === '\n') {
-                            el.innerHTML += '<br>';
-                            i++;
-                        } else if (txt.substring(i, i + 3) === '<b>') {
-                            el.innerHTML += '<b>';
-                            i += 3;
-                        } else if (txt.substring(i, i + 4) === '</b>') {
-                            el.innerHTML += '</b>';
-                            i += 4;
-                        } else if (txt.substring(i, i + 3) === '<i>') {
-                            el.innerHTML += '<i>';
-                            i += 3;
-                        } else if (txt.substring(i, i + 4) === '</i>') {
-                            el.innerHTML += '</i>';
-                            i += 4;
-                        } else {
-                            el.innerHTML += txt.charAt(i);
-                            i++;
-                        }
-                        setTimeout(type, spd);
-                    } else {
-                        el.classList.remove('typing');
-                        // Show sigil and button after typing completes
-                        const container = el.parentElement;
-                        const sigil = container.querySelector('.sigil-container');
-                        const playButton = container.querySelector('.play-pause-btn');
-                        
-                        setTimeout(() => {
-                            if (sigil) sigil.classList.add('visible');
-                            setTimeout(() => {
-                                if (playButton) playButton.classList.add('visible');
-                            }, 300);
-                        }, 300);
-                    }
-                }
-                type();
+mixingPlayers.forEach((p,i)=>{
+    const up=()=>{
+        const ca=p[p.currentVersion],
+              pb=document.querySelector(`.progress-container[data-track="${i}"]:not([data-track^="unreleased-"]) .progress-bar`),
+              td=document.querySelector(`.time-display[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(ca.duration){
+            pb.style.width=(ca.currentTime/ca.duration)*100+'%';
+            const cm=Math.floor(ca.currentTime/60),cs=Math.floor(ca.currentTime%60).toString().padStart(2,'0'),
+                  dm=Math.floor(ca.duration/60),ds=Math.floor(ca.duration%60).toString().padStart(2,'0');
+            td.textContent=`${cm}:${cs} / ${dm}:${ds}`;
+        }
+    };
+    p.before.addEventListener('timeupdate',up);
+    p.after.addEventListener('timeupdate',up);
+    p.before.addEventListener('ended',()=>{
+        const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(b)b.textContent='▶';p.isPlaying=false;
+    });
+    p.after.addEventListener('ended',()=>{
+        const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(b)b.textContent='▶';p.isPlaying=false;
+    });
+});
+
+document.querySelectorAll('.progress-container[data-track]:not([data-track^="unreleased-"])').forEach(c=>{
+    c.addEventListener('click',e=>{
+        const ti=parseInt(c.dataset.track),p=mixingPlayers[ti],
+              r=c.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width,
+              newTime=pct*(p[p.currentVersion].duration||0);
+        p.before.currentTime=newTime;
+        p.after.currentTime=newTime;
+    });
+});
+
+document.querySelectorAll('.volume-slider[data-track]:not([data-track^="unreleased-"])').forEach(s=>{
+    s.addEventListener('input',e=>{
+        const ti=parseInt(s.dataset.track),vol=e.target.value/100,p=mixingPlayers[ti];
+        p.masterVolume=vol;
+        if(p.dualPlaybackMode){
+            if(p.currentVersion==='before'){
+                p.before.volume=vol;
+            }else{
+                p.after.volume=vol;
             }
+        }else{
+            p.before.volume=vol;
+            p.after.volume=vol;
+        }
+    });
+});
 
-            function createGlitch(txt, clickable = false) {
-                const el = document.createElement('div');
-                el.className = 'glitch-text' + (clickable ? ' clickable' : '');
-                el.textContent = txt;
-                const pos = getRandPos();
-                el.style.left = pos.left + 'px';
-                el.style.top = pos.top + 'px';
-                
-                if (clickable) {
-                    el.onclick = () => {
-                        el.classList.add('clicked');
-                        noiseElements.forEach(n => n.classList.add('fade-out'));
-                        
-                        setTimeout(() => {
-                            noiseElements.forEach(n => n.remove());
-                            noiseElements = createNoiseField(glitchSets[clickCount]);
-                            const unlockContent = document.getElementById('archiveUnlockContent');
-                            if (unlockContent) {
-                                noiseElements.forEach(n => unlockContent.appendChild(n));
-                            }
-                        }, 500);
-                        
-                        setTimeout(() => {
-                            if (clickCount < 1) {
-                                clickCount++;
-                                el.remove();
-                                const newGlitch = createGlitch(glitchTexts[1], true);
-                                const unlockContent = document.getElementById('archiveUnlockContent');
-                                if (unlockContent) {
-                                    unlockContent.appendChild(newGlitch);
-                                }
-                            } else {
-                                el.style.opacity = '0';
-                                noiseElements.forEach(n => n.classList.add('fade-out'));
-                                setTimeout(() => {
-                                    el.remove();
-                                    noiseElements.forEach(n => n.remove());
-                                    noiseElements = [];
-                                    showDesc();
-                                }, 500);
-                            }
-                        }, 300);
-                    };
-                }
-                return el;
-            }
+document.addEventListener('keydown',e=>{
+    const pi=mixingPlayers.findIndex(p=>p.isPlaying);
+    if(pi===-1)return;
+    if(e.key==='a'||e.key==='A'){
+        e.preventDefault();
+        document.querySelector(`.ab-btn[data-track="${pi}"][data-version="before"]`).click();
+    }else if(e.key==='b'||e.key==='B'){
+        e.preventDefault();
+        document.querySelector(`.ab-btn[data-track="${pi}"][data-version="after"]`).click();
+    }else if(e.key===' '){
+        e.preventDefault();
+        const b=document.querySelector(`.play-btn[data-track="${pi}"]:not([data-track^="unreleased-"])`);
+        if(b)b.click();
+    }
+});
 
-            function typeWriter(el, txt, spd = 50) {
-                let i = 0;
-                el.classList.add('typing');
-                
-                function type() {
-                    if (i < txt.length) {
-                        if (txt[i] === '\n') {
-                            el.innerHTML += '<br>';
-                            i++;
-                        } else if (txt.substring(i, i + 3) === '<b>') {
-                            el.innerHTML += '<b>';
-                            i += 3;
-                        } else if (txt.substring(i, i + 4) === '</b>') {
-                            el.innerHTML += '</b>';
-                            i += 4;
-                        } else if (txt.substring(i, i + 3) === '<i>') {
-                            el.innerHTML += '<i>';
-                            i += 3;
-                        } else if (txt.substring(i, i + 4) === '</i>') {
-                            el.innerHTML += '</i>';
-                            i += 4;
-                        } else {
-                            el.innerHTML += txt.charAt(i);
-                            i++;
-                        }
-                        setTimeout(type, spd);
-                    } else {
-                        el.classList.remove('typing');
-                        showSigilForAbout();
-                    }
-                }
-                type();
-            }
+// Initialize dual playback detection on first interaction
+let detectionDone=false;
+document.addEventListener('click',()=>{
+    <script>
+const unreleasedTracks=[{title:'(the windows)',artist:'santos bluː',file:'unreleased-track1.mp3'},{title:'two eyes',artist:'santos bluː',file:'unreleased-track2.mp3'}];
+const mixingTracks=[{title:'Love or War',artist:'CLOUD5 & santos bluː • 2026',before:'track1-reference.mp3',after:'track1-mixed.mp3'},{title:'Daze',artist:'CLOUD5 • 2022',before:'track2-reference.mp3',after:'track2-mixed.mp3'},{title:'13 Bricks',artist:'CLOUD5 & santos bluː • 2026',before:'track3-reference.mp3',after:'track3-mixed.mp3'},{title:'Reminiscing',artist:'Fenda • 2024',before:'track4-reference.mp3',after:'track4-mixed.mp3'},{title:'Fluid, Go Stupid',artist:'CLOUD5 & santos bluː • 2026',before:'track5-reference.mp3',after:'track5-mixed.mp3'}];
 
-            function showDesc() {
-                const unlockContent = document.getElementById('archiveUnlockContent');
-                if (unlockContent) {
-                    unlockContent.style.opacity = '0';
-                    setTimeout(() => {
-                        unlockContent.remove();
-                        // Restore the archive scroll container
-                        const archiveContainer = document.getElementById('archiveContainer');
-                        archiveContainer.innerHTML = '<div class="archive-scroll" id="archiveScroll"></div>';
-                        initArchive();
-                        aboutCompleted = true;
-                    }, 500);
-                }
-            }
+const unreleasedPlayers=unreleasedTracks.map(t=>({audio:new Audio(t.file),isPlaying:false}));
+const mixingPlayers=mixingTracks.map(t=>({
+    before:new Audio(t.before),
+    after:new Audio(t.after),
+    currentVersion:'before',
+    isPlaying:false,
+    masterVolume:0.8
+}));
 
-            function createNoiseField(chars = glitchSets[0]) {
-                const field = [];
-                const count = Math.floor(Math.random() * 8) + 6;
-                for (let i = 0; i < count; i++) {
-                    const noise = chars[Math.floor(Math.random() * chars.length)];
-                    field.push(createGlitch(noise, false));
-                }
-                return field;
-            }
+unreleasedPlayers.forEach(p=>p.audio.volume=0.8);
+mixingPlayers.forEach(p=>{
+    p.before.volume=0.8;
+    p.after.volume=0.8;
+    p.before.preload='metadata';
+    p.after.preload='metadata';
+});
 
-            function closeAbout() {
-                aboutModal.classList.remove('active');
-            }
+// UNRELEASED - Play/Pause
+document.querySelectorAll('.play-btn[data-track^="unreleased-"]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const tid=btn.dataset.track,ti=parseInt(tid.split('-')[1]),p=unreleasedPlayers[ti];
+        if(p.isPlaying){
+            p.audio.pause();btn.textContent='▶';p.isPlaying=false;
+        }else{
+            unreleasedPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});
+            mixingPlayers.forEach((x,i)=>{if(x.isPlaying){x[x.currentVersion].pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});
+            p.audio.play();btn.textContent='⏸';p.isPlaying=true;
+        }
+    });
+});
 
-            aboutBtn.addEventListener('click', () => {
-                aboutModal.classList.add('active');
-                
-                aboutContent.innerHTML = '';
-                
-                const c = document.createElement('div');
-                c.className = 'description-container';
-                const t = document.createElement('div');
-                t.className = 'description-text';
-                c.appendChild(t);
-                aboutContent.appendChild(c);
-                
-                setTimeout(() => {
-                    c.classList.add('visible');
-                    typeWriter(t, descText, 40);
-                }, 300);
-            });
+unreleasedPlayers.forEach((p,i)=>{
+    const up=()=>{
+        const pb=document.querySelector(`.progress-container[data-track="unreleased-${i}"] .progress-bar`),
+              td=document.querySelector(`.time-display[data-track="unreleased-${i}"]`);
+        if(p.audio.duration){
+            pb.style.width=(p.audio.currentTime/p.audio.duration)*100+'%';
+            const cm=Math.floor(p.audio.currentTime/60),cs=Math.floor(p.audio.currentTime%60).toString().padStart(2,'0'),
+                  dm=Math.floor(p.audio.duration/60),ds=Math.floor(p.audio.duration%60).toString().padStart(2,'0');
+            td.textContent=`${cm}:${cs} / ${dm}:${ds}`;
+        }
+    };
+    p.audio.addEventListener('timeupdate',up);
+    p.audio.addEventListener('ended',()=>{
+        document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';
+        p.isPlaying=false;
+        if(i===0)setTimeout(()=>document.querySelector('.play-btn[data-track="unreleased-1"]').click(),500);
+    });
+});
 
-            aboutClose.addEventListener('click', closeAbout);
+document.querySelectorAll('.progress-container[data-track^="unreleased-"]').forEach(c=>{
+    c.addEventListener('click',e=>{
+        const ti=parseInt(c.dataset.track.split('-')[1]),p=unreleasedPlayers[ti],
+              r=c.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width;
+        p.audio.currentTime=pct*p.audio.duration;
+    });
+});
 
-            // ARCHIVE FUNCTIONS
-            function initArchive() {
-                const archiveScroll = document.getElementById('archiveScroll');
-                archiveScroll.innerHTML = '';
+document.querySelectorAll('.volume-slider[data-track^="unreleased-"]').forEach(s=>{
+    s.addEventListener('input',e=>{
+        const ti=parseInt(s.dataset.track.split('-')[1]);
+        unreleasedPlayers[ti].audio.volume=e.target.value/100;
+    });
+});
 
-                archivePieces.forEach((piece, index) => {
-                    if (piece.type === 'notes') {
-                        const notesEl = document.createElement('div');
-                        notesEl.className = 'archive-notes';
-                        notesEl.innerHTML = `
-                            <div class="notes-title">/// notes</div>
-                            <textarea 
-                                class="notes-textarea" 
-                                id="archiveNotes"
-                                placeholder="type here..."
-                            ></textarea>
-                            <div class="notes-saved" id="notesSaved">saved</div>
-                        `;
-                        archiveScroll.appendChild(notesEl);
+// MIXING PORTFOLIO - Play/Pause (simple single track mode)
+document.querySelectorAll('.play-btn[data-track]:not([data-track^="unreleased-"])').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const ti=parseInt(btn.dataset.track),p=mixingPlayers[ti];
+        const currentAudio=p[p.currentVersion];
+        
+        if(p.isPlaying){
+            currentAudio.pause();
+            btn.textContent='▶';
+            p.isPlaying=false;
+        }else{
+            unreleasedPlayers.forEach((x,i)=>{if(x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});
+            mixingPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x[x.currentVersion].pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});
+            
+            currentAudio.play();
+            btn.textContent='⏸';
+            p.isPlaying=true;
+        }
+    });
+});
 
-                        setTimeout(() => {
-                            const textarea = document.getElementById('archiveNotes');
-                            const savedIndicator = document.getElementById('notesSaved');
-                            const savedNotes = localStorage.getItem('archive_notes');
-                            
-                            if (savedNotes) {
-                                textarea.value = savedNotes;
-                            }
+// A/B Toggle - fast track switching
+document.querySelectorAll('.ab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const ti=parseInt(btn.dataset.track),v=btn.dataset.version,p=mixingPlayers[ti];
+        if(p.currentVersion===v)return;
+        
+        document.querySelectorAll(`.ab-btn[data-track="${ti}"]`).forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const oldVersion=p.currentVersion;
+        const wasPlaying=p.isPlaying;
+        const currentTime=p[oldVersion].currentTime;
+        
+        p.currentVersion=v;
+        
+        if(wasPlaying){
+            p[v].currentTime=currentTime;
+            p[v].play().then(()=>{
+                p[oldVersion].pause();
+            }).catch(()=>{});
+        }
+    });
+});
 
-                            let saveTimeout;
-                            textarea.addEventListener('input', () => {
-                                clearTimeout(saveTimeout);
-                                saveTimeout = setTimeout(() => {
-                                    // Use requestIdleCallback for better performance
-                                    if ('requestIdleCallback' in window) {
-                                        requestIdleCallback(() => {
-                                            localStorage.setItem('archive_notes', textarea.value);
-                                            savedIndicator.classList.add('show');
-                                            setTimeout(() => {
-                                                savedIndicator.classList.remove('show');
-                                            }, 1500);
-                                        });
-                                    } else {
-                                        localStorage.setItem('archive_notes', textarea.value);
-                                        savedIndicator.classList.add('show');
-                                        setTimeout(() => {
-                                            savedIndicator.classList.remove('show');
-                                        }, 1500);
-                                    }
-                                }, 500);
-                            });
-                        }, 100);
-                    } else {
-                        const pieceEl = document.createElement('div');
-                        pieceEl.className = `archive-piece ${piece.flippable ? 'flippable' : ''}`;
-                        
-                        pieceEl.innerHTML = `
-                            <div class="archive-card">
-                                <div class="archive-card-face">
-                                    <img src="${piece.front}" 
-                                         class="archive-image" 
-                                         alt="Archive ${index + 1}"
-                                         loading="lazy"
-                                         decoding="async">
-                                    <div class="archive-glitch"></div>
-                                </div>
-                                ${piece.back ? `
-                                <div class="archive-card-face archive-card-back">
-                                    <img src="${piece.back}" 
-                                         class="archive-image" 
-                                         alt="Archive ${index + 1} Back"
-                                         loading="lazy"
-                                         decoding="async">
-                                    <div class="archive-glitch"></div>
-                                </div>
-                                ` : ''}
-                            </div>
-                        `;
+mixingPlayers.forEach((p,i)=>{
+    const up=()=>{
+        const ca=p[p.currentVersion],
+              pb=document.querySelector(`.progress-container[data-track="${i}"]:not([data-track^="unreleased-"]) .progress-bar`),
+              td=document.querySelector(`.time-display[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(ca.duration){
+            pb.style.width=(ca.currentTime/ca.duration)*100+'%';
+            const cm=Math.floor(ca.currentTime/60),cs=Math.floor(ca.currentTime%60).toString().padStart(2,'0'),
+                  dm=Math.floor(ca.duration/60),ds=Math.floor(ca.duration%60).toString().padStart(2,'0');
+            td.textContent=`${cm}:${cs} / ${dm}:${ds}`;
+        }
+    };
+    p.before.addEventListener('timeupdate',up);
+    p.after.addEventListener('timeupdate',up);
+    p.before.addEventListener('ended',()=>{
+        if(p.currentVersion==='before'){
+            const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);
+            if(b)b.textContent='▶';p.isPlaying=false;
+        }
+    });
+    p.after.addEventListener('ended',()=>{
+        if(p.currentVersion==='after'){
+            const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);
+            if(b)b.textContent='▶';p.isPlaying=false;
+        }
+    });
+});
 
-                        if (piece.flippable) {
-                            const card = pieceEl.querySelector('.archive-card');
-                            pieceEl.addEventListener('click', () => {
-                                card.classList.toggle('flipped');
-                            });
-                        }
+document.querySelectorAll('.progress-container[data-track]:not([data-track^="unreleased-"])').forEach(c=>{
+    c.addEventListener('click',e=>{
+        const ti=parseInt(c.dataset.track),p=mixingPlayers[ti],
+              r=c.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width,
+              newTime=pct*(p[p.currentVersion].duration||0);
+        p[p.currentVersion].currentTime=newTime;
+    });
+});
 
-                        archiveScroll.appendChild(pieceEl);
-                    }
-                });
-            }
+document.querySelectorAll('.volume-slider[data-track]:not([data-track^="unreleased-"])').forEach(s=>{
+    s.addEventListener('input',e=>{
+        const ti=parseInt(s.dataset.track),vol=e.target.value/100,p=mixingPlayers[ti];
+        p.masterVolume=vol;
+        p.before.volume=vol;
+        p.after.volume=vol;
+    });
+});
 
-            initArchive();
-
-            archiveLink.addEventListener('click', () => {
-                archiveModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                
-                // If archive already unlocked, show it directly
-                if (aboutCompleted) {
-                    return;
-                }
-                
-                // First time - show glitch interaction
-                clickCount = 0;
-                const archiveContainer = document.getElementById('archiveContainer');
-                archiveContainer.innerHTML = '<div id="archiveUnlockContent" style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;"></div>';
-                const unlockContent = document.getElementById('archiveUnlockContent');
-                
-                noiseElements = createNoiseField();
-                noiseElements.forEach(n => unlockContent.appendChild(n));
-                const mainGlitch = createGlitch(glitchTexts[0], true);
-                unlockContent.appendChild(mainGlitch);
-            });
-
-            archiveClose.addEventListener('click', () => {
-                archiveModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-
-            archiveModal.addEventListener('click', (e) => {
-                if (e.target === archiveModal) {
-                    archiveModal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && archiveModal.classList.contains('active')) {
-                    archiveModal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                }
-            });
-
-            streamBtn.addEventListener('click', () => {
-                currentContext = 'ep';
-                showStreamingModal();
-            });
-
-            albumCover.addEventListener('click', () => {
-                currentContext = 'ep';
-                showStreamingModal();
-            });
-
-            function showStreamingModal() {
-                streamingModal.classList.add('active');
-                
-                document.querySelectorAll('.streaming-option').forEach(option => {
-                    option.onclick = () => {
-                        const service = option.dataset.service;
-                        preferredService = service;
-                        streamingModal.classList.remove('active');
-                        
-                        const url = currentContext === 'ep' ? epLinks[service] : songLinks[currentContext][service];
-                        window.open(url, '_blank');
-                    };
-                });
-            }
-
-            streamingModal.addEventListener('click', (e) => {
-                if (e.target === streamingModal) {
-                    streamingModal.classList.remove('active');
-                }
-            });
-
-            moreMusicBtn.addEventListener('click', () => {
-                musicLinks.classList.toggle('expanded');
-            });
-
-            document.querySelectorAll('.music-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    currentContext = e.target.dataset.song;
-                    showStreamingModal();
-                });
-            });
-
-            emailForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const submitBtn = emailForm.querySelector('.subscribe-btn');
-                const originalText = submitBtn.textContent;
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
-                
-                const templateParams = {
-                    to_email: document.getElementById('emailInput').value,
-                    user_email: document.getElementById('emailInput').value,
-                    customer_name: document.getElementById('nameInput').value
-                };
-                
-                // Check if emailjs is loaded
-                if (typeof emailjs !== 'undefined') {
-                    emailjs.send('service_pr6bs0j', 'template_oe15cej', templateParams)
-                        .then(() => {
-                            submitBtn.textContent = 'Subscribed!';
-                            emailForm.reset();
-                            setTimeout(() => {
-                                submitBtn.textContent = originalText;
-                                submitBtn.disabled = false;
-                            }, 2000);
-                        })
-                        .catch((error) => {
-                            console.error('EmailJS error:', error);
-                            submitBtn.textContent = 'Error - Try again';
-                            setTimeout(() => {
-                                submitBtn.textContent = originalText;
-                                submitBtn.disabled = false;
-                            }, 2000);
-                        });
-                } else {
-                    console.error('EmailJS not loaded');
-                    submitBtn.textContent = 'Error - Try again';
-                    setTimeout(() => {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }, 2000);
-                }
-            });
-        });
+document.addEventListener('keydown',e=>{
+    const pi=mixingPlayers.findIndex(p=>p.isPlaying);
+    if(pi===-1)return;
+    if(e.key==='a'||e.key==='A'){
+        e.preventDefault();
+        document.querySelector(`.ab-btn[data-track="${pi}"][data-version="before"]`).click();
+    }else if(e.key==='b'||e.key==='B'){
+        e.preventDefault();
+        document.querySelector(`.ab-btn[data-track="${pi}"][data-version="after"]`).click();
+    }else if(e.key===' '){
+        e.preventDefault();
+        const b=document.querySelector(`.play-btn[data-track="${pi}"]:not([data-track^="unreleased-"])`);
+        if(b)b.click();
+    }
+});
     </script>
 </body>
 </html>

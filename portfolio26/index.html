@@ -468,6 +468,216 @@ document.addEventListener('keydown',e=>{
         document.querySelector(`.ab-btn[data-track="${pi}"][data-version="before"]`).click();
     }else if(e.key==='b'||e.key==='B'){
         e.preventDefault();
+    <script>
+const unreleasedTracks=[{title:'(the windows)',artist:'santos bluː',file:'unreleased-track1.mp3'},{title:'two eyes',artist:'santos bluː',file:'unreleased-track2.mp3'}];
+const mixingTracks=[{title:'Love or War',artist:'CLOUD5 & santos bluː • 2026',before:'track1-reference.mp3',after:'track1-mixed.mp3'},{title:'Daze',artist:'CLOUD5 • 2022',before:'track2-reference.mp3',after:'track2-mixed.mp3'},{title:'13 Bricks',artist:'CLOUD5 & santos bluː • 2026',before:'track3-reference.mp3',after:'track3-mixed.mp3'},{title:'Reminiscing',artist:'Fenda • 2024',before:'track4-reference.mp3',after:'track4-mixed.mp3'},{title:'Fluid, Go Stupid',artist:'CLOUD5 & santos bluː • 2026',before:'track5-reference.mp3',after:'track5-mixed.mp3'}];
+
+const unreleasedPlayers=unreleasedTracks.map(t=>({audio:new Audio(t.file),isPlaying:false}));
+const mixingPlayers=mixingTracks.map(t=>({
+    before:new Audio(t.before),
+    after:new Audio(t.after),
+    currentVersion:'before',
+    isPlaying:false,
+    masterVolume:0.8,
+    dualPlaybackMode:false
+}));
+
+unreleasedPlayers.forEach(p=>p.audio.volume=0.8);
+mixingPlayers.forEach(p=>{
+    p.before.volume=0.8;
+    p.after.volume=0;
+    p.before.preload='auto';
+    p.after.preload='auto';
+});
+
+// Detect if dual playback works (desktop) or not (mobile)
+function detectDualPlayback(callback){
+    const test1=new Audio();
+    const test2=new Audio();
+    test1.src='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
+    test2.src='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
+    test1.volume=0.01;
+    test2.volume=0.01;
+    Promise.all([test1.play(),test2.play()])
+        .then(()=>{callback(true);test1.pause();test2.pause();})
+        .catch(()=>{callback(false);});
+}
+
+// UNRELEASED - Play/Pause
+document.querySelectorAll('.play-btn[data-track^="unreleased-"]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const tid=btn.dataset.track,ti=parseInt(tid.split('-')[1]),p=unreleasedPlayers[ti];
+        if(p.isPlaying){
+            p.audio.pause();btn.textContent='▶';p.isPlaying=false;
+        }else{
+            unreleasedPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});
+            mixingPlayers.forEach((x,i)=>{if(x.isPlaying){x.before.pause();x.after.pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});
+            p.audio.play();btn.textContent='⏸';p.isPlaying=true;
+        }
+    });
+});
+
+unreleasedPlayers.forEach((p,i)=>{
+    const up=()=>{
+        const pb=document.querySelector(`.progress-container[data-track="unreleased-${i}"] .progress-bar`),
+              td=document.querySelector(`.time-display[data-track="unreleased-${i}"]`);
+        if(p.audio.duration){
+            pb.style.width=(p.audio.currentTime/p.audio.duration)*100+'%';
+            const cm=Math.floor(p.audio.currentTime/60),cs=Math.floor(p.audio.currentTime%60).toString().padStart(2,'0'),
+                  dm=Math.floor(p.audio.duration/60),ds=Math.floor(p.audio.duration%60).toString().padStart(2,'0');
+            td.textContent=`${cm}:${cs} / ${dm}:${ds}`;
+        }
+    };
+    p.audio.addEventListener('timeupdate',up);
+    p.audio.addEventListener('ended',()=>{
+        document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';
+        p.isPlaying=false;
+        if(i===0)setTimeout(()=>document.querySelector('.play-btn[data-track="unreleased-1"]').click(),500);
+    });
+});
+
+document.querySelectorAll('.progress-container[data-track^="unreleased-"]').forEach(c=>{
+    c.addEventListener('click',e=>{
+        const ti=parseInt(c.dataset.track.split('-')[1]),p=unreleasedPlayers[ti],
+              r=c.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width;
+        p.audio.currentTime=pct*p.audio.duration;
+    });
+});
+
+document.querySelectorAll('.volume-slider[data-track^="unreleased-"]').forEach(s=>{
+    s.addEventListener('input',e=>{
+        const ti=parseInt(s.dataset.track.split('-')[1]);
+        unreleasedPlayers[ti].audio.volume=e.target.value/100;
+    });
+});
+
+// MIXING PORTFOLIO - Play/Pause
+document.querySelectorAll('.play-btn[data-track]:not([data-track^="unreleased-"])').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const ti=parseInt(btn.dataset.track),p=mixingPlayers[ti];
+        if(p.isPlaying){
+            p.before.pause();p.after.pause();
+            btn.textContent='▶';p.isPlaying=false;
+        }else{
+            unreleasedPlayers.forEach((x,i)=>{if(x.isPlaying){x.audio.pause();document.querySelector(`.play-btn[data-track="unreleased-${i}"]`).textContent='▶';x.isPlaying=false}});
+            mixingPlayers.forEach((x,i)=>{if(i!==ti&&x.isPlaying){x.before.pause();x.after.pause();const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);if(b)b.textContent='▶';x.isPlaying=false}});
+            
+            // Detect mode if not yet determined
+            if(!('dualPlaybackMode' in p)){
+                detectDualPlayback(canDual=>{
+                    p.dualPlaybackMode=canDual;
+                    startPlayback(p,btn);
+                });
+            }else{
+                startPlayback(p,btn);
+            }
+        }
+    });
+});
+
+function startPlayback(p,btn){
+    if(p.dualPlaybackMode){
+        // Desktop: play both, use volume switching
+        p.before.currentTime=p.after.currentTime;
+        p.before.volume=p.currentVersion==='before'?p.masterVolume:0;
+        p.after.volume=p.currentVersion==='after'?p.masterVolume:0;
+        p.before.play();
+        p.after.play();
+    }else{
+        // Mobile: play only current track
+        p[p.currentVersion].play();
+    }
+    btn.textContent='⏸';
+    p.isPlaying=true;
+}
+
+// A/B Toggle
+document.querySelectorAll('.ab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        const ti=parseInt(btn.dataset.track),v=btn.dataset.version,p=mixingPlayers[ti];
+        if(p.currentVersion===v)return;
+        
+        document.querySelectorAll(`.ab-btn[data-track="${ti}"]`).forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const oldV=p.currentVersion;
+        p.currentVersion=v;
+        
+        if(p.isPlaying){
+            if(p.dualPlaybackMode){
+                // Desktop: instant volume crossfade
+                p.before.volume=v==='before'?p.masterVolume:0;
+                p.after.volume=v==='after'?p.masterVolume:0;
+            }else{
+                // Mobile: switch tracks with minimal gap
+                const ct=p[oldV].currentTime;
+                p[oldV].pause();
+                p[v].currentTime=ct;
+                p[v].play().catch(()=>{});
+            }
+        }
+    });
+});
+
+mixingPlayers.forEach((p,i)=>{
+    const up=()=>{
+        const ca=p[p.currentVersion],
+              pb=document.querySelector(`.progress-container[data-track="${i}"]:not([data-track^="unreleased-"]) .progress-bar`),
+              td=document.querySelector(`.time-display[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(ca.duration){
+            pb.style.width=(ca.currentTime/ca.duration)*100+'%';
+            const cm=Math.floor(ca.currentTime/60),cs=Math.floor(ca.currentTime%60).toString().padStart(2,'0'),
+                  dm=Math.floor(ca.duration/60),ds=Math.floor(ca.duration%60).toString().padStart(2,'0');
+            td.textContent=`${cm}:${cs} / ${dm}:${ds}`;
+        }
+    };
+    p.before.addEventListener('timeupdate',up);
+    p.after.addEventListener('timeupdate',up);
+    p.before.addEventListener('ended',()=>{
+        const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(b)b.textContent='▶';p.isPlaying=false;
+    });
+    p.after.addEventListener('ended',()=>{
+        const b=document.querySelector(`.play-btn[data-track="${i}"]:not([data-track^="unreleased-"])`);
+        if(b)b.textContent='▶';p.isPlaying=false;
+    });
+});
+
+document.querySelectorAll('.progress-container[data-track]:not([data-track^="unreleased-"])').forEach(c=>{
+    c.addEventListener('click',e=>{
+        const ti=parseInt(c.dataset.track),p=mixingPlayers[ti],
+              r=c.getBoundingClientRect(),pct=(e.clientX-r.left)/r.width,
+              newTime=pct*(p[p.currentVersion].duration||0);
+        p.before.currentTime=newTime;
+        p.after.currentTime=newTime;
+    });
+});
+
+document.querySelectorAll('.volume-slider[data-track]:not([data-track^="unreleased-"])').forEach(s=>{
+    s.addEventListener('input',e=>{
+        const ti=parseInt(s.dataset.track),vol=e.target.value/100,p=mixingPlayers[ti];
+        p.masterVolume=vol;
+        if(p.dualPlaybackMode){
+            if(p.currentVersion==='before'){
+                p.before.volume=vol;
+            }else{
+                p.after.volume=vol;
+            }
+        }else{
+            p.before.volume=vol;
+            p.after.volume=vol;
+        }
+    });
+});
+
+document.addEventListener('keydown',e=>{
+    const pi=mixingPlayers.findIndex(p=>p.isPlaying);
+    if(pi===-1)return;
+    if(e.key==='a'||e.key==='A'){
+        e.preventDefault();
+        document.querySelector(`.ab-btn[data-track="${pi}"][data-version="before"]`).click();
+    }else if(e.key==='b'||e.key==='B'){
+        e.preventDefault();
         document.querySelector(`.ab-btn[data-track="${pi}"][data-version="after"]`).click();
     }else if(e.key===' '){
         e.preventDefault();
@@ -475,6 +685,17 @@ document.addEventListener('keydown',e=>{
         if(b)b.click();
     }
 });
+
+// Initialize dual playback detection on first interaction
+let detectionDone=false;
+document.addEventListener('click',()=>{
+    if(!detectionDone){
+        detectionDone=true;
+        detectDualPlayback(canDual=>{
+            mixingPlayers.forEach(p=>p.dualPlaybackMode=canDual);
+        });
+    }
+},{once:true});
     </script>
 </body>
 </html>

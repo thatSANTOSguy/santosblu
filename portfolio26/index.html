@@ -310,8 +310,8 @@
         <div class="keyboard-hint">tip: press A or B to switch versions while playing • space to play/pause</div>
     </div>
     <script>
-const unreleasedTracks=[{title:'(the windows)',artist:'santos bluː',file:'audio/unreleased-track1.mp3'},{title:'two eyes',artist:'santos bluː',file:'audio/unreleased-track2.mp3'}];
-const mixingTracks=[{title:'Love or War',artist:'CLOUD5 & santos bluː • 2026',before:'audio/track1-reference.mp3',after:'audio/track1-mixed.mp3'},{title:'Daze',artist:'CLOUD5 • 2022',before:'audio/track2-reference.mp3',after:'audio/track2-mixed.mp3'},{title:'13 Bricks',artist:'CLOUD5 & santos bluː • 2026',before:'audio/track3-reference.mp3',after:'audio/track3-mixed.mp3'},{title:'Reminiscing',artist:'Fenda • 2024',before:'audio/track4-reference.mp3',after:'audio/track4-mixed.mp3'},{title:'Fluid, Go Stupid',artist:'CLOUD5 & santos bluː • 2026',before:'audio/track5-reference.mp3',after:'audio/track5-mixed.mp3'}];
+const unreleasedTracks=[{title:'(the windows)',artist:'santos bluː',file:'unreleased-track1.mp3'},{title:'two eyes',artist:'santos bluː',file:'unreleased-track2.mp3'}];
+const mixingTracks=[{title:'Love or War',artist:'CLOUD5 & santos bluː • 2026',before:'track1-reference.mp3',after:'track1-mixed.mp3'},{title:'Daze',artist:'CLOUD5 • 2022',before:'track2-reference.mp3',after:'track2-mixed.mp3'},{title:'13 Bricks',artist:'CLOUD5 & santos bluː • 2026',before:'track3-reference.mp3',after:'track3-mixed.mp3'},{title:'Reminiscing',artist:'Fenda • 2024',before:'track4-reference.mp3',after:'track4-mixed.mp3'},{title:'Fluid, Go Stupid',artist:'CLOUD5 & santos bluː • 2026',before:'track5-reference.mp3',after:'track5-mixed.mp3'}];
 const unreleasedPlayers=unreleasedTracks.map(t=>({audio:new Audio(t.file),isPlaying:false}));
 const mixingPlayers=mixingTracks.map(t=>({before:new Audio(t.before),after:new Audio(t.after),currentVersion:'before',isPlaying:false}));
 unreleasedPlayers.forEach(p=>p.audio.volume=0.8);

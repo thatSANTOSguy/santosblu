@@ -325,23 +325,6 @@
         }
     });
 
-    // Keep both tracks synced at all times
-    Object.entries(players).forEach(([id, p]) => {
-        if(!p.audio) {
-            p.before.addEventListener('timeupdate', () => {
-                if(p.current === 'before' && p.playing) {
-                    p.after.currentTime = p.before.currentTime;
-                }
-            });
-            
-            p.after.addEventListener('timeupdate', () => {
-                if(p.current === 'after' && p.playing) {
-                    p.before.currentTime = p.after.currentTime;
-                }
-            });
-        }
-    });
-
     document.querySelectorAll('.play-btn').forEach(btn => {
         btn.onclick = () => {
             const id = btn.dataset.track;
@@ -384,21 +367,26 @@
                 const oldTrack = p[p.current];
                 const newTrack = p[ver];
                 const wasPlaying = p.playing;
-                
-                // Sync position
-                newTrack.currentTime = oldTrack.currentTime;
-                
-                // Switch
-                p.current = ver;
+                const currentTime = oldTrack.currentTime;
                 
                 if(wasPlaying) {
-                    // Start new track, then stop old one for smoothest transition
-                    newTrack.play().then(() => {
-                        oldTrack.pause();
-                    }).catch(() => {
-                        // If play fails, just pause old track
-                        oldTrack.pause();
+                    // Pause old track first
+                    oldTrack.pause();
+                    
+                    // Set new track to same position
+                    newTrack.currentTime = currentTime;
+                    
+                    // Change current version
+                    p.current = ver;
+                    
+                    // Start new track
+                    newTrack.play().catch(() => {
+                        console.log('Play failed');
                     });
+                } else {
+                    // Not playing, just switch current version
+                    p.current = ver;
+                    newTrack.currentTime = currentTime;
                 }
             }
         };

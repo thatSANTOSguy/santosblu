@@ -98,6 +98,10 @@
             justify-content: center;
             font-size: 14px;
         }
+        .play-btn.paused {
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
         .play-btn:hover {
             border-color: rgba(255, 255, 255, 0.8);
             background: rgba(255, 255, 255, 0.05);
@@ -348,17 +352,21 @@
             if(p.playing) {
                 audio.pause();
                 btn.textContent = '▶';
+                btn.classList.remove('paused');
                 p.playing = false;
             } else {
                 Object.entries(players).forEach(([k, v]) => {
                     if(k !== id && v.playing) {
                         (v.audio || v[v.current]).pause();
-                        document.querySelector(`[data-track="${k}"].play-btn`).textContent = '▶';
+                        const otherBtn = document.querySelector(`[data-track="${k}"].play-btn`);
+                        otherBtn.textContent = '▶';
+                        otherBtn.classList.remove('paused');
                         v.playing = false;
                     }
                 });
                 audio.play();
-                btn.textContent = '⏸';
+                btn.textContent = '❚❚';
+                btn.classList.add('paused');
                 p.playing = true;
             }
         };
@@ -414,7 +422,9 @@
         if(p.audio) {
             p.audio.ontimeupdate = update;
             p.audio.onended = () => {
-                document.querySelector(`[data-track="${id}"].play-btn`).textContent = '▶';
+                const btn = document.querySelector(`[data-track="${id}"].play-btn`);
+                btn.textContent = '▶';
+                btn.classList.remove('paused');
                 p.playing = false;
                 if(id === 'u0') setTimeout(() => document.querySelector('[data-track="u1"].play-btn').click(), 500);
             };
@@ -423,7 +433,9 @@
             p.after.ontimeupdate = update;
             p.before.onended = p.after.onended = () => {
                 if(p.current === 'before' && p.before.ended || p.current === 'after' && p.after.ended) {
-                    document.querySelector(`[data-track="${id}"].play-btn`).textContent = '▶';
+                    const btn = document.querySelector(`[data-track="${id}"].play-btn`);
+                    btn.textContent = '▶';
+                    btn.classList.remove('paused');
                     p.playing = false;
                 }
             };

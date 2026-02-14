@@ -310,8 +310,33 @@
     };
 
     Object.values(players).forEach(p => {
-        if(p.audio) p.audio.volume = 0.8;
-        else { p.before.volume = 0.8; p.after.volume = 0.8; }
+        if(p.audio) {
+            p.audio.volume = 0.8;
+            p.audio.preload = 'auto';
+        } else {
+            p.before.volume = 0.8;
+            p.after.volume = 0.8;
+            p.before.preload = 'auto';
+            p.after.preload = 'auto';
+        }
+    });
+
+    // Keep both tracks synced at all times
+    Object.entries(players).forEach(([id, p]) => {
+        if(!p.audio) {
+            const syncTracks = () => {
+                const active = p[p.current];
+                const inactive = p.current === 'before' ? p.after : p.before;
+                
+                // Keep inactive track synced to active track's position
+                if(Math.abs(inactive.currentTime - active.currentTime) > 0.1) {
+                    inactive.currentTime = active.currentTime;
+                }
+            };
+            
+            p.before.addEventListener('timeupdate', syncTracks);
+            p.after.addEventListener('timeupdate', syncTracks);
+        }
     });
 
     document.querySelectorAll('.play-btn').forEach(btn => {
@@ -349,12 +374,25 @@
             btn.classList.add('active');
             
             if(p.current !== ver) {
-                const time = p[p.current].currentTime;
+                const oldTrack = p[p.current];
+                const newTrack = p[ver];
                 const wasPlaying = p.playing;
-                if(wasPlaying) p[p.current].pause();
+                
+                // Sync position
+                newTrack.currentTime = oldTrack.currentTime;
+                
+                // Switch
                 p.current = ver;
-                p[ver].currentTime = time;
-                if(wasPlaying) p[ver].play();
+                
+                if(wasPlaying) {
+                    // Start new track, then stop old one for smoothest transition
+                    newTrack.play().then(() => {
+                        oldTrack.pause();
+                    }).catch(() => {
+                        // If play fails, just pause old track
+                        oldTrack.pause();
+                    });
+                }
             }
         };
     });
@@ -384,8 +422,10 @@
             p.before.ontimeupdate = update;
             p.after.ontimeupdate = update;
             p.before.onended = p.after.onended = () => {
-                document.querySelector(`[data-track="${id}"].play-btn`).textContent = '▶';
-                p.playing = false;
+                if(p.current === 'before' && p.before.ended || p.current === 'after' && p.after.ended) {
+                    document.querySelector(`[data-track="${id}"].play-btn`).textContent = '▶';
+                    p.playing = false;
+                }
             };
         }
     });
@@ -396,7 +436,15 @@
             const p = players[id];
             const audio = p.audio || p[p.current];
             const pct = (e.clientX - c.getBoundingClientRect().left) / c.offsetWidth;
-            audio.currentTime = pct * audio.duration;
+            const newTime = pct * audio.duration;
+            
+            // Seek both tracks if A/B player
+            if(p.before) {
+                p.before.currentTime = newTime;
+                p.after.currentTime = newTime;
+            } else {
+                audio.currentTime = newTime;
+            }
         };
     });
 

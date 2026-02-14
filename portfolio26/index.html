@@ -328,18 +328,17 @@
     // Keep both tracks synced at all times
     Object.entries(players).forEach(([id, p]) => {
         if(!p.audio) {
-            const syncTracks = () => {
-                const active = p[p.current];
-                const inactive = p.current === 'before' ? p.after : p.before;
-                
-                // Keep inactive track synced to active track's position
-                if(Math.abs(inactive.currentTime - active.currentTime) > 0.1) {
-                    inactive.currentTime = active.currentTime;
+            p.before.addEventListener('timeupdate', () => {
+                if(p.current === 'before' && p.playing) {
+                    p.after.currentTime = p.before.currentTime;
                 }
-            };
+            });
             
-            p.before.addEventListener('timeupdate', syncTracks);
-            p.after.addEventListener('timeupdate', syncTracks);
+            p.after.addEventListener('timeupdate', () => {
+                if(p.current === 'after' && p.playing) {
+                    p.before.currentTime = p.after.currentTime;
+                }
+            });
         }
     });
 

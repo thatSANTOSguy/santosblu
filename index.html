@@ -1205,47 +1205,20 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target === streamingModal) streamingModal.classList.remove('active');
     });
 
-    // ── Home audio player — gapless loop via Web Audio API ──
+    // ── Home audio player ──
     var homePlayBtn = document.getElementById('homePlayBtn');
     var playIcon    = homePlayBtn.querySelector('.play-icon');
     var pauseIcon   = homePlayBtn.querySelector('.pause-icon');
+    var audio       = document.getElementById('audioPlayer');
 
-    var audioCtx    = null;
-    var audioBuffer = null;
-    var sourceNode  = null;
-    var playing     = false;
-
-    function initAudio() {
-        if (audioCtx) return Promise.resolve();
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        return fetch('anw-snippet.mp3')
-            .then(function(r) { return r.arrayBuffer(); })
-            .then(function(ab) { return audioCtx.decodeAudioData(ab); })
-            .then(function(buf) { audioBuffer = buf; });
-    }
-
-    function startLoop() {
-        if (!audioBuffer) return;
-        if (sourceNode) { sourceNode.stop(); sourceNode.disconnect(); }
-        sourceNode = audioCtx.createBufferSource();
-        sourceNode.buffer = audioBuffer;
-        sourceNode.loop = true;
-        sourceNode.connect(audioCtx.destination);
-        sourceNode.start(0);
-    }
-
-    homePlayBtn.addEventListener('click', function() {
-        if (!playing) {
-            initAudio().then(function() {
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                startLoop();
-                playing = true;
+    homePlayBtn.addEventListener('click', function () {
+        if (audio.paused) {
+            audio.play().then(function () {
                 playIcon.style.display  = 'none';
                 pauseIcon.style.display = '';
-            }).catch(function(){});
+            }).catch(function () {});
         } else {
-            if (sourceNode) { sourceNode.stop(); sourceNode.disconnect(); sourceNode = null; }
-            playing = false;
+            audio.pause();
             playIcon.style.display  = '';
             pauseIcon.style.display = 'none';
         }

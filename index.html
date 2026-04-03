@@ -103,8 +103,8 @@
         .logo {
             position:fixed; top:24px; left:50%; transform:translateX(-50%);
             z-index:20;
-            font-size:16px; font-weight:500; letter-spacing:0;
-            color:rgba(255,255,255,0.72);
+            font-size:16px; font-weight:300; letter-spacing:0.02em;
+            color:rgba(255,255,255,0.45);
             text-transform:lowercase;
             white-space:nowrap;
         }
@@ -736,7 +736,7 @@
     <div class="archive-close" id="connectClose"></div>
     <div class="connect-inner">
         <div class="connect-header">
-            <span class="connect-label">witness</span>
+            <span class="connect-label">tune in</span>
         </div>
         <form class="connect-form" id="connectForm">
             <input type="text"  id="connectName"  placeholder="your name"  autocomplete="off" required>
@@ -1391,6 +1391,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var TOTAL    = catalogue.length;
     var SWIPE_THRESHOLD = 45;
 
+    function imgError(img) {
+        var p = img.parentNode;
+        if (p) { var d = document.createElement('div'); d.className = 'tape-reel'; p.replaceChild(d, img); }
+    }
+
     function formatAbout(text) {
         return text.split('||').map(function(p) {
             return '<p style="margin-bottom:0.9em">' + p.trim() + '</p>';
@@ -1416,12 +1421,7 @@ document.addEventListener('DOMContentLoaded', function () {
         card.dataset.idx = idx;
 
         var artHTML = rel.art
-            ? (function() {
-                var imgId = 'art-' + idx;
-                return '<img id="' + imgId + '" src="' + rel.art + '" alt="' + rel.title + '" loading="lazy" ' +
-                    'style="width:100%;height:100%;object-fit:cover;display:block;border-radius:50%;" ' +
-                    'onerror="var p=this.parentNode;p.innerHTML=\'<div class=\"tape-reel\"></div>\';">';
-            })()
+            ? '<img src="' + rel.art + '" alt="" loading="lazy" onerror="imgError(this)">'
             : '<div class="tape-reel"></div>';
 
         var discHTML =

@@ -6,6 +6,8 @@
     <title>santos bluː</title>
     <link rel="preconnect" href="https://use.typekit.net">
     <link rel="stylesheet" href="https://use.typekit.net/mbc3fgm.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         /* ── RESET ── */
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -103,12 +105,12 @@
         .logo {
             position:fixed; top:24px; left:50%; transform:translateX(-50%);
             z-index:20;
-            font-size:16px; font-weight:300; letter-spacing:0.02em;
-            color:rgba(255,255,255,0.45);
+            font-size:14px; font-weight:300; letter-spacing:0.01em;
+            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color:rgba(255,255,255,0.38);
             text-transform:lowercase;
             white-space:nowrap;
         }
-
         /* Current release — quiet prompt */
         .stream-prompt {
             position:fixed;
@@ -706,7 +708,7 @@
         </button>
         <button class="stream-btn" id="streamBtn">stream · alive &amp; well</button>
     </div>
-    <audio id="audioPlayer" src="anw-snippet.mp3" preload="none" loop style="display:none"></audio>
+    <audio id="audioPlayer" src="anw-snippet.mp3"></audio>
 </div>
 
 <!-- Nav -->
@@ -831,9 +833,9 @@
                 vec3 nMid    = vec3(0.026, 0.026, 0.030);
                 vec3 nLow    = vec3(0.024, 0.024, 0.028);
 
-                // Dawn peak: warm bands, no purple anywhere
-                // Zenith stays darkest — charcoal #131619
-                vec3 dZenith = vec3(0.075, 0.086, 0.098); // arrives at Studio 212 charcoal
+                // Dawn peak: blood orange / deep crimson — Lightroom orange hue -37
+                // Zenith stays dark charcoal
+                vec3 dZenith = vec3(0.075, 0.086, 0.098); // charcoal
                 vec3 dUpper  = vec3(0.055, 0.032, 0.010); // warm dark brown
                 vec3 dMid    = vec3(0.160, 0.055, 0.008); // deep orange-red
                 vec3 dLow    = vec3(0.275, 0.098, 0.010); // rich orange near horizon
@@ -917,8 +919,8 @@
 
                     // Cloud colour — dark silhouette
                     vec3 cloudCol = mix(
-                        vec3(0.008, 0.009, 0.012),
-                        vec3(0.028, 0.012, 0.005),
+                        vec3(0.006, 0.006, 0.008),
+                        vec3(0.055, 0.003, 0.009),
                         cycle
                     );
 
@@ -1086,7 +1088,7 @@
     var uTime  = gl.getUniformLocation(prog, 'u_time');
     var uCycle = gl.getUniformLocation(prog, 'u_cycle');
 
-    var CYCLE = 1080.0; // 18 minutes
+    var CYCLE = 900.0; // 15 minutes
     var start = performance.now();
 
     function getCycle(t) {
@@ -1210,13 +1212,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var playIcon    = homePlayBtn.querySelector('.play-icon');
     var pauseIcon   = homePlayBtn.querySelector('.pause-icon');
     var audio       = document.getElementById('audioPlayer');
+    audio.loop      = true;
 
     homePlayBtn.addEventListener('click', function () {
         if (audio.paused) {
             audio.play().then(function () {
                 playIcon.style.display  = 'none';
                 pauseIcon.style.display = '';
-            }).catch(function () {});
+            }).catch(function (err) {
+                console.log('Play error:', err);
+            });
         } else {
             audio.pause();
             playIcon.style.display  = '';

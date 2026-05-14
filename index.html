@@ -77,7 +77,7 @@
             left:50%; transform:translateX(-50%);
             font-family:'Courier New', monospace;
             font-size:9px; letter-spacing:0.35em; text-transform:uppercase;
-            color:rgba(255,255,255,0.28);
+            color:rgba(255,255,255,0.52);
             opacity:0;
             animation:fadeIn 1s ease forwards 1s;
             white-space:nowrap;
@@ -105,12 +105,13 @@
         .logo {
             position:fixed; top:24px; left:50%; transform:translateX(-50%);
             z-index:20;
-            font-size:14px; font-weight:300; letter-spacing:0.01em;
-            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            color:rgba(255,255,255,0.38);
+            font-size:13px; font-weight:600; letter-spacing:0.14em;
+            font-family:'Syne', sans-serif;
+            color:rgba(255,255,255,0.68);
             text-transform:lowercase;
             white-space:nowrap;
         }
+
         /* Current release — quiet prompt */
         .stream-prompt {
             position:fixed;
@@ -126,30 +127,30 @@
         .home-sigil {
             width:72px; height:auto;
             display:block;
-            opacity:0.28;
+            opacity:0.50;
             pointer-events:none;
             user-select:none;
         }
         .home-play-btn {
             background:none; border:none; cursor:pointer;
             padding:0; display:flex; align-items:center; justify-content:center;
-            opacity:0.55; transition:opacity 0.25s, transform 0.2s;
+            opacity:0.72; transition:opacity 0.25s, transform 0.2s;
             flex-shrink:0;
         }
-        .home-play-btn:hover { opacity:0.90; transform:scale(1.1); }
+        .home-play-btn:hover { opacity:1; transform:scale(1.1); }
         .home-play-btn svg { width:16px; height:16px; display:block; }
 
 
         .stream-btn {
             font-family:'Courier New', monospace;
             font-size:9px; letter-spacing:0.28em; text-transform:lowercase;
-            color:rgba(255,255,255,0.28);
+            color:rgba(255,255,255,0.60);
             background:none; border:none; cursor:pointer;
             padding:0;
             transition:color 0.25s ease;
             white-space:nowrap;
         }
-        .stream-btn:hover { color:rgba(255,255,255,0.65); }
+        .stream-btn:hover { color:rgba(255,255,255,0.90); }
 
         /* ── BOTTOM NAV ── */
         .site-nav {
@@ -167,12 +168,12 @@
         .nav-btn {
             font-family:'Courier New', monospace;
             font-size:10px; letter-spacing:0.28em; text-transform:lowercase;
-            color:rgba(255,255,255,0.40);
+            color:rgba(255,255,255,0.68);
             background:none; border:none; cursor:pointer;
             padding:8px 0;
             transition:color 0.25s ease;
         }
-        .nav-btn:hover { color:rgba(255,255,255,0.85); }
+        .nav-btn:hover { color:rgba(255,255,255,0.95); }
 
 
         /* ── ARCHIVE MODAL ── */
@@ -272,13 +273,13 @@
         .glitch-text {
             position:absolute;
             font-family:'Courier New', monospace;
-            font-size:13px; color:rgba(255,255,255,0.50);
+            font-size:13px; color:rgba(255,255,255,0.72);
             letter-spacing:1px; user-select:none;
-            opacity:0.8; transition:opacity 0.5s;
+            opacity:0.9; transition:opacity 0.5s;
         }
         .glitch-text.fade-out { opacity:0; }
         .glitch-text.clickable { cursor:pointer; pointer-events:all; }
-        .glitch-text.clickable:hover { color:rgba(255,255,255,0.75); }
+        .glitch-text.clickable:hover { color:rgba(255,255,255,0.95); }
         .glitch-text.clicked { animation:glitchPulse 0.3s; }
         @keyframes glitchPulse {
             0%,100%{transform:translate(0,0)} 25%{transform:translate(-2px,1px)}
@@ -321,7 +322,7 @@
             transform:translateX(-50%);
             font-family:'Courier New',monospace;
             font-size:9px; letter-spacing:0.30em; text-transform:uppercase;
-            color:rgba(255,255,255,0.28);
+            color:rgba(255,255,255,0.52);
             z-index:3010; pointer-events:none; white-space:nowrap;
         }
 
@@ -330,7 +331,7 @@
             transform:translateX(-50%);
             font-family:'Courier New',monospace;
             font-size:8px; letter-spacing:0.28em; text-transform:uppercase;
-            color:rgba(255,255,255,0.16);
+            color:rgba(255,255,255,0.38);
             z-index:3010; pointer-events:none; white-space:nowrap;
             transition:opacity 0.5s;
         }
@@ -369,13 +370,13 @@
         .rec-side {
             font-family:'Courier New',monospace;
             font-size:7.5px; letter-spacing:0.38em; text-transform:uppercase;
-            color:rgba(255,255,255,0.26);
+            color:rgba(255,255,255,0.52);
         }
         .rec-side-r { text-align:right; }
         .rec-cat-label {
             font-family:'Courier New',monospace;
             font-size:7.5px; letter-spacing:0.20em;
-            color:rgba(255,255,255,0.16); text-align:center;
+            color:rgba(255,255,255,0.38); text-align:center;
         }
 
         /* ── VINYL DISC AREA ── */
@@ -443,7 +444,7 @@
         .rec-data-item {
             font-family:'Courier New',monospace;
             font-size:6.5px; letter-spacing:0.18em; text-transform:uppercase;
-            color:rgba(255,255,255,0.16);
+            color:rgba(255,255,255,0.38);
             writing-mode:vertical-lr; transform:rotate(180deg);
         }
         .matrix-text {
@@ -466,12 +467,12 @@
         .rec-sub {
             font-family:'Courier New',monospace;
             font-size:7.5px; letter-spacing:0.16em; text-transform:uppercase;
-            color:rgba(255,255,255,0.28); margin-top:3px;
+            color:rgba(255,255,255,0.58); margin-top:3px;
         }
         .rec-format {
             font-family:'Courier New',monospace;
             font-size:7.5px; letter-spacing:0.16em; text-transform:uppercase;
-            color:rgba(255,255,255,0.18); text-align:right; line-height:1.7;
+            color:rgba(255,255,255,0.45); text-align:right; line-height:1.7;
         }
 
         /* ── ABOUT SECTION — abbreviated + expandable ── */
@@ -486,19 +487,19 @@
         .rec-about-label {
             font-family:'Courier New',monospace;
             font-size:7.5px; letter-spacing:0.32em; text-transform:uppercase;
-            color:rgba(255,255,255,0.22);
+            color:rgba(255,255,255,0.50);
         }
         .rec-about-toggle {
             font-family:'Courier New',monospace;
             font-size:7.5px; letter-spacing:0.20em; text-transform:uppercase;
-            color:rgba(255,255,255,0.20); transition:color 0.2s;
+            color:rgba(255,255,255,0.45); transition:color 0.2s;
         }
-        .rec-about-header:hover .rec-about-toggle { color:rgba(255,255,255,0.50); }
+        .rec-about-header:hover .rec-about-toggle { color:rgba(255,255,255,0.78); }
 
         /* Abbreviated — always visible, 2 lines */
         .rec-about-short {
             font-size:11.5px; line-height:1.75;
-            color:rgba(255,255,255,0.45);
+            color:rgba(255,255,255,0.70);
             max-height:3.5em;
             overflow:hidden;
             position:relative;
@@ -508,12 +509,12 @@
             position:absolute; bottom:0; right:0;
             background:rgba(9,9,14,0.97);
             padding-left:4px;
-            color:rgba(255,255,255,0.30);
+            color:rgba(255,255,255,0.60);
         }
         /* Full text — hidden until expanded */
         .rec-about-full {
             font-size:11.5px; line-height:1.80;
-            color:rgba(255,255,255,0.50);
+            color:rgba(255,255,255,0.72);
             max-height:0; overflow:hidden;
             transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1);
             margin-top:0;
@@ -538,7 +539,7 @@
         .rec-streams-label {
             font-family:'Courier New',monospace;
             font-size:7.5px; letter-spacing:0.32em; text-transform:uppercase;
-            color:rgba(255,255,255,0.22); padding:8px 0 6px; display:block;
+            color:rgba(255,255,255,0.50); padding:8px 0 6px; display:block;
         }
         .rec-stream-link {
             display:flex; align-items:center; justify-content:space-between;
@@ -551,9 +552,9 @@
         .rec-stream-name {
             font-family:'Courier New',monospace;
             font-size:9px; letter-spacing:0.18em; text-transform:uppercase;
-            color:rgba(255,255,255,0.55);
+            color:rgba(255,255,255,0.80);
         }
-        .rec-stream-arrow { font-size:11px; color:rgba(255,255,255,0.22); }
+        .rec-stream-arrow { font-size:11px; color:rgba(255,255,255,0.50); }
         /* ── STREAMING MODAL ── */
         .streaming-modal {
             position:fixed; inset:0;
@@ -570,21 +571,21 @@
         .streaming-title {
             font-family:'Courier New',monospace;
             font-size:9px; letter-spacing:0.35em; text-transform:uppercase;
-            color:rgba(255,255,255,0.30);
+            color:rgba(255,255,255,0.62);
             margin-bottom:20px;
         }
         .streaming-options { display:flex; flex-direction:column; gap:0; }
         .streaming-option {
             background:none; border:none;
             border-bottom:1px solid rgba(255,255,255,0.07);
-            color:rgba(255,255,255,0.55);
+            color:rgba(255,255,255,0.78);
             font-family:'Courier New',monospace;
             font-size:10px; letter-spacing:0.20em; text-transform:uppercase;
             padding:13px 0; cursor:pointer; text-align:left;
             transition:color 0.2s;
         }
         .streaming-option:last-child { border-bottom:none; }
-        .streaming-option:hover { color:rgba(255,255,255,0.90); }
+        .streaming-option:hover { color:rgba(255,255,255,0.95); }
 
         /* ── CONNECT MODAL ── */
         .connect-modal {
@@ -596,19 +597,19 @@
         .connect-modal.active { display:flex; }
         .connect-inner { width:min(88vw, 340px); display:flex; flex-direction:column; }
         .connect-header { border-bottom:1px solid rgba(255,255,255,0.07); padding-bottom:16px; margin-bottom:28px; }
-        .connect-label { font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.40em; text-transform:uppercase; color:rgba(255,255,255,0.28); }
+        .connect-label { font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.40em; text-transform:uppercase; color:rgba(255,255,255,0.62); }
         .connect-form { display:flex; flex-direction:column; gap:16px; margin-bottom:28px; }
         .connect-form input { background:none; border:none; border-bottom:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.75); font-family:'Courier New',monospace; font-size:12px; letter-spacing:0.12em; padding:8px 0; outline:none; transition:border-color 0.2s; }
-        .connect-form input::placeholder { color:rgba(255,255,255,0.22); }
+        .connect-form input::placeholder { color:rgba(255,255,255,0.42); }
         .connect-form input:focus { border-bottom-color:rgba(255,255,255,0.40); }
-        .connect-form button { background:none; border:1px solid rgba(255,255,255,0.22); color:rgba(255,255,255,0.55); font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.35em; text-transform:uppercase; padding:11px 0; cursor:pointer; transition:border-color 0.2s, color 0.2s; margin-top:4px; }
-        .connect-form button:hover { border-color:rgba(255,255,255,0.55); color:rgba(255,255,255,0.85); }
+        .connect-form button { background:none; border:1px solid rgba(255,255,255,0.35); color:rgba(255,255,255,0.78); font-family:'Courier New',monospace; font-size:9px; letter-spacing:0.35em; text-transform:uppercase; padding:11px 0; cursor:pointer; transition:border-color 0.2s, color 0.2s; margin-top:4px; }
+        .connect-form button:hover { border-color:rgba(255,255,255,0.70); color:rgba(255,255,255,0.95); }
         .connect-divider { height:1px; background:rgba(255,255,255,0.07); margin-bottom:24px; }
         .connect-links { display:flex; flex-direction:column; }
-        .connect-link { font-family:'Courier New',monospace; font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.38); text-decoration:none; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); transition:color 0.2s; display:flex; align-items:center; justify-content:space-between; }
+        .connect-link { font-family:'Courier New',monospace; font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.68); text-decoration:none; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06); transition:color 0.2s; display:flex; align-items:center; justify-content:space-between; }
         .connect-link:last-child { border-bottom:none; }
-        .connect-link::after { content:'↗'; color:rgba(255,255,255,0.18); font-size:11px; }
-        .connect-link:hover { color:rgba(255,255,255,0.75); }
+        .connect-link::after { content:'↗'; color:rgba(255,255,255,0.45); font-size:11px; }
+        .connect-link:hover { color:rgba(255,255,255,0.95); }
 
                 /* ── SINGLE CARD LAYOUT ── */
         .record-card.is-single .rec-body {
@@ -642,12 +643,12 @@
         .single-sub {
             font-family:'Courier New',monospace;
             font-size:8px; letter-spacing:0.18em; text-transform:uppercase;
-            color:rgba(255,255,255,0.35); margin-top:2px;
+            color:rgba(255,255,255,0.60); margin-top:2px;
         }
         .single-meta {
             font-family:'Courier New',monospace;
             font-size:7.5px; letter-spacing:0.18em; text-transform:uppercase;
-            color:rgba(255,255,255,0.20); margin-top:1px;
+            color:rgba(255,255,255,0.45); margin-top:1px;
         }
 
 
@@ -835,10 +836,10 @@
 
                 // Dawn peak: blood orange / deep crimson — Lightroom orange hue -37
                 // Zenith stays dark charcoal
-                vec3 dZenith = vec3(0.075, 0.086, 0.098); // charcoal
-                vec3 dUpper  = vec3(0.055, 0.032, 0.010); // warm dark brown
-                vec3 dMid    = vec3(0.160, 0.055, 0.008); // deep orange-red
-                vec3 dLow    = vec3(0.275, 0.098, 0.010); // rich orange near horizon
+                vec3 dZenith = vec3(0.065, 0.008, 0.012); // deep blood red at top
+                vec3 dUpper  = vec3(0.120, 0.006, 0.012); // dark crimson upper
+                vec3 dMid    = vec3(0.220, 0.005, 0.022); // blood red mid
+                vec3 dLow    = vec3(0.340, 0.005, 0.022); // deep red-orange near horizon
 
                 vec3 zenith = mix(nZenith, dZenith, cycle);
                 vec3 upper  = mix(nUpper,  dUpper,  cycle);
@@ -875,13 +876,13 @@
                     // Atmospheric glow around sun position in sky
                     float sDist  = length(uv - sunPos);
                     float sGlow  = exp(-sDist * sDist / (0.06 + 0.10*cycle)) * 0.7 * cycle;
-                    vec3  gColor = mix(vec3(0.55,0.06,0.02), vec3(0.88,0.22,0.03), cycle);
+                    vec3  gColor = mix(vec3(0.45,0.04,0.01), vec3(0.820,0.020,0.120), cycle);
                     skyCol += gColor * sGlow;
 
                     // Sun disc — only draw if sunPos.y is within sky region
                     float sunR = 0.020 + 0.005 * cycle;
                     float disc = 1.0 - smoothstep(sunR - 0.003, sunR + 0.005, sDist);
-                    vec3  sCol = mix(vec3(0.98, 0.10, 0.02), vec3(0.99, 0.42, 0.06), cycle);
+                    vec3  sCol = mix(vec3(0.98, 0.08, 0.01), vec3(1.000,0.140,0.040), cycle);
                     // Corona
                     float corona = exp(-sDist*sDist/(0.003+0.004*cycle)) * 0.9;
                     skyCol += sCol * corona * cycle;
@@ -975,7 +976,7 @@
                 float rcd2 = fbm(vec2(reflUv.x * 2.1 - u_time * 0.0025, rSkyT * 1.6 + 1.1));
                 float rcl  = smoothstep(0.22, 0.52, rcd1) * smoothstep(0.18, 0.48, rcd2);
                 rcl *= smoothstep(0.08, 0.22, rSkyT) * smoothstep(1.0, 0.55, rSkyT);
-                vec3 rcloudLit = mix(vec3(0.008,0.009,0.012), vec3(0.35,0.10,0.02), cycle);
+                vec3 rcloudLit = mix(vec3(0.006,0.006,0.008), vec3(0.380,0.010,0.053), cycle);
                 reflCol = mix(reflCol, rcloudLit, rcl * cycle * 0.55);
 
                 // Sun reflection — stretched vertical column broken by ripples
@@ -985,7 +986,7 @@
                 vec2  stretched  = vec2(toRefl.x * 9.0, toRefl.y * 0.8);
                 float rGlow      = exp(-dot(stretched, stretched) / (0.035 + 0.08*cycle))
                                    * 0.9 * cycle;
-                vec3  gColor2    = mix(vec3(0.45,0.06,0.02), vec3(0.82,0.20,0.03), cycle);
+                vec3  gColor2    = mix(vec3(0.38,0.04,0.01), vec3(0.780,0.020,0.110), cycle);
                 reflCol += gColor2 * rGlow;
 
                 // Fine specular glints — scattered, non-repeating
@@ -995,7 +996,7 @@
                 float spec  = max(0.0, spec1 - 0.72)
                             * max(0.0, spec2 - 0.65)
                             * max(0.0, spec3 - 0.50) * 6.0;
-                vec3  specCol = mix(vec3(0.05,0.03,0.01), vec3(0.28,0.12,0.03), cycle);
+                vec3  specCol = mix(vec3(0.04,0.02,0.01), vec3(0.320,0.020,0.035), cycle);
                 reflCol += specCol * spec * (0.15 + 0.25 * cycle);
 
                 // ── UNIFIED SLATE BASE ──
@@ -1027,13 +1028,13 @@
 
                 // Horizon line glow
                 float hLine = exp(-abs(uv.y - HORIZ) * 110.0) * cycle * 0.45;
-                col += mix(vec3(0.06,0.03,0.05), vec3(0.65,0.28,0.07), cycle) * hLine;
+                col += mix(vec3(0.05,0.02,0.02), vec3(0.720,0.030,0.052), cycle) * hLine;
 
                 // ── ATMOSPHERIC HAZE ──
                 // Warm fog layer just above and below horizon — diffuses light through air
                 float hazeY    = abs(uv.y - HORIZ);
                 float hazeBand = exp(-hazeY * hazeY * 35.0) * cycle * 0.18;
-                vec3  hazeCol  = mix(vec3(0.25, 0.08, 0.02), vec3(0.55, 0.22, 0.05), cycle);
+                vec3  hazeCol  = mix(vec3(0.20, 0.05, 0.01), vec3(0.520,0.020,0.065), cycle);
                 col += hazeCol * hazeBand;
 
                 // Slight warm atmospheric tint in lower sky near horizon
@@ -1088,8 +1089,16 @@
     var uTime  = gl.getUniformLocation(prog, 'u_time');
     var uCycle = gl.getUniformLocation(prog, 'u_cycle');
 
-    var CYCLE = 900.0; // 15 minutes
+    var CYCLE = 1080.0; // 18 minutes
     var start = performance.now();
+    var externalTime = null;
+
+    function setShaderTime(t) { externalTime = t; }
+
+    window.addEventListener('message', function(e) {
+        if (e.origin !== 'https://studio212.xyz') return;
+        if (e.data && e.data.type === 'scrub') setShaderTime(e.data.time);
+    });
 
     function getCycle(t) {
         var phase = (t % CYCLE) / CYCLE;
@@ -1098,7 +1107,7 @@
     }
 
     (function render() {
-        var t = (performance.now() - start) / 1000;
+        var t = externalTime !== null ? externalTime : (performance.now() - start) / 1000;
         gl.uniform2f(uRes, canvas.width, canvas.height);
         gl.uniform1f(uTime, t);
         gl.uniform1f(uCycle, getCycle(t));
